@@ -2,13 +2,15 @@
 
 Simon D. Levy est professeur dans un département informatique pour une université à
 Washigton. Il a réalisé un programme permettant de contrôler le drone par l’intermédiaire un
-joystick mais également par un module de suivit d’objet en Python (Voir vidéo). Nous allons
-expliquer les étapes de compilation du projet.
+joystick mais également par un module de suivit d’objet en Python (Voir vidéo : http://www.youtube.com/watch?v=_3697dtyOz4). Nous allons expliquer les étapes de compilation du projet.
 
-## L'ensemble des plugins
+## Modification du fichier "autopylot.makefile"
 
-* **[video-png](plugins/video-png/)** permet de diffuser la vidéo sur le navigateur par le chargement d’une image statique. Cela fonctionne très bien sur tous les navigateurs. Nécessite l’installation du
-paquet ffmpeg sur le système. (module disponible sur https://github.com/eschnou/ardrone-webflight/blob/master/plugins/video-png/)
+* le chemin du SDK de l’AR.Drone (ligne 24)
+```
+# This should reflect where you put the SDK
+SDK_DIR:=/home/quentin/Documents/ARDrone_SDK_2_0_1
+```
 
 * **[video-stream](plugins/video-stream/)** utilise node-dronestream pour diffuser le flux vidéo en h264 via des websockets en javascript. Nécessite un navigateur et un processeur modernes. (module disponible sur https://github.com/eschnou/ardrone-webflight/blob/master/plugins/video-stream/)
 
