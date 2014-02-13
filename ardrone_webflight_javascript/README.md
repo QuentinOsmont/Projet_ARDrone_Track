@@ -1,91 +1,97 @@
-# ardrone-webflight
+# ardrone_webflight_javascript
 
-Cette application permet de piloter le drone directement depuis notre navigateur. De plus, il est possible d'étendre l'application avec des plugins afin d'ajouter des fonctionnalités telles que l'enregistrement vidéo, le vol autonome, la reconnaissance des visages, le suivit d'objet et plus encore. Cela permet d'avoir un environnement convivial pour construire et expérimenter notre drone.
+Cette application permet de piloter le drone directement depuis notre navigateur. De plus, il est possible d'étendre l'application avec des plugins afin d'ajouter des fonctionnalités telles que l'enregistrement vidéo, le vol autonome, la reconnaissance des visages, le suivit d'objet et plus encore. Cela permet d'avoir un environnement convivial pour construire et expérimenter notre drone. Le projet source provient de ce dépôt : http://eschnou.github.io/ardrone-webflight/. Le programme n'a pas été modifié à ce jour, seulement l'ensemble des plugins ont été ajoutés au dossier "plugins".
 
-## Built-in plugins
+## L'ensemble des plugins
 
-* **[video-png](plugins/video-png/)** stream the video to the browser through static image loading,
-    works great in every browser. Requires ffmpeg installed on your system.
+* **[video-png](plugins/video-png/)** permet de diffuser la vidéo sur le navigateur par le chargement d’une image statique. Cela fonctionne très bien sur tous les navigateurs. Nécessite l’installation du
+paquet ffmpeg sur le système. (module disponible sur https://github.com/eschnou/ardrone-webflight/blob/master/plugins/video-png/)
 
-* **[video-stream](plugins/video-stream/)** use [node-dronestream](https://github.com/bkw/node-dronestream) to stream the raw h264 video
-feed via webscokets and rendering in Javascript !!! Need a modern browser and CPU.
+* **[video-stream](plugins/video-stream/)** utilise node-dronestream pour diffuser le flux vidéo en h264 via des websockets en javascript. Nécessite un navigateur et un processeur modernes. (module disponible sur https://github.com/eschnou/ardrone-webflight/blob/master/plugins/video-stream/)
 
-* **[hud](plugins/hud/)** to visualize a head-up display with artificial horizon, compass,
-    altimeter, etc. Based on [nodecopter-cockpit](https://github.com/bkw/nodecopter-cockpit)
+* **[hud](plugins/hud/)** permet de visualiser en haut de la fenêtre une boussole, un altimètre, ..., basé sur nodecoper-cockpit. (module disponible sur https://github.com/eschnou/ardrone-webflight/blob/master/plugins/hud/)
 
-* **[pilot](plugins/pilot)** to control the drone remotely using the keyboard. Based on [drone-browser](https://github.com/functino/drone-browser).
+* **[pilot](plugins/pilot)** permet de contrôler le drone en utilisant le clavier. Le contrôle s’effectue sur le navigateur. (module disponible sur https://github.com/eschnou/ardrone-webflight/blob/master/plugins/pilot)
 
-* **[battery](plugins/battery)** display a battery widget in the top bar.
+* **[battery](plugins/battery)** affiche le niveau de la batterie dans la barre du haut. (module dispo-
+nible sur https://github.com/eschnou/ardrone-webflight/blob/master/plugins/battery)
 
-* **[blackbox](plugins/blackbox)** records all mission data (raw video, navdata, etc.) on the disk.
+* **[blackbox](plugins/blackbox)** enregistre toutes les données de la mission (flux vidéo, données de na-
+vigaions, ...) sur le disque. (module disponible sur https://github.com/eschnou/ardrone-webflight/blob/master/plugins/blackbox)
 
-* **[replay](plugins/replay)** replays a mission by injecting the data at the client level. Makes it a very
-friendly tool to code/test/debug when you can't fly. **You need to use video-png for video, not compatible with video-stream yet.**
+* **[replay](plugins/replay)** permet de rejouer une mission en injectant des données au niveau du client.
+Outil utile pour coder, tester, et déboguer lorsque nous pouvons pas faire voler le drone. Nécessite le module video-png, il n’est pas encore compatible avec video-stream. (module disponible sur https://github.com/eschnou/ardrone-webflight/blob/master/plugins/replay)
 
 
-## Other plugins
+* **[copterface](https://github.com/eschnou/webflight-copterface)** détecte les visages et permet au drone de les suivre en effectuant une rotation. (module disponible sur https://github.com/eschnou/webflight-copterface)
 
-Feel free to add your plugins in this list by editing this page.
+* **[traffic](https://github.com/wiseman/webflight-traffic)** affiche un trafic aérien depuis des données ADS-B comme une superposition de la réalité augmentée. (module disponible sur https://github.com/wiseman/
 
-* **[copterface](https://github.com/eschnou/webflight-copterface)** detect faces and track them by rotating the drone. 
-A port of the [copterface](https://github.com/paulhayes/copterface) project to the webflight environment.
+* **[gamepad](https://github.com/wiseman/webflight-gamepad)** permet de contrôler le drone avec une manette. (module disponible sur https://github.com/wiseman/webflight-gamepad)
 
-* **[traffic](https://github.com/wiseman/webflight-traffic)** displays live Air traffic from ADS-B data as an augmented reality overlay.
+* **[tracker](https://github.com/bkw/webflight-tracker)** permet de suivre un objet par ses pixels sur le flux vidéo en cliquant dessus. (module disponible sur https://github.com/bkw/webflight-tracker)
 
-* **[gamepad](https://github.com/wiseman/webflight-gamepad)** controls the drone with a gamepad.
+* **[trollface](https://github.com/andrew/webflight-trollface)** permet de détecter les visages et dispose un visage de troll par dessus. (module disponible sur https://github.com/andrew/webflight-trollface)
 
-* **[tracker](https://github.com/bkw/webflight-tracker)** track pixels on the videostream by clicking on them.
+## Installation
 
-* **[trollface](https://github.com/andrew/webflight-trollface)** detect faces and overlay trollfaces on top of them.
-
-## Install
-
-WebFlight requires a recent nodejs (built and tested with node > 0.10) as well as
-[npm](https://npmjs.org/) and [bower](http://bower.io/) for dependency management.
-
-In order to use the video-png plugin, you also need ffmpeg installed on your system.
-
+Le projet require une version récente de nodejs (node > 0.10).
 ```
-git clone https://github.com/eschnou/ardrone-webflight.git
-cd ardrone-webflight
+sudo apt-get install python-software-properties python g++ make
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get update
+sudo apt-get install nodejs
+```
+
+Afin de configurer le projet avec node, le dossier doit être initialisé par le gestionnaire
+de paquets "npm" réservé à node.js et "Bower" qui va permettre d’installer, de mettre à
+jour ou de désinstaller toutes les dépendances qui sont nécessaires au projet.
+```
+git clone https://github.com/QuentinOsmont/Projet_ARDrone_Track
+cd Projet_ARDrone_Track/ardrone_webflight_javascript
 npm install
+sudo npm install -g bower
 bower install
 ```
 
-## Usage
+Pour utiliser les plugins, le fichier config.js doit être configuré :
 
-1. Copy the config.js.sample to config.js and edit to select your plugins
-2. Connect to the drone's wifi
-3. Run `node app.js`
-4. Point your browser to http://localhost:3000/
+```
+cp config.js.example config.js
+//Modification du fichier config.js pour l'utilisation du plugin tracker
+var config = {
+    plugins: [ "video-stream", "hud", "battery", "pilot", "tracker" ],
+    ...
+
+```
+
+Dans le but d'utiliser les plvar config = {
+plugins: [ "video-stream", "hud", "battery", "pilot", "tracker" ],
+...ugins video, le paquet "ffmpeg" doit être installé. De plus pour une utilisation correcte du projet, le navigateur "firefox" avec une version récente doit être utilisé. En effet, le programme nécessite un navigateur récent et performant. Il existe des bugs d'utilisation sur "google chrome".
+
+## Utilisation
+
+1. Se connecter au drone en WIFI
+2. Lancer `node app.js`
+3. Aller sur le navigateur à l'adresse `http://localhost:3000/`
 
 
-### Controlling the drone
+### Contrôle du drone
 
-If you have enabled the **pilot** plugin, you can fly the drone with the following keys. You can define your keyboard in the 
-config file. In the plugin, `azerty` and `qwerty` keyboards are defined.  Feel free to define others.
-
-Use `z, s, q, d` to move front, back and sideways. Use your `cursors` to go up/down or turn
-clockwise/counter clockwise. Use `t` to takeoff and `l` for landing.
-
-Use the `tab` key to toggle acceleration speed slow/fast.
-
-Use the `f` key to perform a flip in the current direction of movement.
-
-Use the `c` key to switch the video feed between front/bottom camera.
-
-Use the `e` key to recover from an emergency after a crash.
-
-### Record a mission
-
-Just press the `r` to start recording. A popup alers you when the recording starts. Press `r` again to stop. Each mission
-is bundled in its own folder.
-
-## Adding your own plugin
-
-There is no tutorial yet, in the meanwhile, just have a look at the built in plugins,
-it is faily straightforward.
-
+Chacune des commandes pour contrôler le drone doivent être tapées dans la fenêtre du navigateur (nécessite le module « pilot »). 
+* Commande -> Fonction
+* t -> décollage
+* l -> atterrissage
+* z -> déplacement avant
+* s -> déplacement arrière
+* q -> déplacement latéral gauche
+* d -> déplacement latéral droit
+* TAB -> change de vitesse d’accélération (lente/rapide)
+* f -> effectue un flip dans le sens actuel du mouvement
+* c -> change de caméra
+* e -> permet de se remettre d’une situation d’urgence
+* r -> enregistre/arrète l’enregistrement
 
 
 ## License
