@@ -1,0 +1,2951 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>17 Building Urbi SDK</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,sections+,xhtml,info --> 
+<meta name="src" content="urbi-sdk.tex" /> 
+<meta name="date" content="2010-09-30 15:52:00" /> 
+<link rel="stylesheet" type="text/css" href="urbi-sdk.css" /> 
+</head><body 
+>
+   <div class="header"><a 
+href="migration-from-urbiscript-1-to-urbiscript-2.html" ><p>Prev</p></a><a 
+href="migration-from-urbiscript-1-to-urbiscript-2.html#tailurbi-sdkch16.html" ><p>Prev-tail</p></a><a 
+href="#tailurbi-sdkch17.html"><p>Tail</p></a><a 
+href="guidelines-and-cook-books.html#build.html" ><p>Up</p></a></div><h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;17</span><br /><a 
+href="index.html#QQ2-25-182" id="x25-17700017">Building Urbi SDK</a></h2>
+<!--l. 11--><p class="noindent"><!-- tex4ht:FileName="build" -->
+</p><!--l. 20--><p class="indent">   This section is meant for people who want to <span 
+class="cmti-10x-x-109">build </span>the Urbi SDK. If you just want to install a
+pre-built Urbi SDK, see <a 
+href="installation.html#x22-10500014">Chapter&#x00A0;14<!--tex4ht:ref: sec:installation --></a>.
+</p>
+   <div class="sectionTOCS">
+   &#x00A0;<span class="sectionToc">17.1 <a 
+href="#x25-17800017.1">Requirements</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">17.1.1 <a 
+href="#x25-17900017.1.1">Bootstrap</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">17.1.2 <a 
+href="#x25-18000017.1.2">Build</a></span>
+<br />   &#x00A0;<span class="sectionToc">17.2 <a 
+href="#x25-18100017.2">Check out</a></span>
+<br />   &#x00A0;<span class="sectionToc">17.3 <a 
+href="#x25-18200017.3">Bootstrap</a></span>
+<br />   &#x00A0;<span class="sectionToc">17.4 <a 
+href="#x25-18300017.4">Configure</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">17.4.1 <a 
+href="#x25-18400017.4.1">configuration options</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">17.4.2 <a 
+href="#x25-18500017.4.2">Windows: Cygwin</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">17.4.3 <a 
+href="#x25-18600017.4.3">building For Windows</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">17.4.4 <a 
+href="#x25-18700017.4.4">Building for Windows using Cygwin</a></span>
+<br />   &#x00A0;<span class="sectionToc">17.5 <a 
+href="#x25-18800017.5">Compile</a></span>
+<br />   &#x00A0;<span class="sectionToc">17.6 <a 
+href="#x25-18900017.6">Install</a></span>
+<br />   &#x00A0;<span class="sectionToc">17.7 <a 
+href="#x25-19000017.7">Relocatable</a></span>
+<br />   &#x00A0;<span class="sectionToc">17.8 <a 
+href="#x25-19100017.8">Run</a></span>
+<br />   &#x00A0;<span class="sectionToc">17.9 <a 
+href="#x25-19200017.9">Check</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">17.9.1 <a 
+href="#x25-19300017.9.1">Lazy test suites</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">17.9.2 <a 
+href="#x25-19400017.9.2">Partial test suite runs</a></span>
+   </div>
+   <h3 class="sectionHead"><span class="titlemark">17.1   </span> <a 
+href="index.html#QQ2-25-183" id="x25-17800017.1">Requirements</a></h3>
+<!--l. 26--><p class="noindent">This section lists all the dependencies of this package. Some of them are required to <span 
+class="cmti-10x-x-109">bootstrap</span><a 
+ id="x25-178001"></a> the
+package, i.e., to build it from the repository. Others are required to <span 
+class="cmti-10x-x-109">build</span><a 
+ id="x25-178002"></a> the package, i.e., to compile it
+from a tarball, or after a bootstrap.
+</p><!--l. 31--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">17.1.1   </span> <a 
+href="contents.html#QQ2-25-184" id="x25-17900017.1.1">Bootstrap</a></h4>
+<!--l. 33--><p class="noindent">To bootstrap this package from its repository, and then to compile it, the following tools are
+needed.
+     </p><dl class="description"><dt class="description">
+<span 
+class="cmbx-10x-x-109">Autoconf 2.64 or later</span> </dt><dd 
+class="description">&#x00A0;
+                                                                                       
+
+                                                                                       
+     <br class="newline" />
+     <!--l. 39--><p class="noindent"><div class="cxx">
+</p>
+     <!--l. 39--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179001r1"></a></span><span 
+class="cmtt-10x-x-109">package</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">autoconf</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">Automake 1.11.1 or later</span> </dt><dd 
+class="description">Note that if you have to install Automake by hand (as opposed to &#8220;with
+     your distribution&#8217;s system&#8221;), you have to tell its <span 
+class="cmtt-10x-x-109">aclocal </span>that it should also look
+     at the files from the system&#8217;s aclocal. If &#8216;<span 
+class="cmtt-10x-x-109">/usr/local/bin/aclocal</span>&#8217; is the one you
+     just installed, and &#8216;<span 
+class="cmtt-10x-x-109">/usr/bin/aclocal</span>&#8217; is the system&#8217;s one, then run something like
+     this:
+     <!--l. 50--><p class="noindent"><div class="shell">
+</p>
+     <!--l. 50--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179002r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">dirlist</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">(/</span><span 
+class="cmtt-10x-x-109">usr</span><span 
+class="cmtt-10x-x-109">/</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">local</span></span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">bin</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">aclocal</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">print</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">ac</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">dir</span><span 
+class="cmtt-10x-x-109">)/</span><span 
+class="cmtt-10x-x-109">dirlist</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179003r2"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">sudo</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">mkdir</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">p</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">dirname</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">$dirlist</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179004r3"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">sudo</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">usr</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">bin</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">aclocal</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">print</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">ac</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">dir</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x003E;&#x003E;</span><span 
+class="cmtt-10x-x-109">$dirlist</span>
+     </pre>
+     </div>
+     <!--l. 56--><p class="noindent"><div class="cxx">
+</p>
+     <!--l. 56--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179005r1"></a></span><span 
+class="cmtt-10x-x-109">package</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">automake</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">Cvs</span> </dt><dd 
+class="description">This surprising requirement comes from the system Bison uses to fetch the current version of the
+     message translations. <div class="cxx">
+     <!--l. 63--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179006r1"></a></span><span 
+class="cmtt-10x-x-109">package</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">cvs</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">Git 1.6 or later</span> </dt><dd 
+class="description">Beware that older versions behave poorly with submodules. <div class="cxx">
+     <!--l. 69--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179007r1"></a></span><span 
+class="cmtt-10x-x-109">package</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">git</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">core</span>
+     </pre>
+                                                                                       
+
+                                                                                       
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">Gettext 1.17</span> </dt><dd 
+class="description">Required to bootstrap Bison. In particular it provides autopoint. <div class="cxx">
+     <!--l. 75--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179008r1"></a></span><span 
+class="cmtt-10x-x-109">package</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">gettext</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">GNU sha1sum</span> </dt><dd 
+class="description">We need the GNU version of sha1sum. <div class="cxx">
+     <!--l. 81--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179009r1"></a></span><span 
+class="cmtt-10x-x-109">package</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">coreutils</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">Help2man</span> </dt><dd 
+class="description">Needed by Bison. <div class="cxx">
+     <!--l. 87--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179010r1"></a></span><span 
+class="cmtt-10x-x-109">package</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">help2man</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">Python</span> </dt><dd 
+class="description">You need &#8216;<span 
+class="cmtt-10x-x-109">xml/sax</span>&#8217;, which seems to be part only of Python 2.6. Using <span 
+class="cmtt-10x-x-109">python</span><span 
+class="cmtt-10x-x-109">_select </span>can
+     be useful to state that you want to use Python 2.6 by default (&#8216;<span 
+class="cmtt-10x-x-109">sudo python</span><span 
+class="cmtt-10x-x-109">_select</span>
+     <span 
+class="cmtt-10x-x-109">python26</span>&#8217;). <div class="cxx">
+     <!--l. 95--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179011r1"></a></span><span 
+class="cmtt-10x-x-109">deb</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">python2</span><span 
+class="cmtt-10x-x-109">.6</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179012r2"></a></span><span 
+class="cmtt-10x-x-109">MacPorts</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">python26</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179013r3"></a></span><span 
+class="cmtt-10x-x-109">MacPorts</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">python_select</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">Texinfo</span> </dt><dd 
+class="description">Needed to compile Bison. <div class="cxx">
+     <!--l. 102--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179014r1"></a></span><span 
+class="cmtt-10x-x-109">package</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">texinfo</span>
+     </pre>
+     </div>
+                                                                                       
+
+                                                                                       
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">yaml for Python</span> </dt><dd 
+class="description">The AST is generated from a description written in YAML. Our (Python) tools
+     need to read these files to generate the AST classes. See <a 
+href="http://pyyaml.org/wiki/PyYAML" ><span 
+class="cmtt-10x-x-109">http://pyyaml.org/wiki/PyYAML</span></a>. The
+     installation procedure on Cygwin is:
+     <!--l. 111--><p class="noindent"><div class="shell">
+</p>
+     <!--l. 111--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179015r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">cd</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">tmp</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179016r2"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">wget</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">http</span><span 
+class="cmtt-10x-x-109">://</span><span 
+class="cmtt-10x-x-109">pyyaml</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">org</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">download</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">pyyaml</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">PyYAML</span><span 
+class="cmtt-10x-x-109">-3.09.</span><span 
+class="cmtt-10x-x-109">zip</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179017r3"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">unzip</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">PyYAML</span><span 
+class="cmtt-10x-x-109">-3.09.</span><span 
+class="cmtt-10x-x-109">zip</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179018r4"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">cd</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">pyYAML</span><span 
+class="cmtt-10x-x-109">-3.09</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179019r5"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">python</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">setup</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">py</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">install</span>
+     </pre>
+     </div>
+     <!--l. 119--><p class="noindent"><div class="cxx">
+</p>
+     <!--l. 119--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179020r1"></a></span><span 
+class="cmtt-10x-x-109">MacPorts</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">py26</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">yaml</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179021r2"></a></span><span 
+class="cmtt-10x-x-109">deb</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">python</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">yaml</span>
+     </pre>
+     </div>
+     <!--l. 124--><p class="noindent">At least on OS X you also need to specify the PYTHONPATH:
+     </p><!--l. 126--><p class="noindent"><div class="shell">
+</p>
+     <!--l. 126--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179022r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">export</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">PYTHONPATH</span><span 
+class="cmtt-10x-x-109">=</span><!--l. 127--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">\</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179023r2"></a></span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">opt</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">local</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Library</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Frameworks</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Python</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">.</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">framework</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Versions</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/2.6\</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-179024r3"></a></span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">lib</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">python2</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">.6/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">site</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">packages</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">:</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">$PYTHONPATH</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre>
+     </pre>
+     </div>
+     </dd></dl>
+<!--l. 133--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">17.1.2   </span> <a 
+href="contents.html#QQ2-25-185" id="x25-18000017.1.2">Build</a></h4>
+     <dl class="description"><dt class="description">
+<span 
+class="cmbx-10x-x-109">bc</span> </dt><dd 
+class="description">Needed by the test suite. <div class="cxx">
+     <!--l. 138--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180001r1"></a></span><span 
+class="cmtt-10x-x-109">package</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">bc</span>
+     </pre>
+     </div>
+                                                                                       
+
+                                                                                       
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">Boost 1.38 or later</span> </dt><dd 
+class="description">Don&#8217;t try to build it yourself, ask your distribution&#8217;s management to install it.
+     <div class="cxx">
+     <!--l. 144--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180002r1"></a></span><span 
+class="cmtt-10x-x-109">deb</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">libboost</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">dev</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180003r2"></a></span><span 
+class="cmtt-10x-x-109">MacPorts</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">boost</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180004r3"></a></span><span 
+class="cmtt-10x-x-109">windows</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">http</span><span 
+class="cmtt-10x-x-109">://</span><span 
+class="cmtt-10x-x-109">www</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">boostpro</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">com</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">download</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">Ccache</span> </dt><dd 
+class="description">Not a requirement, but it&#8217;s better to have it. <div class="cxx">
+     <!--l. 152--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180005r1"></a></span><span 
+class="cmtt-10x-x-109">package</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">ccache</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">Flex 2.5.35 or later</span> </dt><dd 
+class="description">Beware that 2.5.33 has bugs than prevents this package from building correctly.
+     <div class="cxx">
+     <!--l. 159--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180006r1"></a></span><span 
+class="cmtt-10x-x-109">package</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">flex</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">G++ 4.0 or later</span> </dt><dd 
+class="description">GCC 4.2 or later is a better option. Beware that we have a problem with GCC-4.4
+     which rejects some Bison generated code. See <a 
+href="faq.html#x23-11400015.1.2">Section&#x00A0;15.1.2<!--tex4ht:ref: sec:faq:build:uninitialized --></a>. <div class="cxx">
+     <!--l. 166--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180007r1"></a></span><span 
+class="cmtt-10x-x-109">deb</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">g</span><span 
+class="cmtt-10x-x-109">++-4.2</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180008r2"></a></span><span 
+class="cmtt-10x-x-109">MacPorts</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">gcc42</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">Gnuplot</span> </dt><dd 
+class="description">Required to generate charts of trajectories for the documentation. <div class="cxx">
+     <!--l. 173--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180009r1"></a></span><span 
+class="cmtt-10x-x-109">package</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">gnuplot</span>
+     </pre>
+     </div>
+                                                                                       
+
+                                                                                       
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">GraphViz</span> </dt><dd 
+class="description">Used to generate some of the figures in the documentation. There is no GraphViz package
+     for Cygwin, so download the MSI file from GraphViz&#8217; site, and install it. Then change your path
+     to go into its bin directory.
+     <!--l. 182--><p class="noindent"><div class="shell">
+</p>
+     <!--l. 182--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180010r1"></a></span><span 
+class="cmtt-10x-x-109">wget</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">http</span><span 
+class="cmtt-10x-x-109">://</span><span 
+class="cmtt-10x-x-109">www</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">graphviz</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">org</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">pub</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">graphviz</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">stable</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">windows</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">graphviz</span><span 
+class="cmtt-10x-x-109">-2.26.</span><span 
+class="cmtt-10x-x-109">msi</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180011r2"></a></span><span 
+class="cmtt-10x-x-109">PATH</span><span 
+class="cmtt-10x-x-109">=/</span><span 
+class="cmtt-10x-x-109">cygdrive</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">c</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">Program</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Files</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">Graphviz2</span><span 
+class="cmtt-10x-x-109">.26/</span><span 
+class="cmtt-10x-x-109">bin</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">$PATH</span>
+     </pre>
+     </div>
+     <!--l. 187--><p class="noindent"><div class="cxx">
+</p>
+     <!--l. 187--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180012r1"></a></span><span 
+class="cmtt-10x-x-109">package</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">graphviz</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">ImageMagick</span> </dt><dd 
+class="description">Used to convert some of the figures in the documentation. <div class="cxx">
+     <!--l. 193--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180013r1"></a></span><span 
+class="cmtt-10x-x-109">MacPorts</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">ImageMagick</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180014r2"></a></span><span 
+class="cmtt-10x-x-109">deb</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">imagemagick</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">PDFLaTeX</span> </dt><dd 
+class="description">TeX Live is the most common <span class="TEX">T<span 
+class="E">E</span>X</span> distribution nowadays. <div class="cxx">
+     <!--l. 199--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180015r1"></a></span><span 
+class="cmtt-10x-x-109">deb</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">texlive</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">base</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">texlive</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">latex</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">extra</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180016r2"></a></span><span 
+class="cmtt-10x-x-109">MacPorts</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">texlive</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">texlive</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">latex</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">extra</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">texlive</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">htmlxml</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">py-docutils</span> </dt><dd 
+class="description">This is not a requirement, but it&#8217;s better to have it. Used by the test suite. Unfortunately
+     the name of the package varies between distributions. It provides <span 
+class="cmtt-10x-x-109">rst2html</span>.
+     <!--l. 208--><p class="noindent"><div class="cxx">
+</p>
+     <!--l. 208--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180017r1"></a></span><span 
+class="cmtt-10x-x-109">MacPorts</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">py26</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">docutils</span>
+     </pre>
+                                                                                       
+
+                                                                                       
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">socat</span> </dt><dd 
+class="description">Needed by the test suite to send messages to an Urbi server. <div class="cxx">
+     <!--l. 213--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180018r1"></a></span><span 
+class="cmtt-10x-x-109">package</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">socat</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">TeX4HT</span> </dt><dd 
+class="description">Used to generate the HTML documentation. <div class="cxx">
+     <!--l. 218--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180019r1"></a></span><span 
+class="cmtt-10x-x-109">deb</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">tex4ht</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180020r2"></a></span><span 
+class="cmtt-10x-x-109">MacPorts</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">texlive_texmf</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">full</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">Transfig</span> </dt><dd 
+class="description">Needed to convert some figures for documentation (using fig2dev). <div class="cxx">
+     <!--l. 225--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180021r1"></a></span><span 
+class="cmtt-10x-x-109">package</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">transfig</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">Valgrind</span> </dt><dd 
+class="description">Not needed, but if present, used by the test suite. <div class="cxx">
+     <!--l. 230--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-180022r1"></a></span><span 
+class="cmtt-10x-x-109">package</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">valgrind</span>
+     </pre>
+     </div>
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">xsltproc</span> </dt><dd 
+class="description">This is not a requirement, but it&#8217;s better to have it.</dd></dl>
+<!--l. 237--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">17.2   </span> <a 
+href="index.html#QQ2-25-186" id="x25-18100017.2">Check out</a></h3>
+<!--l. 239--><p class="noindent">Get the open source version tarball from <a 
+href="http://www.urbiforge.com/index.php/Main/Downloads" ><span 
+class="cmtt-10x-x-109">http://www.urbiforge.com/index.php/Main/Downloads</span></a>
+and uncompress it. With this version, the bootstrap step can be skipped.
+                                                                                       
+
+                                                                                       
+</p><!--l. 243--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">17.3   </span> <a 
+href="index.html#QQ2-25-187" id="x25-18200017.3">Bootstrap</a></h3>
+<!--l. 244--><p class="noindent">Run
+</p><!--l. 246--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 246--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-182001r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">./</span><span 
+class="cmtt-10x-x-109">bootstrap</span>
+   </pre>
+   </div>
+<!--l. 250--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">17.4   </span> <a 
+href="index.html#QQ2-25-188" id="x25-18300017.4">Configure</a></h3>
+<!--l. 251--><p class="noindent">You should compile in another directory than the one containing the sources.
+</p><!--l. 253--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 253--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-183001r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">mkdir</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">_build</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-183002r2"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">cd</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">_build</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-183003r3"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">../</span><span 
+class="cmtt-10x-x-109">configure</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">OPTIONS</span><span 
+class="cmtt-10x-x-109">...</span>
+   </pre>
+   </div>
+<!--l. 259--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">17.4.1   </span> <a 
+href="contents.html#QQ2-25-189" id="x25-18400017.4.1">configuration options</a></h4>
+<!--l. 260--><p class="noindent">See &#8216;<span 
+class="cmtt-10x-x-109">../configure --help</span>&#8217; for detailed information. Unless you want to do funky stuff, you probably
+need no option.
+</p><!--l. 263--><p class="indent">   To use ccache, pass &#8216;<span 
+class="cmtt-10x-x-109">CC=&#8217;ccache gcc&#8217; CXX=&#8217;ccache g++&#8217;</span>&#8217; as arguments to configure:
+</p><!--l. 266--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 266--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-184001r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">../</span><span 
+class="cmtt-10x-x-109">configure</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">CC</span><span 
+class="cmtt-10x-x-109">=</span><!--l. 267--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">ccache</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">gcc</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">CXX</span><span 
+class="cmtt-10x-x-109">=</span><!--l. 267--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">ccache</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">g</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">++</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">...</span>
+   </pre>
+   </div>
+                                                                                       
+
+                                                                                       
+<!--l. 270--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">17.4.2   </span> <a 
+href="contents.html#QQ2-25-190" id="x25-18500017.4.2">Windows: Cygwin</a></h4>
+<!--l. 271--><p class="noindent">The builds for windows use our wrappers. These wrappers use a database to store the dependencies
+(actually, to speed up their computation). We use Perl, and its DBI module. So be sort to have sqlite,
+and DBI.
+</p><!--l. 276--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 276--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-185001r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">perl</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">MCPAN</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 277--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">install</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Bundle</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">::</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">DBI</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre>
+   </pre>
+   </div>
+<!--l. 280--><p class="indent">   It might fail. The most important part is
+</p><!--l. 282--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 282--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-185002r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">perl</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">MCPAN</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 283--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">install</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">DBD</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">::</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">SQLite</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre>
+   </pre>
+   </div>
+<!--l. 286--><p class="indent">   It might suffice, I don&#8217;t know...
+</p><!--l. 288--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">17.4.3   </span> <a 
+href="contents.html#QQ2-25-191" id="x25-18600017.4.3">building For Windows</a></h4>
+<!--l. 290--><p class="noindent">We support two builds: using Wine on top of Unix, and using Cygwin on top of Windows.
+</p><!--l. 293--><p class="indent">   Both builds use our wrappers around MSVC&#8217;s cl.exe and link.exe. It is still unclear whether it was
+a good or a bad idea, but the wrappers use the same names. Yet libtool will also need to use the
+genuine link.exe. So to set up Libtool properly, you will need to pass the following as argument to
+configure:
+</p><!--l. 299--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 299--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-186001r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">AR</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">lib</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">exe</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-186002r2"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">CC</span><span 
+class="cmtt-10x-x-109">=</span><!--l. 301--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">ccache</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">cl</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">.</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">exe</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-186003r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">CC_FOR_BUILD</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">gcc</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-186004r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">CXX</span><span 
+class="cmtt-10x-x-109">=</span><!--l. 303--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">ccache</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">cl</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">.</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">exe</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-186005r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">LD</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">link</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">exe</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-186006r6"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">DUMPBIN</span><span 
+class="cmtt-10x-x-109">=</span><!--l. 305--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">cygdrive</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">c</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">vcxx8</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">VC</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">bin</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">link</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">.</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">exe</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">dump</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">symbols</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-186007r7"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">RANLIB</span><span 
+class="cmtt-10x-x-109">=:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-186008r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">host_alias</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">mingw32</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-186009r9"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">host</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">mingw32</span>
+   </pre>
+   </div>
+<!--l. 311--><p class="indent">   where: </p>
+     <ul class="itemize1">
+     <li class="itemize">&#8216;<span 
+class="cmtt-10x-x-109">lib.exe</span>&#8217;, &#8216;<span 
+class="cmtt-10x-x-109">cl.exe</span>&#8217;, &#8216;<span 
+class="cmtt-10x-x-109">link.exe</span>&#8217; are the wrappers
+                                                                                       
+
+                                                                                       
+     </li>
+     <li class="itemize">&#8216;<span 
+class="cmtt-10x-x-109">/cygdrive/c/vcxx8/VC/bin/link.exe</span>&#8217; is the genuine MSVC tool.</li></ul>
+<!--l. 318--><p class="indent">   Since we are cross-compiling, we also need to specify <span 
+class="cmtt-10x-x-109">CC</span><span 
+class="cmtt-10x-x-109">_FOR</span><span 
+class="cmtt-10x-x-109">_BUILD </span>so that <span 
+class="cmtt-10x-x-109">config.guess </span>can
+properly guess the type of the build machine.
+</p><!--l. 322--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">17.4.4   </span> <a 
+href="contents.html#QQ2-25-192" id="x25-18700017.4.4">Building for Windows using Cygwin</a></h4>
+<!--l. 324--><p class="noindent">We use our cl.exe wrappers, which is something that Libtool cannot know. So we need to tell it
+that we are on Windows with Cygwin, and pretend we use GCC, so we pretend we run
+mingw.
+</p><!--l. 328--><p class="indent">   The following options have been used with success to compile Urbi SDK with Visual C++ 2005.
+Adjust to your own case (in particular the location of Boost).
+</p><!--l. 332--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 332--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187001r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">../</span><span 
+class="cmtt-10x-x-109">configure</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187002r2"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187003r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">prefix</span><span 
+class="cmtt-10x-x-109">=/</span><span 
+class="cmtt-10x-x-109">usr</span><span 
+class="cmtt-10x-x-109">/</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">local</span></span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">gostai</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187004r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">enable</span></span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">compilation</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">mode</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">debug</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187005r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">enable</span></span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">shared</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187006r6"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">disable</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">static</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187007r7"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">enable</span></span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">dependency</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">tracking</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187008r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">with</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">boost</span><span 
+class="cmtt-10x-x-109">=/</span><span 
+class="cmtt-10x-x-109">cygdrive</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">c</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">gt</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">win32</span><span 
+class="cmtt-10x-x-109">-2/</span><span 
+class="cmtt-10x-x-109">d</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">boost_1_39</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187009r9"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">AR</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">lib</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">exe</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187010r10"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">CC</span><span 
+class="cmtt-10x-x-109">=</span><!--l. 342--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">ccache</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">cl</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">.</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">exe</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187011r11"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">CC_FOR_BUILD</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">gcc</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187012r12"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">CXX</span><span 
+class="cmtt-10x-x-109">=</span><!--l. 344--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">ccache</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">cl</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">.</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">exe</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187013r13"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">LD</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">link</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">exe</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187014r14"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">DUMPBIN</span><span 
+class="cmtt-10x-x-109">=</span><!--l. 346--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">cygdrive</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">c</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">vcxx8</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">VC</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">bin</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">link</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">.</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">exe</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">dump</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">symbols</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187015r15"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">RANLIB</span><span 
+class="cmtt-10x-x-109">=:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187016r16"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">host_alias</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">mingw32</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-187017r17"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">host</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">mingw32</span>
+   </pre>
+   </div>
+<!--l. 358--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">17.5   </span> <a 
+href="index.html#QQ2-25-193" id="x25-18800017.5">Compile</a></h3>
+<!--l. 359--><p class="noindent">Should be straightforward.
+</p><!--l. 361--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 361--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-188001r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">j3</span>
+   </pre>
+   </div>
+<!--l. 365--><p class="indent">   Using <span 
+class="cmtt-10x-x-109">distcc </span>and <span 
+class="cmtt-10x-x-109">ccache </span>is recommended.
+</p><!--l. 367--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">17.6   </span> <a 
+href="index.html#QQ2-25-194" id="x25-18900017.6">Install</a></h3>
+<!--l. 369--><p class="noindent">Running &#8216;<span 
+class="cmtt-10x-x-109">make install</span>&#8217; works as expected. It is a good idea to check that your installation works
+properly: run &#8216;<span 
+class="cmtt-10x-x-109">make installcheck</span>&#8217; (see <a 
+href="#x25-19200017.9">Section&#x00A0;17.9<!--tex4ht:ref: sec:build:check --></a>).
+                                                                                       
+
+                                                                                       
+</p><!--l. 374--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">17.7   </span> <a 
+href="index.html#QQ2-25-195" id="x25-19000017.7">Relocatable</a></h3>
+<!--l. 376--><p class="noindent">If you intend to make a relocatable tree of Urbi SDK (i.e., a self-contained tree that can be moved
+around), then run &#8216;<span 
+class="cmtt-10x-x-109">make relocatable</span>&#8217; after &#8216;<span 
+class="cmtt-10x-x-109">make install</span>&#8217;.
+</p><!--l. 380--><p class="indent">   This step <span 
+class="cmti-10x-x-109">requires </span>that you use a DESTDIR (see the Automake documentation for more
+information). Basically, the sequence of commands should look like:
+</p><!--l. 384--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 384--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-190001r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">DESTDIR</span><span 
+class="cmtt-10x-x-109">=/</span><span 
+class="cmtt-10x-x-109">tmp</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">install</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-190002r2"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">rm</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">rf</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">$DESTDIR</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-190003r3"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">install</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">DESTDIR</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">$DESTDIR</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-190004r4"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">relocatable</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">DESTDIR</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">$DESTDIR</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-190005r5"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">installcheck</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">DESTDIR</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">$DESTDIR</span>
+   </pre>
+   </div>
+<!--l. 392--><p class="indent">   You may now move this tree around and expect the executable to work properly.
+</p><!--l. 395--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">17.8   </span> <a 
+href="index.html#QQ2-25-196" id="x25-19100017.8">Run</a></h3>
+<!--l. 397--><p class="noindent">There are some special variables in addition to the environment variables documented in the
+manual.
+</p><!--l. 400--><p class="indent">
+     </p><dl class="list1"><dt class="list">
+<a 
+ id="x25-191001"></a><span 
+class="cmtt-10x-x-109">URBI</span><span 
+class="cmtt-10x-x-109">_CONSOLE</span><span 
+class="cmtt-10x-x-109">_MODE</span> </dt><dd 
+class="list">
+     <!--l. 401--><p class="noindent">Skip lines in input that look like shell output. A way to accept *.chk as input.
+     </p></dd><dt class="list">
+<a 
+ id="x25-191002"></a><span 
+class="cmtt-10x-x-109">URBI</span><span 
+class="cmtt-10x-x-109">_DESUGAR</span> </dt><dd 
+class="list">
+     <!--l. 404--><p class="noindent">Display the desugared ASTs instead of the original one.
+     </p></dd><dt class="list">
+<a 
+ id="x25-191003"></a><span 
+class="cmtt-10x-x-109">URBI</span><span 
+class="cmtt-10x-x-109">_IGNORE</span><span 
+class="cmtt-10x-x-109">_URBI</span><span 
+class="cmtt-10x-x-109">_U</span> </dt><dd 
+class="list">
+     <!--l. 407--><p class="noindent">Ignore failures (such as differences between kernel revision and &#8216;<span 
+class="cmtt-10x-x-109">urbi.u</span>&#8217; revision) during
+     the initialization.
+     </p></dd><dt class="list">
+<a 
+ id="x25-191004"></a><span 
+class="cmtt-10x-x-109">URBI</span><span 
+class="cmtt-10x-x-109">_INTERACTIVE</span> </dt><dd 
+class="list">
+     <!--l. 410--><p class="noindent">Force the interactive mode, as if &#8216;<span 
+class="cmtt-10x-x-109">--interactive</span>&#8217; was passed.
+     </p></dd><dt class="list">
+<a 
+ id="x25-191005"></a><span 
+class="cmtt-10x-x-109">URBI</span><span 
+class="cmtt-10x-x-109">_LAUNCH</span> </dt><dd 
+class="list">
+     <!--l. 413--><p class="noindent">The path to <span 
+class="cmtt-10x-x-109">urbi-launch </span>that <span 
+class="cmtt-10x-x-109">urbi.exe </span>will exec.
+                                                                                       
+
+                                                                                       
+     </p></dd><dt class="list">
+<a 
+ id="x25-191006"></a><span 
+class="cmtt-10x-x-109">URBI</span><span 
+class="cmtt-10x-x-109">_NO</span><span 
+class="cmtt-10x-x-109">_ICE</span><span 
+class="cmtt-10x-x-109">_CATCHER</span> </dt><dd 
+class="list">
+     <!--l. 416--><p class="noindent">Don&#8217;t try to catch SEGVs.
+     </p></dd><dt class="list">
+<a 
+ id="x25-191007"></a><span 
+class="cmtt-10x-x-109">URBI</span><span 
+class="cmtt-10x-x-109">_PARSER</span> </dt><dd 
+class="list">
+     <!--l. 418--><p class="noindent">Enable Bison parser traces.
+     </p></dd><dt class="list">
+<a 
+ id="x25-191008"></a><span 
+class="cmtt-10x-x-109">URBI</span><span 
+class="cmtt-10x-x-109">_REPORT</span> </dt><dd 
+class="list">
+     <!--l. 420--><p class="noindent">Display stats about execution rounds performed by the kernel.
+     </p></dd><dt class="list">
+<a 
+ id="x25-191009"></a><span 
+class="cmtt-10x-x-109">URBI</span><span 
+class="cmtt-10x-x-109">_ROOT</span><span 
+class="cmtt-10x-x-109">_LIB</span><span 
+class="cmitt-10x-x-109">name</span> </dt><dd 
+class="list">
+     <!--l. 423--><p class="noindent">The  location  of  the  libraries  to  load,  without  the  extension.  The  <span 
+class="cmtt-10x-x-109">LIB</span><span 
+class="cmitt-10x-x-109">name  </span>are:
+     LIBJPEG4URBI, LIBPLUGIN (libuobject plugin), LIBPORT, LIBREMOTE (libuobject
+     remote), LIBSCHED, LIBSERIALIZE, LIBURBI.
+     </p></dd><dt class="list">
+<a 
+ id="x25-191010"></a><span 
+class="cmtt-10x-x-109">URBI</span><span 
+class="cmtt-10x-x-109">_SCANNER</span> </dt><dd 
+class="list">
+     <!--l. 428--><p class="noindent">Enable Flex scanner traces.
+     </p></dd><dt class="list">
+<a 
+ id="x25-191011"></a><span 
+class="cmtt-10x-x-109">URBI</span><span 
+class="cmtt-10x-x-109">_TOPLEVEL</span> </dt><dd 
+class="list">
+     <!--l. 430--><p class="noindent">Force the display the result of the top-level evaluation into the lobby.</p></dd></dl>
+<!--l. 434--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">17.9   </span> <a 
+href="index.html#QQ2-25-197" id="x25-19200017.9">Check</a></h3>
+<!--l. 436--><p class="noindent">There are several test suites that will be run if you run &#8216;<span 
+class="cmtt-10x-x-109">make check</span>&#8217; (&#8216;<span 
+class="cmtt-10x-x-109">-j4</span>&#8217; works on most
+machines).
+</p><!--l. 439--><p class="indent">   To rerun only the tests that failed, use &#8216;<span 
+class="cmtt-10x-x-109">make recheck</span>&#8217;. Some tests have explicit dependencies, and
+they are not rerun if nothing was changed (unless they had failed the previous time). It is therefore
+expected that after one (long) run of &#8216;<span 
+class="cmtt-10x-x-109">make check</span>&#8217;, the second one will be &#8220;instantaneous&#8221;: the
+previous log files are reused.
+</p><!--l. 445--><p class="indent">   Note that running &#8216;<span 
+class="cmtt-10x-x-109">make</span>&#8217; in the top-level is needed when you change something deep in the
+package. If you forget this &#8216;<span 
+class="cmtt-10x-x-109">make</span>&#8217; run, the timestamps on which the test suite depends will not be
+updated, and therefore the results of the previous state of the package will be used, instead of your
+fresh changes.
+                                                                                       
+
+                                                                                       
+</p><!--l. 451--><p class="indent">   Some tests are extremely &#8220;touchy&#8221;. Because the test suite exercises Urbi under extreme conditions,
+some tests may fail not because of a problem in Urbi, but because of non-determinism in the test itself.
+In this case, another run of &#8216;<span 
+class="cmtt-10x-x-109">make check</span>&#8217; will give an opportunity for the test to pass (remind that the
+tests that passed will not be run again). Also, using &#8216;<span 
+class="cmtt-10x-x-109">make check -j16</span>&#8217; is a sure means to have the
+Urbi scheduler behave insufficiently well for the test to pass. <span 
+class="cmbx-10x-x-109">Do not send bug reports for such</span>
+<span 
+class="cmbx-10x-x-109">failures.</span>. Before reporting bugs, make sure that the failures remain after a few &#8216;<span 
+class="cmtt-10x-x-109">make check -j1</span>&#8217;
+invocations.
+</p><!--l. 462--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">17.9.1   </span> <a 
+href="contents.html#QQ2-25-198" id="x25-19300017.9.1">Lazy test suites</a></h4>
+<!--l. 463--><p class="noindent">The test suites are declared as &#8220;lazy&#8221;, i.e., unless its dependencies changed, a successful test will be
+run only once &#8212; failing tests do not &#8220;cache&#8221; their results. Because spelling out the dependencies is
+painful, we rely on a few timestamps:
+</p><!--l. 468--><p class="indent">
+     </p><dl class="list1"><dt class="list">
+<a 
+ id="x25-193001"></a>&#8216;<span 
+class="cmtt-10x-x-109">libraries.stamp</span>&#8217; </dt><dd 
+class="list">
+     <!--l. 469--><p class="noindent">Updated when a library is updated (libport, libuobject, etc.).
+     </p></dd><dt class="list">
+<a 
+ id="x25-193002"></a>&#8216;<span 
+class="cmtt-10x-x-109">executables.stamp</span>&#8217; </dt><dd 
+class="list">
+     <!--l. 472--><p class="noindent">Updated when an executable is updated (<span 
+class="cmtt-10x-x-109">urbi-launch</span>, etc.). Depends on libraries.stamp.
+     </p></dd><dt class="list">
+<a 
+ id="x25-193003"></a>&#8216;<span 
+class="cmtt-10x-x-109">urbi.stamp</span>&#8217; </dt><dd 
+class="list">
+     <!--l. 475--><p class="noindent">When Urbi sources (&#8216;<span 
+class="cmtt-10x-x-109">share/urbi/*.u</span>&#8217;) are updated.
+     </p></dd><dt class="list">
+<a 
+ id="x25-193004"></a>&#8216;<span 
+class="cmtt-10x-x-109">all.stamp</span>&#8217; </dt><dd 
+class="list">
+     <!--l. 477--><p class="noindent">Updated when any of the three aforementioned timestamps is.</p></dd></dl>
+<!--l. 481--><p class="indent">   These timestamps are updated <span 
+class="cmbx-10x-x-109">only </span>when <span 
+class="cmtt-10x-x-109">make </span>is run in the top-level. Therefore, the following
+sequence does not work as expected:
+</p><!--l. 485--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 485--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-193005r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">check</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">tests</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 486--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">#</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">All</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">passes</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-193006r2"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">emacs</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">share</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">foo</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">u</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-193007r3"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">check</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">tests</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 488--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">#</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">All</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">passes</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">again</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre>
+   </pre>
+   </div>
+<!--l. 491--><p class="noindent">because the timestamps were not given a chance to notice that some Urbi source changed, so Make did
+not notice the tests really needed to be rerun and <span 
+class="cmbx-10x-x-109">the tests were not run</span>.
+                                                                                       
+
+                                                                                       
+</p><!--l. 496--><p class="indent">   You may either just update the timestamps:
+</p><!--l. 498--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 498--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-193008r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">check</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">tests</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 499--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">#</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">All</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">passes</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-193009r2"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">emacs</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">share</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">foo</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">u</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-193010r3"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">stamps</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 501--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">#</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Update</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">timestamps</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-193011r4"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">check</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">tests</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 502--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">#</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">All</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">passes</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">again</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre>
+   </pre>
+   </div>
+<!--l. 505--><p class="indent">   or completely disable the test suite laziness:
+</p><!--l. 507--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 507--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-193012r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">check</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">tests</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">LAZY_TEST_SUITE</span><span 
+class="cmtt-10x-x-109">=</span>
+   </pre>
+   </div>
+<!--l. 511--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">17.9.2   </span> <a 
+href="contents.html#QQ2-25-199" id="x25-19400017.9.2">Partial test suite runs</a></h4>
+<!--l. 512--><p class="noindent">You can run each test suite individually by hand as follows:
+     </p><dl class="list1"><dt class="list">
+<a 
+ id="x25-194001"></a>&#8216;<span 
+class="cmtt-10x-x-109">sdk-remote/libport/test-suite.log</span>&#8217; </dt><dd 
+class="list">
+     <!--l. 514--><p class="noindent">Tests libport. <div class="shell">
+</p>
+     <!--l. 515--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-194002r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">check</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">sdk</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">remote</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">libport</span>
+     </pre>
+     </div>
+     </dd><dt class="list">
+<a 
+ id="x25-194003"></a>&#8216;<span 
+class="cmtt-10x-x-109">sdk-remote/src/tests/test-suite.log</span>&#8217; </dt><dd 
+class="list">
+     <!--l. 519--><p class="noindent">Checks liburbi, and some of the executables we ship. Requires the kernel to be compiled in order
+     to be able to test some of the uobjects.
+     </p><!--l. 523--><p class="noindent"><div class="shell">
+</p>
+     <!--l. 523--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-194004r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">check</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">sdk</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">remote</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">src</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">tests</span>
+     </pre>
+     </div>
+                                                                                       
+
+                                                                                       
+     </dd><dt class="list">
+<a 
+ id="x25-194005"></a>&#8216;<span 
+class="cmtt-10x-x-109">tests/test-suite.log</span>&#8217; </dt><dd 
+class="list">
+     <!--l. 527--><p class="noindent">Tests the kernel and uobjects. <div class="shell">
+</p>
+     <!--l. 529--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-194006r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">check</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">tests</span>
+     </pre>
+     </div>
+     <!--l. 533--><p class="noindent">Partial runs can be invoked:
+     </p><!--l. 536--><p class="noindent"><div class="shell">
+</p>
+     <!--l. 536--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-194007r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">check</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">tests</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">TESTS</span><span 
+class="cmtt-10x-x-109">=</span><!--l. 537--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">2.</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">x</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">echo</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">.</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">chk</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre>
+     </pre>
+     </div>
+     <!--l. 540--><p class="noindent">wildcards are supported:
+     </p><!--l. 543--><p class="noindent"><div class="shell">
+</p>
+     <!--l. 543--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-194008r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">check</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">tests</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">TESTS</span><span 
+class="cmtt-10x-x-109">=</span><!--l. 544--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">2.</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">x</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/*</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre>
+     </pre>
+     </div>
+     <!--l. 547--><p class="noindent">To check remote uobjects tests:
+     </p><!--l. 550--><p class="noindent"><div class="shell">
+</p>
+     <!--l. 550--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-194009r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">check</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">tests</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">TESTS</span><span 
+class="cmtt-10x-x-109">=</span><!--l. 551--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">uob</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">remote</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/*</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre>
+     </pre>
+     </div>
+     </dd><dt class="list">
+<a 
+ id="x25-194010"></a>&#8216;<span 
+class="cmtt-10x-x-109">doc/tests/test-suite.log</span>&#8217; </dt><dd 
+class="list">
+     <!--l. 554--><p class="noindent">The snippets of code displayed in the documentation are transformed into test files.
+     <div class="shell">
+</p>
+     <!--l. 556--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x25-194011r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">make</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">check</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">doc</span>
+     </pre>
+                                                                                       
+
+                                                                                       
+     </div>
+     </dd></dl>
+<!--l. 9--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 9--><p class="indent">   <div class="footer"><a 
+href="migration-from-urbiscript-1-to-urbiscript-2.html" ><p>Prev</p></a><a 
+href="migration-from-urbiscript-1-to-urbiscript-2.html#tailurbi-sdkch16.html" ><p>Prev-tail</p></a><a 
+href="build.html" ><p>Front</p></a><a 
+href="guidelines-and-cook-books.html#build.html" ><p>Up</p></a></div><a 
+ id="tailurbi-sdkch17.html"></a>   </p> 
+</body></html> 

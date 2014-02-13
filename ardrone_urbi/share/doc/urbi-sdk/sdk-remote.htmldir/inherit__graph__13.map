@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" href="$classurbi_1_1_u_callback_wrapper.html" title="Wrapper around a callback function. Use callback() to create them." alt="" coords="7,150,188,174" />
+<area shape="rect" href="$classurbi_1_1_u_callback_wrapper0.html" title="urbi::UCallbackWrapper0\&lt; C \&gt;" alt="" coords="288,6,517,30" />
+<area shape="rect" href="$classurbi_1_1_u_callback_wrapper1.html" title="urbi::UCallbackWrapper1\&lt; C, P1 \&gt;" alt="" coords="275,54,531,78" />
+<area shape="rect" href="$classurbi_1_1_u_callback_wrapper2.html" title="urbi::UCallbackWrapper2\&lt; C, P1, P2 \&gt;" alt="" coords="263,102,543,126" />
+<area shape="rect" href="$classurbi_1_1_u_callback_wrapper3.html" title="urbi::UCallbackWrapper3\&lt; C, P1, P2, P3 \&gt;" alt="" coords="249,150,556,174" />
+<area shape="rect" href="$classurbi_1_1_u_callback_wrapper4.html" title="urbi::UCallbackWrapper4\&lt; C, P1, P2, P3, P4 \&gt;" alt="" coords="237,198,568,222" />
+<area shape="rect" href="$classurbi_1_1_u_callback_wrapper_c_f.html" title="urbi::UCallbackWrapperCF" alt="" coords="303,246,503,270" />
+<area shape="rect" href="$classurbi_1_1_u_callback_wrapper_f.html" title="urbi::UCallbackWrapperF" alt="" coords="308,294,497,318" />
+</map>

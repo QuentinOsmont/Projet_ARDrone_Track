@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>14 Installation</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,sections+,xhtml,info --> 
+<meta name="src" content="urbi-sdk.tex" /> 
+<meta name="date" content="2010-09-30 15:52:00" /> 
+<link rel="stylesheet" type="text/css" href="urbi-sdk.css" /> 
+</head><body 
+>
+   <div class="header"><a 
+href="faq.html" ><p>Next</p></a><a 
+href="urbi-sdkli4.html" ><p>Prev</p></a><a 
+href="urbi-sdkli4.html#tailurbi-sdkli4.html" ><p>Prev-tail</p></a><a 
+href="#tailurbi-sdkch14.html"><p>Tail</p></a><a 
+href="guidelines-and-cook-books.html#installation.html" ><p>Up</p></a></div><h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;14</span><br /><a 
+href="index.html#QQ2-22-110" id="x22-10500014">Installation</a></h2>
+   <div class="sectionTOCS">
+   &#x00A0;<span class="sectionToc">14.1 <a 
+href="#x22-10600014.1">Download</a></span>
+<br />   &#x00A0;<span class="sectionToc">14.2 <a 
+href="#x22-10700014.2">Install &amp; Check</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">14.2.1 <a 
+href="#x22-10800014.2.1">GNU/Linux and Mac OS X</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">14.2.2 <a 
+href="#x22-10900014.2.2">Windows</a></span>
+   </div>
+   <h3 class="sectionHead"><span class="titlemark">14.1   </span> <a 
+href="index.html#QQ2-22-111" id="x22-10600014.1">Download</a></h3>
+<!--l. 14--><p class="noindent">Various pre-compiled packages are provided. They are named </p>
+<div class="center" 
+>
+<!--l. 15--><p class="noindent">
+</p><!--l. 16--><p class="noindent">&#8216;<span 
+class="cmtt-10x-x-109">urbi-sdk-</span><span 
+class="cmitt-10x-x-109">version</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">arch</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">os</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">compiler</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmitt-10x-x-109">ext </span>&#8217;</p></div>
+<!--l. 18--><p class="noindent">where
+     </p><dl class="description"><dt class="description">
+<span 
+class="cmitt-10x-x-109">version</span> </dt><dd 
+class="description">specifies the exact revision of Urbi that you are using. It can be simple, <span 
+class="cmtt-10x-x-109">2.0</span>, or more
+     complex, <span 
+class="cmtt-10x-x-109">2.0-beta3-137-g28f8880</span>. In that case,
+          <dl class="description"><dt class="description">
+     <span 
+class="cmbx-10x-x-109">2.0</span> </dt><dd 
+class="description">is the version of the Urbi Kernel,
+          </dd><dt class="description">
+     <span 
+class="cmbx-10x-x-109">beta3</span> </dt><dd 
+class="description">designates the third pre-release,
+          </dd><dt class="description">
+     <span 
+class="cmbx-10x-x-109">137</span> </dt><dd 
+class="description">is the number of changes since beta3 (not counting changes in sub-packages),
+          </dd><dt class="description">
+     <span 
+class="cmbx-10x-x-109">g28f8880</span> </dt><dd 
+class="description">is a version control identifier, used internally to track the exact version that is
+          being tested by our users.</dd></dl>
+     </dd><dt class="description">
+<span 
+class="cmitt-10x-x-109">arch</span> </dt><dd 
+class="description">describes the architecture, the <span 
+class="cmcsc-10x-x-109"><span 
+class="small-caps">c</span><span 
+class="small-caps">p</span><span 
+class="small-caps">u</span></span>: <span 
+class="cmtt-10x-x-109">ARM</span>, <span 
+class="cmtt-10x-x-109">ppc</span>, or <span 
+class="cmtt-10x-x-109">x86</span>.
+     </dd><dt class="description">
+<span 
+class="cmitt-10x-x-109">os</span> </dt><dd 
+class="description">is the operating system: <span 
+class="cmtt-10x-x-109">linux </span>for GNU/Linux, <span 
+class="cmtt-10x-x-109">osx </span>for Mac OS X, or <span 
+class="cmtt-10x-x-109">windows </span>for Microsoft
+     Windows.
+     </dd><dt class="description">
+<span 
+class="cmitt-10x-x-109">compiler</span> </dt><dd 
+class="description">is the tool chain used to compile the programs: <span 
+class="cmtt-10x-x-109">gcc4 </span>for the GNU Compiler Collection
+     4.x, <span 
+class="cmtt-10x-x-109">vcxx2005 </span>for Microsoft Visual C <span 
+class="cmbx-8">++</span> 2005, <span 
+class="cmtt-10x-x-109">vcxx2008 </span>for Microsoft Visual C <span 
+class="cmbx-8">++</span>
+     2008.
+                                                                                       
+
+                                                                                       
+     </dd><dt class="description">
+<span 
+class="cmitt-10x-x-109">ext</span> </dt><dd 
+class="description">is the package format extension. For Unix architectures, <span 
+class="cmtt-10x-x-109">tar.bz2</span>; uncompress them with <span 
+class="cmtt-10x-x-109">tar xf</span>
+     <span 
+class="cmitt-10x-x-109">tarfile</span>. For Windows hosts, we provide zip files (&#8216;<span 
+class="cmtt-10x-x-109">*.zip</span>&#8217;) for both &#8220;release&#8221; and &#8220;debug&#8221;
+     flavors, and installers (for instance &#8216;<span 
+class="cmtt-10x-x-109">*.exe</span>&#8217;). You are encouraged to use the installers, since in
+     addition to installing headers and libraries, they also install Visual C <span 
+class="cmbx-8">++</span> Wizards to create
+     UObjects, they take care of installing the Visual Runtime if needed, and they install Gostai
+     Console and Gostai Editor.</dd></dl>
+<!--l. 49--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">14.2   </span> <a 
+href="index.html#QQ2-22-112" id="x22-10700014.2">Install &amp; Check</a></h3>
+<!--l. 52--><p class="noindent">The package is <span 
+class="cmti-10x-x-109">relocatable</span><a 
+ id="x22-107001"></a>, i.e., it does not need to be put at a specific location, nor does it need
+special environment variables to be set. It is not necessary to be a super-user to install it. The <span 
+class="cmti-10x-x-109">root</span><a 
+ id="x22-107002"></a> of
+the package, denoted by <span 
+class="cmitt-10x-x-109">urbi-root </span>hereafter, is the absolute name of the directory which contains the
+package.
+</p><!--l. 58--><p class="indent">   After the install, the quickest way to test your installation is to run the various programs.
+</p><!--l. 61--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">14.2.1   </span> <a 
+href="contents.html#QQ2-22-113" id="x22-10800014.2.1">GNU/Linux and Mac OS X</a></h4>
+<!--l. 63--><p class="noindent">Decompress the package where you want to install it. If <span 
+class="cmitt-10x-x-109">urbi-sdk-2.x </span>denotes the version of Urbi
+SDK you downloaded (say, <span 
+class="cmitt-10x-x-109">urbi-sdk-2.x </span>is &#8216;<span 
+class="cmtt-10x-x-109">urbi-sdk-2.3-linux-x86-gcc4</span>&#8217;), run something
+like:
+</p><!--l. 67--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 67--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x22-108001r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">rm</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">rf</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 68--><pre class="listings"><span 
+class="cmitt-10x-x-109">urbi</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">root</span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x22-108002r2"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">cd</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">tmp</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x22-108003r3"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">tar</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">xf</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 70--><pre class="listings"><span 
+class="cmitt-10x-x-109">path</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">to</span></pre><span 
+class="cmtt-10x-x-109">/</span><!--l. 70--><pre class="listings"><span 
+class="cmitt-10x-x-109">urbi</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">sdk</span><span 
+class="cmitt-10x-x-109">-2.</span><span 
+class="cmitt-10x-x-109">x</span></pre><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">tar</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">bz2</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x22-108004r4"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">mv</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 71--><pre class="listings"><span 
+class="cmitt-10x-x-109">urbi</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">sdk</span><span 
+class="cmitt-10x-x-109">-2.</span><span 
+class="cmitt-10x-x-109">x</span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 71--><pre class="listings"><span 
+class="cmitt-10x-x-109">urbi</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">root</span></pre>
+   </pre>
+   </div>
+<!--l. 74--><p class="indent">   This directory, <span 
+class="cmitt-10x-x-109">urbi-root</span>, should contain &#8216;<span 
+class="cmtt-10x-x-109">bin</span>&#8217;, &#8216;<span 
+class="cmtt-10x-x-109">FAQ.txt</span>&#8217; and so forth. Do not move things
+around inside this directory. In order to have an easy access to the Urbi programs, set up your
+<span 
+class="cmtt-10x-x-109">PATH</span>:
+</p><!--l. 78--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 78--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x22-108005r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">export</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">PATH</span><span 
+class="cmtt-10x-x-109">=</span><span class="stringstyle"></span><!--l. 79--><pre class="listings"><span 
+class="cmtt-10x-x-109">"</span><!--l. 79--><pre class="listings"><span 
+class="cmitt-10x-x-109">urbi</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">root</span></pre><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">bin</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">$PATH</span><span 
+class="cmtt-10x-x-109">"</span></pre>
+   </pre>
+   </div>
+<!--l. 82--><p class="indent">   <div class="shell">
+                                                                                       
+
+                                                                                       
+</p>
+   <!--l. 82--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x22-108006r1"></a></span><!--l. 83--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">#</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Check</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">that</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">urbi</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">properly</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">set</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">up</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x22-108007r2"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">version</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x22-108008r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x22-108009r4"></a></span><!--l. 86--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">#</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Check</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">that</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">urbi</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">launch</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">properly</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">installed</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x22-108010r5"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">launch</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">version</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x22-108011r6"></a></span><!--l. 88--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">#</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Check</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">that</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">urbi</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">launch</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">can</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">find</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">its</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">dependencies</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x22-108012r7"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">launch</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">version</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x22-108013r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x22-108014r9"></a></span><!--l. 91--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">#</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Check</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">that</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Urbi</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">can</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">compute</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x22-108015r10"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 92--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">1+2*3;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">shutdown</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x22-108016r11"></a></span><span 
+class="cmtt-10x-x-109">[00000175]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">7</span>
+   </pre>
+   </div>
+<!--l. 96--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">14.2.2   </span> <a 
+href="contents.html#QQ2-22-114" id="x22-10900014.2.2">Windows</a></h4>
+<!--l. 98--><p class="noindent">Decompress the zip file wherever you want or execute the installer.
+</p><!--l. 100--><p class="indent">   Execute the script &#8216;<span 
+class="cmtt-10x-x-109">urbi.bat</span>&#8217;, located at the root of the uncompressed package. It should open a
+terminal with an interactive Urbi session.
+</p>
+<!--l. 104--><p class="noindent"><span class="paragraphHead"><a 
+href="#x22-11000014.2.2" id="x22-11000014.2.2"><span 
+class="cmbx-10x-x-109">Cygwin Issues</span></a></span>
+     </p><div class="quote">
+     <!--l. 105--><p class="noindent"><span 
+class="cmti-10x-x-109">Inputs and outputs of windows native application are buffered under Cygwin. Thus,</span>
+     <span 
+class="cmti-10x-x-109">either running the interactive mode of Urbi or watching the output of the server</span>
+     <span 
+class="cmti-10x-x-109">under Cygwin is not recommended.</span></p></div>
+<!--l. 9--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 9--><p class="indent">   <div class="footer"><a 
+href="faq.html" ><p>Next</p></a><a 
+href="urbi-sdkli4.html" ><p>Prev</p></a><a 
+href="urbi-sdkli4.html#tailurbi-sdkli4.html" ><p>Prev-tail</p></a><a 
+href="installation.html" ><p>Front</p></a><a 
+href="guidelines-and-cook-books.html#installation.html" ><p>Up</p></a></div><a 
+ id="tailurbi-sdkch14.html"></a>    </p> 
+</body></html> 

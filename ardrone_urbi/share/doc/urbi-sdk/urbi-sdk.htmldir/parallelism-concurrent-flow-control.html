@@ -1,0 +1,1971 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>11 Parallelism, Concurrent Flow Control</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,sections+,xhtml,info --> 
+<meta name="src" content="urbi-sdk.tex" /> 
+<meta name="date" content="2010-09-30 15:52:00" /> 
+<link rel="stylesheet" type="text/css" href="urbi-sdk.css" /> 
+</head><body 
+>
+   <div class="header"><a 
+href="event-based-programming.html" ><p>Next</p></a><a 
+href="functional-programming.html" ><p>Prev</p></a><a 
+href="functional-programming.html#tailurbi-sdkch10.html" ><p>Prev-tail</p></a><a 
+href="#tailurbi-sdkch11.html"><p>Tail</p></a><a 
+href="urbiscript-user-manual.html#parallelism-concurrent-flow-control.html" ><p>Up</p></a></div><h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;11</span><br /><a 
+href="index.html#QQ2-17-92" id="x17-8700011">Parallelism, Concurrent Flow Control</a></h2>
+<!--l. 12--><p class="noindent">Parallelism is a major feature of urbiscript. So far, all we&#8217;ve seen already existed in other
+languages &#8212; although we tried to pick, mix and adapt features and paradigms to create a nice
+scripting language. Parallelism is one of the corner stones of its paradigm, and what makes
+it so well suited to high-level scripting of interactive agents, in fields such as robotics or
+AI.
+</p>
+   <div class="sectionTOCS">
+   &#x00A0;<span class="sectionToc">11.1 <a 
+href="#x17-8800011.1">Parallelism operators</a></span>
+<br />   &#x00A0;<span class="sectionToc">11.2 <a 
+href="#x17-8900011.2">Detach</a></span>
+<br />   &#x00A0;<span class="sectionToc">11.3 <a 
+href="#x17-9000011.3">Tags for parallel control flows</a></span>
+<br />   &#x00A0;<span class="sectionToc">11.4 <a 
+href="#x17-9100011.4">Advanced example with parallelism and tags</a></span>
+   </div>
+   <h3 class="sectionHead"><span class="titlemark">11.1   </span> <a 
+href="index.html#QQ2-17-93" id="x17-8800011.1">Parallelism operators</a></h3>
+<!--l. 21--><p class="noindent">For now, we&#8217;ve separated our different commands with a semicolon (<span class="lstinline"><span 
+class="cmtt-10x-x-109">;</span></span>). There are actually four
+statement separators in urbiscript:
+</p>
+     <ul class="itemize1">
+     <li class="itemize">&#8220;<span class="lstinline"><span 
+class="cmtt-10x-x-109">;</span></span>&#8221;: Serialization operator. Wait for the left operand to finish before continuing.
+     </li>
+     <li class="itemize">&#8220;<span class="lstinline"><span 
+class="cmtt-10x-x-109">&amp;</span></span>&#8221;: Parallelism n-ary operator. All its operands are started simultaneously, and executed
+     in parallel. The <span class="lstinline"><span 
+class="cmtt-10x-x-109">&amp;</span></span> block itself finishes when all the operands have finished. <span class="lstinline"><span 
+class="cmtt-10x-x-109">&amp;</span></span> has higher
+     precedence than other separators.
+     </li>
+     <li class="itemize">&#8220;<span class="lstinline"><span 
+class="cmtt-10x-x-109">,</span></span>&#8221;: Background operator. Its left operand is started, and then it proceeds immediately to
+     its right operand. This operator is bound to scopes: when used inside a scope, the scope
+     itself finishes only when all the statements backgrounded with &#8216;<span 
+class="cmtt-10x-x-109">,</span>&#8217; have finished.</li></ul>
+<!--l. 37--><p class="indent">   The example below demonstrates the use of <span class="lstinline"><span 
+class="cmtt-10x-x-109">&amp;</span></span> to launch two functions in parallel.
+</p><!--l. 40--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 40--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88001r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">test</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88002r2"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88003r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 43--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">:</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">1</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88004r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 44--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">:</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">2</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88005r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 45--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">:</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">3</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88006r6"></a></span><span 
+class="cmtt-10x-x-109">}</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88007r7"></a></span><!--l. 47--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Serialized</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">executions</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88008r8"></a></span><span 
+class="cmtt-10x-x-109">test</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 48--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">left</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">test</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 48--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">middle</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">test</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 48--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">right</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88009r9"></a></span><!--l. 49--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">left</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">1</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88010r10"></a></span><!--l. 50--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">left</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">2</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88011r11"></a></span><!--l. 51--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">left</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88012r12"></a></span><!--l. 52--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">middle</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">1</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88013r13"></a></span><!--l. 53--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">middle</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">2</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88014r14"></a></span><!--l. 54--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">middle</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88015r15"></a></span><!--l. 55--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">right</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">1</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88016r16"></a></span><!--l. 56--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">right</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">2</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88017r17"></a></span><!--l. 57--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">right</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88018r18"></a></span><!--l. 58--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Parallel</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">execution</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88019r19"></a></span><span 
+class="cmtt-10x-x-109">test</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 59--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">left</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&amp;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">test</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 59--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">middle</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&amp;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">test</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 59--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">right</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88020r20"></a></span><!--l. 60--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">left</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">1</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88021r21"></a></span><!--l. 61--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">middle</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">1</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88022r22"></a></span><!--l. 62--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">right</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">1</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88023r23"></a></span><!--l. 63--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">left</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">2</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88024r24"></a></span><!--l. 64--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">middle</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">2</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88025r25"></a></span><!--l. 65--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">right</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">2</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88026r26"></a></span><!--l. 66--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">left</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88027r27"></a></span><!--l. 67--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">middle</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88028r28"></a></span><!--l. 68--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">right</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre>
+   </pre>
+   </div>
+<!--l. 71--><p class="indent">   In this test, we see that the <span class="lstinline"><span 
+class="cmtt-10x-x-109">&amp;</span></span> runs its operands simultaneously.
+</p><!--l. 74--><p class="indent">   The difference between &#8220;<span class="lstinline"><span 
+class="cmtt-10x-x-109">&amp;</span></span>&#8221; and &#8220;<span class="lstinline"><span 
+class="cmtt-10x-x-109">,</span></span>&#8221; is rather subtle:
+                                                                                       
+
+                                                                                       
+</p>
+     <ul class="itemize1">
+     <li class="itemize">In the top level, no operand of a job will start &#8220;<span class="lstinline"><span 
+class="cmtt-10x-x-109">&amp;</span></span>&#8221; until all are known. So if you send a
+     line ending with &#8220;<span class="lstinline"><span 
+class="cmtt-10x-x-109">&amp;</span></span>&#8221;, the system will wait for the right operand (in fact, it will wait for
+     a &#8220;<span class="lstinline"><span 
+class="cmtt-10x-x-109">,</span></span>&#8221; or a &#8220;<span class="lstinline"><span 
+class="cmtt-10x-x-109">;</span></span>&#8221;) before firing its left operand. A statement ending with &#8220;<span class="lstinline"><span 
+class="cmtt-10x-x-109">,</span></span>&#8221; will be fired
+     immediately.
+     </li>
+     <li class="itemize">Execution is blocked after a &#8220;<span class="lstinline"><span 
+class="cmtt-10x-x-109">&amp;</span></span>&#8221; group until all its children have finished.</li></ul>
+<!--l. 87--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 87--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88029r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">test</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88030r2"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88031r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 90--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">:</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">1</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88032r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 91--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">:</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">2</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88033r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 92--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">:</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">3</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88034r6"></a></span><span 
+class="cmtt-10x-x-109">}</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88035r7"></a></span><!--l. 94--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Run</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">test</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">and</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">echo</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">("</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">right</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">")</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">in</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">parallel,</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88036r8"></a></span><!--l. 95--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">and</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">wait</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">until</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">both</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">are</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">done</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">before</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">continuing</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88037r9"></a></span><span 
+class="cmtt-10x-x-109">test</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 96--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">left</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&amp;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 96--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">right</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 96--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">done</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88038r10"></a></span><!--l. 97--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">left</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">1</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88039r11"></a></span><!--l. 98--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">right</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88040r12"></a></span><!--l. 99--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">left</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">2</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88041r13"></a></span><!--l. 100--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">left</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88042r14"></a></span><!--l. 101--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">done</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88043r15"></a></span><!--l. 102--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Run</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">test</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">in</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">background,</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">then</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">both</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">echos</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">without</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">waiting</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88044r16"></a></span><span 
+class="cmtt-10x-x-109">test</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 103--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">left</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 103--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">right</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 103--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">done</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88045r17"></a></span><!--l. 104--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">left</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">1</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88046r18"></a></span><!--l. 105--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">right</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88047r19"></a></span><!--l. 106--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">left</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">2</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88048r20"></a></span><!--l. 107--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">done</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-88049r21"></a></span><!--l. 108--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">left</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre>
+   </pre>
+   </div>
+<!--l. 111--><p class="indent">   That&#8217;s about all there is to say about these operators. Although they&#8217;re rather simple,
+they are really powerful and enables you to include parallelism anywhere at no syntactical
+cost.
+</p><!--l. 115--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">11.2   </span> <a 
+href="index.html#QQ2-17-94" id="x17-8900011.2">Detach</a></h3>
+<!--l. 117--><p class="noindent">The <a 
+ id="x17-89001"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">Control</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">detach</span></span> function backgrounds the execution of its argument. Its behavior is the same as
+the comma (<span class="lstinline"><span 
+class="cmtt-10x-x-109">,</span></span>) operator, except that the execution is completely detached, and not waited for at the
+end of the scope.
+</p><!--l. 122--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 122--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-89002r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">test</span><span 
+class="cmtt-10x-x-109">()</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-89003r2"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-89004r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 125--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Wait</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">for</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">one</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">second,</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">and</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">echo</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">foo</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">".</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-89005r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">detach</span><span 
+class="cmtt-10x-x-109">({</span><span 
+class="cmtt-10x-x-109">sleep</span><span 
+class="cmtt-10x-x-109">(1</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 126--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">foo</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)});</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-89006r5"></a></span><span 
+class="cmtt-10x-x-109">}|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-89007r6"></a></span><span 
+class="cmtt-10x-x-109">test</span><span 
+class="cmtt-10x-x-109">();</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-89008r7"></a></span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 129--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Not</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">blocked</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-89009r8"></a></span><!--l. 130--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Job</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x003C;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">shell_4</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x003E;</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-89010r9"></a></span><!--l. 131--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Not</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">blocked</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-89011r10"></a></span><span 
+class="cmtt-10x-x-109">sleep</span><span 
+class="cmtt-10x-x-109">(2</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-89012r11"></a></span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 133--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">End</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">sleep</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-89013r12"></a></span><!--l. 134--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">foo</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-89014r13"></a></span><!--l. 135--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">002000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">End</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">of</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">sleep</span></span></pre>
+   </pre>
+   </div>
+<!--l. 138--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">11.3   </span> <a 
+href="index.html#QQ2-17-95" id="x17-9000011.3">Tags for parallel control flows</a></h3>
+                                                                                       
+
+                                                                                       
+<!--l. 141--><p class="noindent">A <a 
+href="#x33-516017r61"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Tag</span></span> (<span 
+class="cmbx-10x-x-109">??</span>sec:std-Tag)</a> is a multipurpose code execution control and instrumentation feature. Any
+chunk of code can be tagged, by preceding it with a tag and a colon (<span class="lstinline"><span 
+class="cmtt-10x-x-109">:</span></span>). Tag can be created with
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">Tag</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">)</span></span>. Naming tags is optional, yet it&#8217;s a good idea since it will be used for many features.
+The example below illustrates how to tag chunks of code.
+</p><!--l. 148--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 148--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90001r1"></a></span><!--l. 149--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Create</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">new</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">tag</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90002r2"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Tag</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 150--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">name</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90003r3"></a></span><!--l. 151--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Tag</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x003C;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">name</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x003E;</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90004r4"></a></span><!--l. 152--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Tag</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">evaluation</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">42</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90005r5"></a></span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">42;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90006r6"></a></span><!--l. 154--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">42</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90007r7"></a></span><!--l. 155--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Tag</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">evaluation</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">block</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90008r8"></a></span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 156--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">foo</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">51</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90009r9"></a></span><!--l. 157--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">51</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90010r10"></a></span><!--l. 158--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Tag</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">call</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90011r11"></a></span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 159--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">tagged</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90012r12"></a></span><!--l. 160--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">tagged</span></span></pre>
+   </pre>
+   </div>
+<!--l. 163--><p class="indent">   You can use tags that were not declared previously, they will be created implicitly (see below).
+However, this is not recommended since tags will be created in a global scope, the <span class="lstinline"><span 
+class="cmtt-10x-x-109">Tag</span></span> object. This
+feature can be used when inputting test code in the top level to avoid bothering to declare each tag,
+yet it is considered poor practice in regular code.
+</p><!--l. 170--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 170--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90013r1"></a></span><!--l. 171--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Since</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">mytag</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">not</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">declared,</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">this</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">will</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">first</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">do</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">:</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90014r2"></a></span><!--l. 172--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Tag</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">mytag</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">=</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Tag</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">new</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">("</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">mytag</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">");</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90015r3"></a></span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">42;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90016r4"></a></span><!--l. 174--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">42</span></span></pre>
+   </pre>
+   </div>
+<!--l. 177--><p class="indent">   So you can tag code, yet what&#8217;s the use? One of the primary purpose of tags is to be able to
+control the execution of code running in parallel. Tags have a few control methods (see <a 
+href="#x33-516017r61"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Tag</span></span>
+(<span 
+class="cmbx-10x-x-109">??</span>sec:std-Tag)</a>):
+     </p><dl class="description"><dt class="description">
+<span 
+class="cmbx-10x-x-109">freeze</span> </dt><dd 
+class="description">Suspend execution of all tagged code.
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">unfreeze</span> </dt><dd 
+class="description">Resume execution of previously frozen code.
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">stop</span> </dt><dd 
+class="description">Stop the execution of the tagged code. The flows of execution that where stopped jump
+     immediately at the end of the tagged block.
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">block</span> </dt><dd 
+class="description">Block the execution of the tagged code, that is:
+          <ul class="itemize1">
+          <li class="itemize">Stop it.
+          </li>
+          <li class="itemize">When an execution flow encounters the tagged block, it simply skips it.</li></ul>
+     <!--l. 193--><p class="noindent">You can think of <span class="lstinline"><span 
+class="cmtt-10x-x-109">block</span></span> like a permanent <span class="lstinline"><span 
+class="cmtt-10x-x-109">stop</span></span>.
+                                                                                       
+
+                                                                                       
+     </p></dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">unblock</span> </dt><dd 
+class="description">Stop blocking the tagged code.</dd></dl>
+<!--l. 197--><p class="indent">   The three following examples illustrate these features.
+</p><!--l. 199--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 199--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90017r1"></a></span><!--l. 200--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Launch</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">in</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">background</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">(</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">using</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">comma</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">)</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">code</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">that</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">prints</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">ping</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90018r2"></a></span><!--l. 201--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">every</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">second</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Tag</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">it</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">to</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">keep</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">control</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">over</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">it</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90019r3"></a></span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90020r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">every</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(1</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90021r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 204--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">ping</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">),</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90022r6"></a></span><span 
+class="cmtt-10x-x-109">sleep</span><span 
+class="cmtt-10x-x-109">(2.5</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90023r7"></a></span><!--l. 206--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ping</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90024r8"></a></span><!--l. 207--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ping</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90025r9"></a></span><!--l. 208--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">002000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ping</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90026r10"></a></span><!--l. 209--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Suspend</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">execution</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90027r11"></a></span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">freeze;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90028r12"></a></span><!--l. 211--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">No</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">printing</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">anymore</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90029r13"></a></span><span 
+class="cmtt-10x-x-109">sleep</span><span 
+class="cmtt-10x-x-109">(1</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90030r14"></a></span><!--l. 213--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Resume</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">execution</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90031r15"></a></span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">unfreeze;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90032r16"></a></span><span 
+class="cmtt-10x-x-109">sleep</span><span 
+class="cmtt-10x-x-109">(1</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90033r17"></a></span><!--l. 216--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">007000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ping</span></span></pre>
+   </pre>
+   </div>
+<!--l. 219--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 219--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90034r1"></a></span><!--l. 220--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Now,</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">we</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">print</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">out</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">message</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">when</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">we</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">get</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">out</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">tag</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90035r2"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90036r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90037r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">every</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(1</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90038r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 224--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">ping</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90039r6"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 225--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Execution</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">flow</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">jumps</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">here</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">if</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">mytag</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">stopped</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90040r7"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 226--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Background</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">job</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">stopped</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)|</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90041r8"></a></span><span 
+class="cmtt-10x-x-109">},</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90042r9"></a></span><span 
+class="cmtt-10x-x-109">sleep</span><span 
+class="cmtt-10x-x-109">(2.5</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90043r10"></a></span><!--l. 229--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ping</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90044r11"></a></span><!--l. 230--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ping</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90045r12"></a></span><!--l. 231--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">002000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ping</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90046r13"></a></span><!--l. 232--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Stop</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">tag</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90047r14"></a></span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">stop;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90048r15"></a></span><!--l. 234--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">002500]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Background</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">job</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">stopped</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90049r16"></a></span><!--l. 235--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Our</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">background</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">job</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">finished</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90050r17"></a></span><!--l. 236--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Unfreezing</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">tag</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">has</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">no</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">effect</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90051r18"></a></span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">unfreeze;</span>
+   </pre>
+   </div>
+<!--l. 240--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 240--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90052r1"></a></span><!--l. 241--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Now,</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">print</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">out</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">message</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">when</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">we</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">get</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">out</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">tag</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90053r2"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">loop</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90054r3"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90055r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 244--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">ping</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">sleep</span><span 
+class="cmtt-10x-x-109">(1</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90056r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 245--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">pong</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">sleep</span><span 
+class="cmtt-10x-x-109">(1</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90057r6"></a></span><span 
+class="cmtt-10x-x-109">},</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90058r7"></a></span><span 
+class="cmtt-10x-x-109">sleep</span><span 
+class="cmtt-10x-x-109">(3.5</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90059r8"></a></span><!--l. 248--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ping</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90060r9"></a></span><!--l. 249--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">pong</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90061r10"></a></span><!--l. 250--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">002000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ping</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90062r11"></a></span><!--l. 251--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">003000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">pong</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90063r12"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90064r13"></a></span><!--l. 253--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Block</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">printing</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">pong</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90065r14"></a></span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">block;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90066r15"></a></span><span 
+class="cmtt-10x-x-109">sleep</span><span 
+class="cmtt-10x-x-109">(3</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90067r16"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90068r17"></a></span><!--l. 257--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">The</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">second</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">half</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">while</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">isn</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">t</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">executed</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">anymore</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90069r18"></a></span><!--l. 258--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">004000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ping</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90070r19"></a></span><!--l. 259--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">005000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ping</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90071r20"></a></span><!--l. 260--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">006000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ping</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90072r21"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90073r22"></a></span><!--l. 262--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Reactivate</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">pong</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90074r23"></a></span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">unblock;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90075r24"></a></span><span 
+class="cmtt-10x-x-109">sleep</span><span 
+class="cmtt-10x-x-109">(3.5</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90076r25"></a></span><!--l. 265--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">008000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">pong</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90077r26"></a></span><!--l. 266--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">009000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ping</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90078r27"></a></span><!--l. 267--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">010000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">pong</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-90079r28"></a></span><!--l. 268--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">011000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ping</span></span></pre>
+   </pre>
+   </div>
+<!--l. 271--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">11.4   </span> <a 
+href="index.html#QQ2-17-96" id="x17-9100011.4">Advanced example with parallelism and tags</a></h3>
+<!--l. 273--><p class="noindent">In this section, we implement a more advanced example with parallelism.
+</p><!--l. 276--><p class="indent">   The listing below presents how to implement a <span class="lstinline"><span 
+class="cmtt-10x-x-109">timeOut</span></span> function, that takes code to execute and a
+timeout as arguments. It executes the code, and returns its value. However, if the code execution takes
+longer than the given timeout, it aborts it, prints <span class="lstinline"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Timeout</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">!</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></span> and returns <span class="lstinline"><span 
+class="cmtt-10x-x-109">void</span></span>. In this example, we
+use:
+</p>
+     <ul class="itemize1">
+     <li class="itemize">Lazy evaluation, since we want to delay the execution of the given code, to keep control
+     on it.
+     </li>
+     <li class="itemize">Concurrency operators, to launch a timeout job in background.</li></ul>
+                                                                                       
+
+                                                                                       
+<!--l. 289--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 289--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91001r1"></a></span><!--l. 290--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">timeout</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">(</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Code,</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Duration</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">).</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91002r2"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">timeOut</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91003r3"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91004r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 293--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">In</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">background,</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">launch</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">timeout</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">job</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">that</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">waits</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91005r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 294--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">for</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">given</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">duration</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">before</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">aborting</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91006r6"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 295--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">call</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">evalArgAt</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">(1)</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">second</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">argument,</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">duration</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91007r7"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91008r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">sleep</span><span 
+class="cmtt-10x-x-109">(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">call</span></span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">evalArgAt</span><span 
+class="cmtt-10x-x-109">(1));</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91009r9"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 298--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Timeout</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">!</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91010r10"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">return;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91011r11"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">},</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91012r12"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 301--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Run</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Code</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">and</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">return</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">its</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">value</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91013r13"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">return</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">call</span></span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">evalArgAt</span><span 
+class="cmtt-10x-x-109">(0);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91014r14"></a></span><span 
+class="cmtt-10x-x-109">}</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91015r15"></a></span><span 
+class="cmtt-10x-x-109">timeOut</span><span 
+class="cmtt-10x-x-109">({</span><span 
+class="cmtt-10x-x-109">sleep</span><span 
+class="cmtt-10x-x-109">(1</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 304--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">On</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">time</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">42},</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">2</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91016r16"></a></span><!--l. 305--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">On</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">time</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91017r17"></a></span><!--l. 306--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">42</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91018r18"></a></span><span 
+class="cmtt-10x-x-109">timeOut</span><span 
+class="cmtt-10x-x-109">({</span><span 
+class="cmtt-10x-x-109">sleep</span><span 
+class="cmtt-10x-x-109">(2</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 307--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">On</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">time</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">42},</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">1</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x17-91019r19"></a></span><!--l. 308--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Timeout</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">!</span></span></pre>
+   </pre>
+   </div>
+<!--l. 9--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 9--><p class="indent">   <div class="footer"><a 
+href="event-based-programming.html" ><p>Next</p></a><a 
+href="functional-programming.html" ><p>Prev</p></a><a 
+href="functional-programming.html#tailurbi-sdkch10.html" ><p>Prev-tail</p></a><a 
+href="parallelism-concurrent-flow-control.html" ><p>Front</p></a><a 
+href="urbiscript-user-manual.html#parallelism-concurrent-flow-control.html" ><p>Up</p></a></div><a 
+ id="tailurbi-sdkch11.html"></a>  </p> 
+</body></html> 

@@ -1,0 +1,13 @@
+<map id="G" name="G">
+<area shape="rect" href="$exit_8hh.html" title="urbi/exit.hh" alt="" coords="2200,325,2299,349" />
+<area shape="rect" href="$package&#45;info_8hh.html" title="urbi/package&#45;info.hh" alt="" coords="3553,176,3713,200" />
+<area shape="rect" href="$uclient_8hh.html" title="urbi/uclient.hh" alt="" coords="2909,101,3029,125" />
+<area shape="rect" href="$urbi&#45;root_8hh.html" title="urbi/urbi&#45;root.hh" alt="" coords="3561,101,3695,125" />
+<area shape="rect" href="$export_8hh.html" title="urbi/export.hh" alt="" coords="2989,475,3107,499" />
+<area shape="rect" href="$uabstractclient_8hh.html" title="Definition of the URBI interface class." alt="" coords="2881,176,3057,200" />
+<area shape="rect" href="$fwd_8hh.html" title="Forward declarations." alt="" coords="2608,325,2707,349" />
+<area shape="rect" href="$ubinary_8hh.html" title="urbi/ubinary.hh" alt="" coords="2887,325,3009,349" />
+<area shape="rect" href="$umessage_8hh.html" title="urbi/umessage.hh" alt="" coords="2781,251,2925,275" />
+<area shape="rect" href="$uabstractclient_8hxx.html" title="urbi/uabstractclient.hxx" alt="" coords="2475,251,2656,275" />
+<area shape="rect" href="$uimage_8hh.html" title="urbi/uimage.hh" alt="" coords="2885,400,3011,424" />
+</map>

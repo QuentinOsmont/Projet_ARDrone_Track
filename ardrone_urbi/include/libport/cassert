@@ -1,0 +1,299 @@
+/*
+ * Copyright (C) 2009-2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+/// \file libport/cassert
+/// \brief Provide nice assert-like macros.
+
+#ifndef LIBPORT_CASSERT
+# define LIBPORT_CASSERT
+
+# include <cassert>
+# include <iostream> // std::cerr
+# include <libport/cerrno>
+# include <libport/compiler.hh>
+# include <libport/config.h>
+# include <libport/cstdlib>
+# include <libport/cstring> // libport::strerror.
+
+/*-------------------------.
+| LIBPORT_ASSERT_VERBOSE.  |
+`-------------------------*/
+
+// Remove abort messages only if the compilation mode space is enabled.
+# ifndef LIBPORT_ASSERT_VERBOSE
+#  if defined LIBPORT_COMPILATION_MODE_SPACE
+#   define LIBPORT_ASSERT_VERBOSE 0
+#  else
+#   define LIBPORT_ASSERT_VERBOSE 1
+#  endif
+# endif
+
+
+/*--------------.
+| ASSERT_ECHO.  |
+`--------------*/
+
+# if LIBPORT_ASSERT_VERBOSE
+#  define ASSERT_ECHO(File, Line, Message)                      \
+  std::cerr << File << ":" << Line << ": " << Message << std::endl
+# else
+#  define ASSERT_ECHO(File, Line, Message)      \
+  (void) 0
+# endif
+
+
+/*-------------------------.
+| pabort -- Pretty abort.  |
+`-------------------------*/
+
+/// \def pabort(Msg)
+///
+/// Same as abort, but if LIBPORT_ASSERT_VERBOSE is set, report the
+/// Msg using the operator<< on std::cerr.  Msg may include << itself.
+/// So if Msg is complex, beware of predence issues with << and use
+/// parens on the invocation side.
+
+// Unfortunately, some old compilers (namely gcc 3) complain when the
+// last operand of the comma operator has 'no effect' - which is otherwise
+// perfectly legitimate. Work around them with this function.
+//
+// Other compilers, e.g., MSVC, dislike that a no-return function
+// has a non-void return type, which makes plenty of sense.
+# if defined __GNUC__ && __GNUC__ <= 3
+ATTRIBUTE_NORETURN
+static inline int
+_libport_die_hard()
+{
+  libport::abort();
+}
+
+#  define pabort(Msg)                                     \
+  (ASSERT_ECHO(__FILE__, __LINE__, "abort: " << Msg),     \
+   _libport_die_hard())
+# else // !__GNUC__ <= 3
+#  define pabort(Msg)                                     \
+  (ASSERT_ECHO(__FILE__, __LINE__, "abort: " << Msg),     \
+   ::libport::abort(), 0)
+# endif // !__GNUC__ <= 3
+
+/*-----------------------------------------------------.
+| __passert -- Pretty assert with additional message.  |
+`-----------------------------------------------------*/
+
+/// \def __passert(Assertion, Message)
+/// Same as assert, but on failure, dump \a Message on std::cerr.
+# if defined NDEBUG
+#  define __passert(Assertion, Message)         \
+  ((void) 0)
+# else
+#  define __passert(Assertion, Message)			\
+  ((void) ((Assertion)					\
+	   ? 0						\
+	   : pabort(Message)))
+# endif
+
+
+/*-------------------------------------------------------------------.
+| aver -- Same as "libport::assert", to work around the fact that it |
+| is alsmot impossible to redefine assert.                           |
+|                                                                    |
+| Indeed, most implementations do not guard <assert.h> so that we    |
+| can include it with NDEBUG defined and/or undefined in the same    |
+| compilation unit.  And many of the components we use (e.g.,        |
+| Boost), include <cassert>, which undefines our assert and restores |
+| the standard one.                                                  |
+`-------------------------------------------------------------------*/
+
+/// \def aver(Assertion)
+/// Same as assert, but on failure, dump \a Message on std::cerr.
+# define aver(Assertion)                                        \
+  __passert(Assertion,                                          \
+            "failed assertion: " << #Assertion << std::endl)
+
+
+/*---------------------------------------------------------.
+| assert -- Same as "std::assert", but with our features.  |
+`---------------------------------------------------------*/
+
+/// \def assert(Assertion)
+/// Same as assert, but on failure, dump \a Message on std::cerr.
+# undef assert
+# define assert aver
+
+
+/*---------------------------.
+| passert -- Pretty assert.  |
+`---------------------------*/
+
+/// \def passert(Subject, Assertion)
+/// Same as assert, but on failure, dump \a Subject of std::cerr.
+#  define passert(Subject, Assertion)                           \
+  __passert(Assertion,                                          \
+            "failed assertion: " << #Assertion << std::endl	\
+            << "\t with " << #Subject << " = " << Subject)
+
+
+/*----------------------------------------------.
+| errabort -- perror (well, strerror) + abort.  |
+`----------------------------------------------*/
+
+/// \def errabort(Err, Msg)
+///
+/// It is on purpose that Err is not evaluated when NDEBUG: Err could
+/// be costly, or have side effects.  Rather, use ERRNO_RUN, or
+/// PTHREAD_RUN and so forth.
+# define errabort(Err, Msg)                     \
+  pabort(libport::strerror(Err) << ": " << Msg)
+
+/// \def errnoabort(Msg)
+# define errnoabort(Msg)                        \
+  errabort(errno, Msg)
+
+/// \def unreachable()
+///
+/// This call should never be reached, just abort.
+# define unreachable()                          \
+  pabort("unreachable code reached")
+
+/// \def ERRNO_RUN(Function, ...)
+/// Run Function(...) and use errnoabort on errors.
+///
+/// It is considered that there is an error when Function returns a
+/// negative value.  Alternatively we could set errno to 0 before
+/// calling the function, and checking it afterwards, but it's more
+/// expensive.
+# define ERRNO_RUN(Function, ...)               \
+  do {                                          \
+    if (Function (__VA_ARGS__) < 0)             \
+      errnoabort(#Function);                    \
+  } while (false)
+
+
+
+/*--------------------------------------------------------.
+| assert_exp -- Require a non-null value, and return it.  |
+`--------------------------------------------------------*/
+
+# if LIBPORT_ASSERT_VERBOSE
+// Basically, an assert that can be used in an expression.  I meant to
+// use "nonnull", but this name is unused by libstdc++, so the #define
+// breaks everything.
+namespace libport
+{
+  template <typename T>
+  inline
+  T
+  assert_exp_(T t, const char* file, int line, const char* msg)
+  {
+    if (!t)
+    {
+      ASSERT_ECHO(file, line, "failed assertion: " << msg);
+      libport::abort();
+    }
+    return t;
+  }
+}
+
+#  define assert_exp(Obj)		\
+  libport::assert_exp_(Obj, __FILE__, __LINE__ , #Obj)
+# else // !LIBPORT_ASSERT_VERBOSE
+#  define assert_exp(Obj)		(Obj)
+# endif // !LIBPORT_ASSERT_VERBOSE
+
+
+/*---------------------------------------------------------------.
+| assert_<op> -- compare two values, show both of them if fail.  |
+`---------------------------------------------------------------*/
+
+#  define DEFINE_AVER_OP(OpName, Op)                                    \
+namespace libport                                                       \
+{                                                                       \
+  template <typename T, typename U>                                     \
+  inline                                                                \
+  void                                                                  \
+  aver_ ## OpName(const T& lhs, const U& rhs,                           \
+                  const char* lstr, const char* rstr,                   \
+                  const char* file, int line)                           \
+  {                                                                     \
+    if (!(lhs Op rhs))                                                  \
+    {                                                                   \
+      ASSERT_ECHO(file, line,                                           \
+                  "failed assertion: " << lstr << " " #Op " " << rstr); \
+      ASSERT_ECHO(file, line, "  with " << lstr << " = " << lhs);       \
+      ASSERT_ECHO(file, line, "  with " << rstr << " = " << rhs);       \
+      libport::abort();                                                 \
+    }                                                                   \
+  }                                                                     \
+}
+
+  DEFINE_AVER_OP(eq, ==)
+  DEFINE_AVER_OP(ge, >=)
+  DEFINE_AVER_OP(gt, > )
+  DEFINE_AVER_OP(le, <=)
+  DEFINE_AVER_OP(lt, < )
+  DEFINE_AVER_OP(ne, !=)
+
+# if defined NDEBUG
+
+#  define aver_eq(A, B)
+#  define aver_ge(A, B)
+#  define aver_gt(A, B)
+#  define aver_le(A, B)
+#  define aver_lt(A, B)
+#  define aver_ne(A, B)
+
+# elif LIBPORT_ASSERT_VERBOSE
+
+#  define aver_eq(A, B) ::libport::aver_eq(A, B, #A, #B, __FILE__, __LINE__)
+#  define aver_ge(A, B) ::libport::aver_ge(A, B, #A, #B, __FILE__, __LINE__)
+#  define aver_gt(A, B) ::libport::aver_gt(A, B, #A, #B, __FILE__, __LINE__)
+#  define aver_le(A, B) ::libport::aver_le(A, B, #A, #B, __FILE__, __LINE__)
+#  define aver_lt(A, B) ::libport::aver_lt(A, B, #A, #B, __FILE__, __LINE__)
+#  define aver_ne(A, B) ::libport::aver_ne(A, B, #A, #B, __FILE__, __LINE__)
+
+# else // !defined NDEBUG && !LIBPORT_ASSERT_VERBOSE
+
+#  define aver_eq(A, B) aver(A == B)
+#  define aver_ge(A, B) aver(A >= B)
+#  define aver_gt(A, B) aver(A >  B)
+#  define aver_le(A, B) aver(A <= B)
+#  define aver_lt(A, B) aver(A <  B)
+#  define aver_ne(A, B) aver(A != B)
+# endif
+
+  // X <= Y && Y <= Z
+# define aver_le_le(X, Y, Z)                    \
+  do {                                          \
+    aver_le(X, Y);                              \
+    aver_le(Y, Z);                              \
+  } while (false);
+
+  // X <= Y && Y < Z
+# define aver_le_lt(X, Y, Z)                    \
+  do {                                          \
+    aver_le(X, Y);                              \
+    aver_lt(Y, Z);                              \
+  } while (false);
+
+
+
+  // Backward compatibility.
+# define assert_eq  aver_eq
+# define assert_ge  aver_ge
+# define assert_gt  aver_gt
+# define assert_le  aver_le
+# define assert_lt  aver_lt
+# define assert_ne  aver_ne
+
+#endif // !LIBPORT_CASSERT
+
+// Local Variables:
+// mode: C++
+// End:

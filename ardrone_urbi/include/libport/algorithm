@@ -1,0 +1,45 @@
+/*
+ * Copyright (C) 2009, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+#ifndef LIBPORT_ALGORITHM
+# define LIBPORT_ALGORITHM
+
+# include <algorithm>
+
+# include <libport/cmath>
+# include <libport/traits.hh>
+
+namespace libport
+{
+  template <typename T>
+  inline
+  T
+  between(const typename traits::Arg<T>::res min,
+          const typename traits::Arg<T>::res value,
+          const typename traits::Arg<T>::res max);
+
+  template <typename T>
+  inline
+  T
+  rad2deg(const typename traits::Arg<T>::res value);
+
+  template <typename T>
+  inline
+  T
+  deg2rad(const typename traits::Arg<T>::res value);
+}
+
+# include <libport/algorithm.hxx>
+
+#endif // !LIBPORT_ALGORITHM
+
+// Local Variables:
+// mode: C++
+// End:

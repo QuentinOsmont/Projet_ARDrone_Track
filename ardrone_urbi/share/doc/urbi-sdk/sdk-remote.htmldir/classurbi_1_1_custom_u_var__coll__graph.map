@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" href="$classurbi_1_1_u_var.html" title="UVar class definition." alt="" coords="1348,187,1436,211" />
+<area shape="rect" href="$classurbi_1_1_u_prop.html" title="Provides easy access to variable properties." alt="" coords="1600,54,1696,78" />
+<area shape="rect" href="$classurbi_1_1_u_context.html" title="Methods available in both UObject and UVar Wrapper around UContextImpl to enable access through inher..." alt="" coords="1107,115,1227,139" />
+<area shape="rect" href="$classurbi_1_1impl_1_1_u_context_impl.html" title="urbi::impl::UContextImpl" alt="" coords="823,115,1009,139" />
+<area shape="rect" title="STL class." alt="" coords="125,115,237,139" />
+<area shape="rect" href="$classurbi_1_1impl_1_1_u_var_impl.html" title="urbi::impl::UVarImpl" alt="" coords="1088,163,1245,187" />
+</map>

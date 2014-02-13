@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>II urbiscript User Manual</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,sections+,xhtml,info --> 
+<meta name="src" content="urbi-sdk.tex" /> 
+<meta name="date" content="2010-09-30 15:52:00" /> 
+<link rel="stylesheet" type="text/css" href="urbi-sdk.css" /> 
+</head><body 
+>
+   <div class="header"><a 
+href="guidelines-and-cook-books.html" ><p>Next</p></a><a 
+href="uobjects.html" ><p>Prev</p></a><a 
+href="uobjects.html#tailurbi-sdkpa1.html" ><p>Prev-tail</p></a><a 
+href="#tailurbi-sdkpa2.html"><p>Tail</p></a><a 
+href="index.html#urbiscript-user-manual.html" ><p>Up</p></a></div><h1 class="partHead"><span class="titlemark">Part&#x00A0;II<br /></span><a 
+href="index.html#QQ2-9-53" id="x9-48000II">urbiscript User Manual</a></h1>
+<!--l. 20--><p class="noindent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 20--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p>
+   <div class="likechapterTOCS">
+   <span class="chapterToc">5 <a 
+href="first-steps.html#x11-500005">First Steps</a></span>
+<br />   &#x00A0;<span class="sectionToc">5.1 <a 
+href="first-steps.html#x11-510005.1">Comments</a></span>
+<br />   &#x00A0;<span class="sectionToc">5.2 <a 
+href="first-steps.html#x11-520005.2">Literal values</a></span>
+<br />   &#x00A0;<span class="sectionToc">5.3 <a 
+href="first-steps.html#x11-530005.3">Function calls</a></span>
+<br />   &#x00A0;<span class="sectionToc">5.4 <a 
+href="first-steps.html#x11-540005.4">Variables</a></span>
+<br />   &#x00A0;<span class="sectionToc">5.5 <a 
+href="first-steps.html#x11-550005.5">Scopes</a></span>
+<br />   &#x00A0;<span class="sectionToc">5.6 <a 
+href="first-steps.html#x11-560005.6">Method calls</a></span>
+<br />   &#x00A0;<span class="sectionToc">5.7 <a 
+href="first-steps.html#x11-570005.7">Function definition</a></span>
+<br />   &#x00A0;<span class="sectionToc">5.8 <a 
+href="first-steps.html#x11-580005.8">Conclusion</a></span>
+<br />   <span class="chapterToc">6 <a 
+href="basic-objects-value-model.html#x12-590006">Basic Objects, Value Model</a></span>
+<br />   &#x00A0;<span class="sectionToc">6.1 <a 
+href="basic-objects-value-model.html#x12-600006.1">Objects in urbiscript</a></span>
+<br />   &#x00A0;<span class="sectionToc">6.2 <a 
+href="basic-objects-value-model.html#x12-610006.2">Methods</a></span>
+<br />   &#x00A0;<span class="sectionToc">6.3 <a 
+href="basic-objects-value-model.html#x12-620006.3">Everything is an object</a></span>
+<br />   &#x00A0;<span class="sectionToc">6.4 <a 
+href="basic-objects-value-model.html#x12-630006.4">The urbiscript values model</a></span>
+<br />   &#x00A0;<span class="sectionToc">6.5 <a 
+href="basic-objects-value-model.html#x12-640006.5">Conclusion</a></span>
+<br />   <span class="chapterToc">7 <a 
+href="flow-control-constructs.html#x13-650007">Flow Control Constructs</a></span>
+<br />   &#x00A0;<span class="sectionToc">7.1 <a 
+href="flow-control-constructs.html#x13-660007.1">if</a></span>
+<br />   &#x00A0;<span class="sectionToc">7.2 <a 
+href="flow-control-constructs.html#x13-670007.2">while</a></span>
+<br />   &#x00A0;<span class="sectionToc">7.3 <a 
+href="flow-control-constructs.html#x13-680007.3">for</a></span>
+<br />   &#x00A0;<span class="sectionToc">7.4 <a 
+href="flow-control-constructs.html#x13-690007.4">switch</a></span>
+<br />   &#x00A0;<span class="sectionToc">7.5 <a 
+href="flow-control-constructs.html#x13-700007.5">do</a></span>
+<br />   <span class="chapterToc">8 <a 
+href="advanced-functions-and-scoping.html#x14-710008">Advanced Functions and Scoping</a></span>
+<br />   &#x00A0;<span class="sectionToc">8.1 <a 
+href="advanced-functions-and-scoping.html#x14-720008.1">Scopes as expressions</a></span>
+<br />   &#x00A0;<span class="sectionToc">8.2 <a 
+href="advanced-functions-and-scoping.html#x14-730008.2">Advanced scoping</a></span>
+<br />   &#x00A0;<span class="sectionToc">8.3 <a 
+href="advanced-functions-and-scoping.html#x14-740008.3">Local functions</a></span>
+<br />   &#x00A0;<span class="sectionToc">8.4 <a 
+href="advanced-functions-and-scoping.html#x14-750008.4">Lexical closures</a></span>
+<br />   <span class="chapterToc">9 <a 
+href="objective-programming-urbiscript-object-model.html#x15-760009">Objective Programming, urbiscript Object Model</a></span>
+<br />   &#x00A0;<span class="sectionToc">9.1 <a 
+href="objective-programming-urbiscript-object-model.html#x15-770009.1">Prototype-based programing in urbiscript</a></span>
+<br />   &#x00A0;<span class="sectionToc">9.2 <a 
+href="objective-programming-urbiscript-object-model.html#x15-780009.2">Prototypes and slot lookup</a></span>
+<br />   &#x00A0;<span class="sectionToc">9.3 <a 
+href="objective-programming-urbiscript-object-model.html#x15-790009.3">Copy on write</a></span>
+<br />   &#x00A0;<span class="sectionToc">9.4 <a 
+href="objective-programming-urbiscript-object-model.html#x15-800009.4">Defining pseudo-classes</a></span>
+<br />   &#x00A0;<span class="sectionToc">9.5 <a 
+href="objective-programming-urbiscript-object-model.html#x15-810009.5">Constructors</a></span>
+<br />   &#x00A0;<span class="sectionToc">9.6 <a 
+href="objective-programming-urbiscript-object-model.html#x15-820009.6">Operators</a></span>
+<br />   <span class="chapterToc">10 <a 
+href="functional-programming.html#x16-8300010">Functional Programming</a></span>
+                                                                                       
+
+                                                                                       
+<br />   &#x00A0;<span class="sectionToc">10.1 <a 
+href="functional-programming.html#x16-8400010.1">First class functions</a></span>
+<br />   &#x00A0;<span class="sectionToc">10.2 <a 
+href="functional-programming.html#x16-8500010.2">Lambda functions</a></span>
+<br />   &#x00A0;<span class="sectionToc">10.3 <a 
+href="functional-programming.html#x16-8600010.3">Lazy arguments</a></span>
+<br />   <span class="chapterToc">11 <a 
+href="parallelism-concurrent-flow-control.html#x17-8700011">Parallelism, Concurrent Flow Control</a></span>
+<br />   &#x00A0;<span class="sectionToc">11.1 <a 
+href="parallelism-concurrent-flow-control.html#x17-8800011.1">Parallelism operators</a></span>
+<br />   &#x00A0;<span class="sectionToc">11.2 <a 
+href="parallelism-concurrent-flow-control.html#x17-8900011.2">Detach</a></span>
+<br />   &#x00A0;<span class="sectionToc">11.3 <a 
+href="parallelism-concurrent-flow-control.html#x17-9000011.3">Tags for parallel control flows</a></span>
+<br />   &#x00A0;<span class="sectionToc">11.4 <a 
+href="parallelism-concurrent-flow-control.html#x17-9100011.4">Advanced example with parallelism and tags</a></span>
+<br />   <span class="chapterToc">12 <a 
+href="event-based-programming.html#x18-9200012">Event-based Programming</a></span>
+<br />   &#x00A0;<span class="sectionToc">12.1 <a 
+href="event-based-programming.html#x18-9300012.1">Event related constructs</a></span>
+<br />   &#x00A0;<span class="sectionToc">12.2 <a 
+href="event-based-programming.html#x18-9400012.2">Events</a></span>
+<br />   <span class="chapterToc">13 <a 
+href="ros-tutorial.html#x19-9500013">Urbi for ROS Users</a></span>
+<br />   &#x00A0;<span class="sectionToc">13.1 <a 
+href="ros-tutorial.html#x19-9600013.1">Communication on topics</a></span>
+<br />   &#x00A0;<span class="sectionToc">13.2 <a 
+href="ros-tutorial.html#x19-10200013.2">Using Services</a></span>
+   </div>
+                                                                                       
+
+                                                                                       
+
+                                                                                       
+
+                                                                                       
+<!--l. 9--><p class="noindent">
+                                                                                       
+
+                                                                                       
+</p>
+                                                                                       
+
+                                                                                       
+
+                                                                                       
+
+                                                                                       
+
+                                                                                       
+
+                                                                                       
+<!--l. 9--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p>
+                                                                                       
+
+                                                                                       
+<!--l. 9--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p>
+                                                                                       
+
+                                                                                       
+
+                                                                                       
+
+                                                                                       
+
+                                                                                       
+
+                                                                                       
+<!--l. 8--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p>
+                                                                                       
+
+                                                                                       
+<!--l. 9--><p class="indent">   <div class="footer"><a 
+href="guidelines-and-cook-books.html" ><p>Next</p></a><a 
+href="uobjects.html" ><p>Prev</p></a><a 
+href="uobjects.html#tailurbi-sdkpa1.html" ><p>Prev-tail</p></a><a 
+href="urbiscript-user-manual.html" ><p>Front</p></a><a 
+href="index.html#urbiscript-user-manual.html" ><p>Up</p></a></div><a 
+ id="tailurbi-sdkpa2.html"></a> </p> 
+</body></html> 

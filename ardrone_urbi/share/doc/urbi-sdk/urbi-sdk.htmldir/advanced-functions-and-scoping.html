@@ -1,0 +1,786 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>8 Advanced Functions and Scoping</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,sections+,xhtml,info --> 
+<meta name="src" content="urbi-sdk.tex" /> 
+<meta name="date" content="2010-09-30 15:52:00" /> 
+<link rel="stylesheet" type="text/css" href="urbi-sdk.css" /> 
+</head><body 
+>
+   <div class="header"><a 
+href="objective-programming-urbiscript-object-model.html" ><p>Next</p></a><a 
+href="flow-control-constructs.html" ><p>Prev</p></a><a 
+href="flow-control-constructs.html#tailurbi-sdkch7.html" ><p>Prev-tail</p></a><a 
+href="#tailurbi-sdkch8.html"><p>Tail</p></a><a 
+href="urbiscript-user-manual.html#advanced-functions-and-scoping.html" ><p>Up</p></a></div><h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;8</span><br /><a 
+href="index.html#QQ2-14-76" id="x14-710008">Advanced Functions and Scoping</a></h2>
+<!--l. 12--><p class="noindent">This section presents advanced uses of functions and scoping, as well as their combo: lexical closures,
+which prove to be a very powerful tool.
+</p>
+   <div class="sectionTOCS">
+   &#x00A0;<span class="sectionToc">8.1 <a 
+href="#x14-720008.1">Scopes as expressions</a></span>
+<br />   &#x00A0;<span class="sectionToc">8.2 <a 
+href="#x14-730008.2">Advanced scoping</a></span>
+<br />   &#x00A0;<span class="sectionToc">8.3 <a 
+href="#x14-740008.3">Local functions</a></span>
+<br />   &#x00A0;<span class="sectionToc">8.4 <a 
+href="#x14-750008.4">Lexical closures</a></span>
+   </div>
+   <h3 class="sectionHead"><span class="titlemark">8.1   </span> <a 
+href="index.html#QQ2-14-77" id="x14-720008.1">Scopes as expressions</a></h3>
+<!--l. 18--><p class="noindent">Contrary to other languages from the C family, scopes are expressions: they can be used where values
+are expected, just as <span class="lstinline"><span 
+class="cmtt-10x-x-109">1</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">1</span></span> or <span class="lstinline"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">foo</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></span>. They evaluate to the value of their last expression, or <span class="lstinline"><span 
+class="cmtt-10x-x-109">void</span></span> if
+they are empty. The following listing illustrates the use of scopes as expressions. Note that the last
+semicolon inside a scope is optional.
+</p><!--l. 26--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 26--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-72001r1"></a></span><!--l. 27--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Scopes</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">evaluate</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">to</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">last</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">expression</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">they</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">contain</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-72002r2"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">1;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">2;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">3};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-72003r3"></a></span><!--l. 29--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-72004r4"></a></span><!--l. 30--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">They</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">are</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">expressions</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-72005r5"></a></span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">({1;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">2;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">3});</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-72006r6"></a></span><!--l. 32--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre>
+   </pre>
+   </div>
+<!--l. 35--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">8.2   </span> <a 
+href="index.html#QQ2-14-78" id="x14-730008.2">Advanced scoping</a></h3>
+<!--l. 37--><p class="noindent">Scopes can be nested. Variables can be redefined in sub-scopes. In this case, the inner variables hide
+the outer ones, as illustrated below.
+</p><!--l. 41--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 41--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73001r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 42--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Define</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">outer</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">x</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73002r2"></a></span><!--l. 43--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">0</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73003r3"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73004r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">1;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 45--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Define</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">an</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">inner</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">x</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73005r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">2;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 46--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">These</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">refer</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">to</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73006r6"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 47--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">inner</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">x</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73007r7"></a></span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73008r8"></a></span><!--l. 49--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">2</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73009r9"></a></span><span 
+class="cmtt-10x-x-109">x;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 50--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">This</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">outer</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">x</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">again</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73010r10"></a></span><!--l. 51--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">0</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73011r11"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73012r12"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">3;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 53--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">This</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">still</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">outer</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">x</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73013r13"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73014r14"></a></span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73015r15"></a></span><!--l. 56--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73016r16"></a></span><span 
+class="cmtt-10x-x-109">x;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-73017r17"></a></span><!--l. 58--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre>
+   </pre>
+   </div>
+                                                                                       
+
+                                                                                       
+<!--l. 61--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">8.3   </span> <a 
+href="index.html#QQ2-14-79" id="x14-740008.3">Local functions</a></h3>
+<!--l. 63--><p class="noindent">Functions can be defined anywhere local variables can &#8212; that is, about anywhere. These functions&#8217;
+visibility are limited to the scope they&#8217;re defined in, like variables. This enables for instance to write
+local helper functions like &#8220;max2&#8221; in the example below.
+</p><!--l. 68--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 68--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-74001r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">max3</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">a,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">b,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">c</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 69--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Max</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">three</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">values</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-74002r2"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-74003r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">max2</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">a,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">b</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-74004r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-74005r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">if</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x003E;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">b</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-74006r6"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">return</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-74007r7"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">else</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-74008r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">return</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">b</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-74009r9"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-74010r10"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">max2</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">a,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">max2</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">b,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">c</span><span 
+class="cmtt-10x-x-109">));</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-74011r11"></a></span><span 
+class="cmtt-10x-x-109">}</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{};</span>
+   </pre>
+   </div>
+<!--l. 82--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">8.4   </span> <a 
+href="index.html#QQ2-14-80" id="x14-750008.4">Lexical closures</a></h3>
+<!--l. 84--><p class="noindent">A <span 
+class="cmti-10x-x-109">closure</span><a 
+ id="x14-75001"></a> is the capture by a function of a variable external to this function. urbiscript supports lexical
+closure: functions can refer to outer local variables, as long as they are visible (in scope) from where
+the function is defined.
+</p><!--l. 89--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 89--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75002r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">printSalaries</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">rate</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75003r2"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75004r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">charges</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">100;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75005r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">computeSalary</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">hours</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75006r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75007r6"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 95--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Here</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">rate</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">and</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">charges</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">are</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">captured</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75008r7"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 96--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">from</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">environment</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">by</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">closure</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75009r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">rate</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">*</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">hours</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">charges</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75010r9"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75011r10"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75012r11"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 100--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Alice</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">s</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">salary</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">computeSalary</span><span 
+class="cmtt-10x-x-109">(35));</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75013r12"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 101--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Bob</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">s</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">salary</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">computeSalary</span><span 
+class="cmtt-10x-x-109">(30));</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75014r13"></a></span><span 
+class="cmtt-10x-x-109">}</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75015r14"></a></span><span 
+class="cmtt-10x-x-109">printSalaries</span><span 
+class="cmtt-10x-x-109">(15);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75016r15"></a></span><!--l. 104--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Alice</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">s</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">salary</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">is</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">425</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75017r16"></a></span><!--l. 105--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Bob</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">s</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">salary</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">is</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">350</span></span></pre>
+   </pre>
+   </div>
+<!--l. 108--><p class="indent">   Closures can also write to captured variables, as shown below.
+</p><!--l. 111--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 111--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75018r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75019r2"></a></span><!--l. 113--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">0</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75020r3"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">b</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75021r4"></a></span><!--l. 115--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">0</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75022r5"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">add</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">n</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75023r6"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75024r7"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 118--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">x</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">and</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">y</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">are</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">updated</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">by</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">closure</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75025r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">n;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75026r9"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">b</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">n;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75027r10"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">void</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75028r11"></a></span><span 
+class="cmtt-10x-x-109">}</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75029r12"></a></span><span 
+class="cmtt-10x-x-109">add</span><span 
+class="cmtt-10x-x-109">(25);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75030r13"></a></span><span 
+class="cmtt-10x-x-109">add</span><span 
+class="cmtt-10x-x-109">(25);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75031r14"></a></span><span 
+class="cmtt-10x-x-109">add</span><span 
+class="cmtt-10x-x-109">(1);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75032r15"></a></span><span 
+class="cmtt-10x-x-109">a;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75033r16"></a></span><!--l. 127--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">51</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75034r17"></a></span><span 
+class="cmtt-10x-x-109">b;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x14-75035r18"></a></span><!--l. 129--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">51</span></span></pre>
+   </pre>
+   </div>
+<!--l. 132--><p class="indent">   Closure can be really powerful tools in some situation, and they are even more useful when
+combined with functional programing, as described in <a 
+href="functional-programming.html#x16-8300010">Chapter&#x00A0;10<!--tex4ht:ref: sec:tut:functional --></a>.
+</p><!--l. 9--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 9--><p class="indent">   <div class="footer"><a 
+href="objective-programming-urbiscript-object-model.html" ><p>Next</p></a><a 
+href="flow-control-constructs.html" ><p>Prev</p></a><a 
+href="flow-control-constructs.html#tailurbi-sdkch7.html" ><p>Prev-tail</p></a><a 
+href="advanced-functions-and-scoping.html" ><p>Front</p></a><a 
+href="urbiscript-user-manual.html#advanced-functions-and-scoping.html" ><p>Up</p></a></div><a 
+ id="tailurbi-sdkch8.html"></a>  </p> 
+</body></html> 

@@ -1,0 +1,27 @@
+#! /bin/sh
+# umake-deepclean.  Generated wrapper for umake.
+
+me=$(basename "$0")
+
+# Always honor UMAKE if defined.
+# Then try to find umake where it was installed, otherwise in the
+# same dir as this tool, or finally, trust the $PATH.
+if test -z "$UMAKE"; then
+  for dir in '/prefix/bin' $(dirname "$0")
+  do
+    if test -f $dir/umake; then
+      UMAKE=$dir/umake
+      break
+    fi
+  done
+fi
+
+: ${UMAKE=umake}
+
+($UMAKE --version) >/dev/null 2>&1 ||
+  {
+    echo >&2 "$me: cannot run umake: $UMAKE"
+    exit 1
+  }
+
+exec $UMAKE --deep-clean VPATH=/home/build/kernel-2.0_x86_gcc4_release-dynamic/work/build/sdk-remote/sdk/../../../source/sdk-remote/sdk-remote/src/liburbi "$@"

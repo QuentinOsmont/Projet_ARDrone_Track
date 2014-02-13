@@ -1,0 +1,76 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+class Global.Group : RangeIterable
+{
+  function init
+  {
+    var this.members = call.evalArgs |
+    this
+  };
+
+  // n-ary strict: add the arguments as group members.
+  function add
+  {
+    // Fetch Object's updateSlot or we will trigger the fallback
+    Object.getSlot("updateSlot")
+      .apply([this, "members", members + call.evalArgs])|
+    this
+  };
+
+  copySlot("add", "<<");
+
+  // n-ary strict: remove the arguments as group members.
+  // Removing a non-member is ok.
+  function remove
+  {
+    // Fetch Object's updateSlot or we will trigger the fallback
+    Object.getSlot("updateSlot")
+      .apply([this, "members", members - call.evalArgs])|
+    this
+  };
+
+  function asList()
+  {
+    members
+  };
+
+  function asString()
+  {
+    if (this === Group)
+      "Group"
+    else
+      type + " " + members
+  };
+
+  // FIXME: This implementation always evaluates the
+  // arguments. There's no other way to do it for now.
+  function fallback
+  {
+    var results = [] |
+    // We must use callMessage instead of apply, as the later looses the message
+    var outer_call = call |
+    // Evaluate args once.
+    call.evalArgs = call.evalArgs |
+    function action (m)
+    {
+      results.insertBack(m.callMessage(outer_call).acceptVoid)
+    } |
+    'each&'(action) |
+    // If the resulting group contains only void, return void.
+    if (results.all(methodToFunction("isVoid")))
+      void
+    else
+      Group.getSlot("new").apply([Group] + results)
+  };
+
+  for| (var s : ["getProperty", "hasProperty", "setProperty", "updateSlot"])
+    copySlot("fallback", s);
+};

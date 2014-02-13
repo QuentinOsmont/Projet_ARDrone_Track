@@ -1,0 +1,119 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+var Global.WeakPointer = Finalizable.new;
+/** A WeakPointer can be inserted into a WeakDictionary without increasing its
+  * reference count. Upon destruction of the WeakPointer, it is automatically
+  * removed of all WeakDictionary it was in.
+  */
+do (Global.WeakPointer)
+{
+  // Careful, we rely on copy-on-write.
+  var dicts = [];
+  function finalize()
+  {
+    nonInterruptible |
+    for| (var d: dicts)
+    {
+      d.dict.erase(this.'$id') |
+      __inc |
+      d.__inc |
+      d.cache_values
+    }
+  };
+};
+
+var Global.WeakDictionary = Finalizable.new;
+do (Global.WeakDictionary)
+{
+  function init()
+  {
+    var this.dict = [ => ] |
+    // Cache values for performance
+    var this.values = []
+  };
+  function '[]='(key, val)
+  {
+    nonInterruptible |
+    if (!dict.has(key.'$id'))
+    {
+      if (!key.isA(WeakPointer))
+        throw "WeakDictionary key is not a WeakPointer"|
+      key.__dec |
+      key.dicts = key.dicts + [this]|
+      __dec |
+      dict.set(key.'$id', Pair.new(key, [val]))
+    }
+    else
+      dict[key.'$id'].second << val |
+    cache_values
+  };
+  function '[]'(key)
+  {
+    dict[key.'$id'].second
+  };
+  function finalize()
+  {
+    nonInterruptible |
+    for(var e: dict)
+    {
+      e.second.first.__inc |
+      e.second.first.dicts.remove(this) |
+      __inc
+    }
+  };
+  function erase(key)
+  {
+    if (!key.isA(WeakPointer))
+      throw "WeakDictionary key is not a WeakPointer"|
+    nonInterruptible |
+    if (dict.has(key.'$id'))
+    {
+      dict.erase(key.'$id') |
+      key.__inc |
+      key.dicts.remove(this) |
+      __inc
+    }
+  };
+  function remove(val)
+  {
+    for|(var e: dict)
+    {
+      if (e.second.second.has(val))
+      {
+        dict.set(e.first,
+                 Pair.new(e.second.first, e.second.second.remove(val))) |
+        cache_values
+      }
+    }
+  };
+  function empty()
+  {
+    dict.empty
+  };
+  function asList()
+  {
+    dict.asList.map(function(x) {x.second})
+  };
+  function cache_values()
+  {
+    values = [] |
+    for|(var e: dict)
+    {
+      values += e.second.second
+    }
+  };
+  function keys()
+  {
+    dict.asList.map(function(x) {x.second.first})
+  };
+};
+
+

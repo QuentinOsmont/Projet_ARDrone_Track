@@ -1,0 +1,14 @@
+<map id="G" name="G">
+<area shape="rect" href="$classurbi_1_1_u_abstract_client.html" title="Interface for an URBI wrapper object." alt="" coords="1228,355,1391,379" />
+<area shape="rect" title="STL class." alt="" coords="911,236,1018,260" />
+<area shape="rect" title="STL class." alt="" coords="466,175,674,199" />
+<area shape="rect" title="STL class." alt="" coords="172,175,348,199" />
+<area shape="rect" title="STL class." alt="" coords="7,175,116,199" />
+<area shape="rect" href="$classurbi_1_1_binary_data.html" title="urbi::BinaryData" alt="" coords="503,404,636,428" />
+<area shape="rect" title="STL class." alt="" coords="515,486,624,510" />
+<area shape="rect" href="$classurbi_1_1_u_callback_info.html" title="urbi::UCallbackInfo" alt="" coords="495,640,644,664" />
+<area shape="rect" title="STL class." alt="" coords="919,176,1010,200" />
+<area shape="rect" title="STL class." alt="" coords="474,127,666,151" />
+<area shape="rect" href="$classurbi_1_1_u_callback_wrapper.html" title="Wrapper around a callback function. Use callback() to create them." alt="" coords="170,640,351,664" />
+<area shape="rect" href="$classlibport_1_1_socket.html" title="libport::Socket" alt="" coords="1250,403,1370,427" />
+</map>

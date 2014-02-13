@@ -1,0 +1,69 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+const var Global.Mutex = Tag.new;
+do (Mutex)
+{
+  var type = "Mutex";
+  function asMutex() { this };
+  var asString = Object.getSlot("asString");
+
+  function init()
+  {
+    var this.sem = Semaphore.new(1)|
+    at (enter?) lock |
+    at (leave?) unlock
+  };
+
+  function lock()
+  {
+    sem.acquire
+  };
+
+  function unlock()
+  {
+    sem.release
+  };
+
+  function '!'()
+  {
+    NotMutex.new(this)
+  };
+};
+
+var Global.NotMutex = Mutex.new;
+do (NotMutex)
+{
+  var type = "NotMutex";
+  function asNotMutex() { this };
+  var asString = Object.getSlot("asString");
+
+  function clone()
+  {
+    var res = Mutex.new|
+    res.protos = [NotMutex]|
+    res;
+  };
+
+  function init(var mtx)
+  {
+    var this.mtx = mtx
+  };
+
+  function lock()
+  {
+    mtx.unlock
+  };
+
+  function unlock()
+  {
+    mtx.lock
+  };
+};

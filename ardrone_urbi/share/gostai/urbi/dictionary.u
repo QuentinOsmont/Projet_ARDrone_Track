@@ -1,0 +1,108 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+do (Global.Dictionary)
+{
+  protos = [Global.RangeIterable, Global.Comparable, Global.Container];
+
+  class KeyError: Exception
+  {
+    function init(name)
+    {
+      var this.key = name;
+      Exception.getSlot("init").apply([this, "missing key: %s" % name]);
+    }
+  };
+
+  /// Dictionary.init(KEY1, VAL1, ...).
+  function init
+  {
+    if (call.argsCount % 2)
+      throw Exception.Primitive.new("new",
+                                    "Dictionary constructor must be given "
+                                    "an even number of arguments") |
+    for| (var i = 0; i < call.argsCount; i += 2)
+      set(call.evalArgAt(i), call.evalArgAt(i + 1)) |
+    this
+  };
+
+  function asList()
+  {
+    var res = []|
+    for| (var k: keys)
+      res.insertBack(Pair.new (k, get (k)))|
+    res
+  };
+
+  function asString()
+  {
+    var sep = "" |
+    var res = "[" |
+    for| (var k: keys)
+    {
+      res += sep + k.asPrintable + " => " + get(k).asPrintable |
+      sep = ", " |
+    }|
+    if (!size)
+      res += " => " |
+    res +  "]"
+  };
+
+  function getWithDefault(name, otherwise, insert = false)
+  {
+    if (has(name))
+      get(name)
+    else
+    {
+      if (insert)
+        set(name, otherwise) |
+      otherwise
+    }
+  };
+
+  // Syntactic sugar.
+  copySlot("get", "[]");
+  function '[]=' (k, v)
+  {
+    set(k, v) |
+    v
+  };
+
+  // Compare two dictionaries.  This suppose that elements are Comparable.
+  function '==' (rhs)
+  {
+    if (size != rhs.size)
+      return false |
+    for (var k: keys)
+      if (!rhs.has(k) || get(k) != rhs.get(k))
+        return false |
+    return true
+  };
+
+  // Extends the dictionary with the one provided in its argument.
+  function extend (ext)
+  {
+    for|(var item: ext)
+      set(item.first, item.second) |
+    this
+  };
+
+  // Pattern matching.
+  function matchAgainst(handler, pattern)
+  {
+    if (!pattern.isA(Dictionary))
+      return false |
+    for| (var k: pattern.keys)
+      if (!has(k) || !handler.matchPattern(pattern[k], this[k]))
+        return false |
+    return true
+  };
+
+};

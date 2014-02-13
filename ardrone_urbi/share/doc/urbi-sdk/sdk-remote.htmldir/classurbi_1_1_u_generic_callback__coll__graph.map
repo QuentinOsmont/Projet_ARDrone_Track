@@ -1,0 +1,16 @@
+<map id="G" name="G">
+<area shape="rect" href="$classurbi_1_1_u_context.html" title="Methods available in both UObject and UVar Wrapper around UContextImpl to enable access through inher..." alt="" coords="1112,289,1232,313" />
+<area shape="rect" href="$classurbi_1_1_u_object.html" title="Main UObject class definition Each UObject instance corresponds to an URBI object." alt="" coords="2000,713,2112,737" />
+<area shape="rect" href="$classurbi_1_1_u_object_hub.html" title="Main UObjectHub class definition." alt="" coords="2616,713,2755,737" />
+<area shape="rect" href="$classurbi_1_1_u_var.html" title="UVar class definition." alt="" coords="1528,200,1616,224" />
+<area shape="rect" href="$classurbi_1_1impl_1_1_u_context_impl.html" title="urbi::impl::UContextImpl" alt="" coords="825,289,1012,313" />
+<area shape="rect" title="STL class." alt="" coords="125,289,237,313" />
+<area shape="rect" title="STL class." alt="" coords="1127,893,1217,917" />
+<area shape="rect" href="$classurbi_1_1base_u_r_b_i_starter.html" title="urbi::baseURBIStarter" alt="" coords="1488,749,1656,773" />
+<area shape="rect" title="STL class." alt="" coords="823,893,1015,917" />
+<area shape="rect" title="STL class." alt="" coords="2001,1020,2111,1044" />
+<area shape="rect" href="$classurbi_1_1_u_prop.html" title="Provides easy access to variable properties." alt="" coords="2008,53,2104,77" />
+<area shape="rect" href="$classurbi_1_1impl_1_1_u_var_impl.html" title="urbi::impl::UVarImpl" alt="" coords="1093,139,1251,163" />
+<area shape="rect" href="$classurbi_1_1impl_1_1_u_object_impl.html" title="urbi::impl::UObjectImpl" alt="" coords="1483,875,1661,899" />
+<area shape="rect" href="$classurbi_1_1impl_1_1_u_generic_callback_impl.html" title="urbi::impl::UGenericCallbackImpl" alt="" coords="1933,412,2179,436" />
+</map>

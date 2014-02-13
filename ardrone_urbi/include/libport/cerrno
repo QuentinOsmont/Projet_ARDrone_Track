@@ -1,0 +1,24 @@
+/*
+ * Copyright (C) 2009-2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+#ifndef LIBPORT_CERRNO
+# define LIBPORT_CERRNO
+
+// boost/cerrno.hpp covers portability issues for us.  We could use
+// our how numbering scheme, but given that we talk about #define
+// here, the risks of having mysterious incompatibilities is way too
+// high.
+# include <boost/cerrno.hpp>
+
+#endif // ! LIBPORT_CERRNO
+
+// Local Variables:
+// mode: C++
+// End:

@@ -1,0 +1,1318 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>5 First Steps</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,sections+,xhtml,info --> 
+<meta name="src" content="urbi-sdk.tex" /> 
+<meta name="date" content="2010-09-30 15:52:00" /> 
+<link rel="stylesheet" type="text/css" href="urbi-sdk.css" /> 
+</head><body 
+>
+   <div class="header"><a 
+href="basic-objects-value-model.html" ><p>Next</p></a><a 
+href="urbi-sdkli3.html" ><p>Prev</p></a><a 
+href="urbi-sdkli3.html#tailurbi-sdkli3.html" ><p>Prev-tail</p></a><a 
+href="#tailurbi-sdkch5.html"><p>Tail</p></a><a 
+href="urbiscript-user-manual.html#first-steps.html" ><p>Up</p></a></div><h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;5</span><br /><a 
+href="index.html#QQ2-11-55" id="x11-500005">First Steps</a></h2>
+<!--l. 11--><p class="noindent">This section introduces the most basic notions to write urbiscript code. Some aspects are presented
+only minimally. The goal of this section is to bootstrap yourself with the urbiscript language, to be
+able to study more in-depth examples afterward.
+</p>
+   <div class="sectionTOCS">
+   &#x00A0;<span class="sectionToc">5.1 <a 
+href="#x11-510005.1">Comments</a></span>
+<br />   &#x00A0;<span class="sectionToc">5.2 <a 
+href="#x11-520005.2">Literal values</a></span>
+<br />   &#x00A0;<span class="sectionToc">5.3 <a 
+href="#x11-530005.3">Function calls</a></span>
+<br />   &#x00A0;<span class="sectionToc">5.4 <a 
+href="#x11-540005.4">Variables</a></span>
+<br />   &#x00A0;<span class="sectionToc">5.5 <a 
+href="#x11-550005.5">Scopes</a></span>
+<br />   &#x00A0;<span class="sectionToc">5.6 <a 
+href="#x11-560005.6">Method calls</a></span>
+<br />   &#x00A0;<span class="sectionToc">5.7 <a 
+href="#x11-570005.7">Function definition</a></span>
+<br />   &#x00A0;<span class="sectionToc">5.8 <a 
+href="#x11-580005.8">Conclusion</a></span>
+   </div>
+   <h3 class="sectionHead"><span class="titlemark">5.1   </span> <a 
+href="index.html#QQ2-11-56" id="x11-510005.1">Comments</a></h3>
+<a 
+ id="x11-51001"></a>
+<!--l. 18--><p class="noindent">Commenting your code is crucial, so let&#8217;s start by learning how to do this in urbiscript. Comments are
+ignored by the interpreter, and can be left as documentation, reminder, &#x2026;urbiscript supports C and
+C<span 
+class="cmbx-8">++</span> style comments:
+</p>
+     <ul class="itemize1">
+     <li class="itemize">C style comments start with <span 
+class="cmtt-10x-x-109">/* </span>and end with <span 
+class="cmtt-10x-x-109">*/</span>.
+     </li>
+     <li class="itemize">C <span 
+class="cmbx-8">++</span> style comments start with <span 
+class="cmtt-10x-x-109">// </span>and last until the end of the line.</li></ul>
+<!--l. 29--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 29--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-51002r1"></a></span><span 
+class="cmtt-10x-x-109">1;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 30--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">This</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">C</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">++</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">style</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">comment</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-51003r2"></a></span><!--l. 31--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">1</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-51004r3"></a></span><span 
+class="cmtt-10x-x-109">2</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 32--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">/*</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">This</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">C</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">style</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">comment</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">*/</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">2;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-51005r4"></a></span><!--l. 33--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">4</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-51006r5"></a></span><!--l. 34--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">/*</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Contrary</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">to</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">C</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">C</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">++,</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">this</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">type</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">comment</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><!--l. 34--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">/*</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">does</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">nest</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">*/</span></span></pre><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">*/</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-51007r6"></a></span><span 
+class="cmtt-10x-x-109">3;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-51008r7"></a></span><!--l. 36--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre>
+   </pre>
+   </div>
+<!--l. 40--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">5.2   </span> <a 
+href="index.html#QQ2-11-57" id="x11-520005.2">Literal values</a></h3>
+                                                                                       
+
+                                                                                       
+<!--l. 42--><p class="noindent">As already seen, we can evaluate literal integers. urbiscript supports several other literals, such
+as:
+     </p><dl class="description"><dt class="description">
+<span 
+class="cmbx-10x-x-109">floats</span> </dt><dd 
+class="description">floating point numbers.
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">strings</span> </dt><dd 
+class="description">character strings.
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">lists</span> </dt><dd 
+class="description">ordered collection of values.
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">dictionary</span> </dt><dd 
+class="description">unordered collection of associations.
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">nil</span> </dt><dd 
+class="description">neutral value. Think of it as the value that fits anywhere.
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">void</span> </dt><dd 
+class="description">absence of value. Think of it as the value that fits nowhere.</dd></dl>
+<!--l. 54--><p class="indent">   These literal values can be obtained with the syntax presented below.
+</p><!--l. 56--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 56--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-52001r1"></a></span><span 
+class="cmtt-10x-x-109">42;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 57--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Integer</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">literal</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-52002r2"></a></span><!--l. 58--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">42</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-52003r3"></a></span><span 
+class="cmtt-10x-x-109">3.14;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 59--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Floating</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">point</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">number</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">literal</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-52004r4"></a></span><!--l. 60--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3.14</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-52005r5"></a></span><!--l. 61--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">string</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 61--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Character</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">string</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">literal</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-52006r6"></a></span><!--l. 62--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">string</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-52007r7"></a></span><span 
+class="cmtt-10x-x-109">[1,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">2,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 63--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 63--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">b</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">];</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 63--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">List</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">literal</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-52008r8"></a></span><!--l. 64--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[1,</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">2,</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">a</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">b</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"]</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-52009r9"></a></span><span 
+class="cmtt-10x-x-109">[</span><!--l. 65--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=&#x003E;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">1,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 65--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">b</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=&#x003E;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">2];</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 65--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Dictionary</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">literal</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-52010r10"></a></span><!--l. 66--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">a</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">1,</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">b</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">2]</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-52011r11"></a></span><span 
+class="cmtt-10x-x-109">nil;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-52012r12"></a></span><span 
+class="cmtt-10x-x-109">void;</span>
+   </pre>
+   </div>
+<!--l. 71--><p class="indent">   This listing highlights some point: </p>
+     <ul class="itemize1">
+     <li class="itemize">Lists and Dictionaries in urbiscript are heterogeneous. That is, one list can hold values of
+     different types.
+     </li>
+     <li class="itemize">The printing of nil and void is empty.</li></ul>
+<!--l. 78--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">5.3   </span> <a 
+href="index.html#QQ2-11-58" id="x11-530005.3">Function calls</a></h3>
+<!--l. 80--><p class="noindent">You can call functions with the classical, mathematical notation.
+</p><!--l. 82--><p class="indent">   <div class="urbiscript">
+                                                                                       
+
+                                                                                       
+</p>
+   <!--l. 82--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-53001r1"></a></span><span 
+class="cmtt-10x-x-109">cos</span><span 
+class="cmtt-10x-x-109">(0);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 83--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Compute</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">cosine</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-53002r2"></a></span><!--l. 84--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">1</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-53003r3"></a></span><span 
+class="cmtt-10x-x-109">max</span><span 
+class="cmtt-10x-x-109">(1,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">3);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 85--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Get</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">maximum</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">arguments</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-53004r4"></a></span><!--l. 86--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-53005r5"></a></span><span 
+class="cmtt-10x-x-109">max</span><span 
+class="cmtt-10x-x-109">(1,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">3,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">4,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">2);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-53006r6"></a></span><!--l. 88--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">4</span></span></pre>
+   </pre>
+   </div>
+<!--l. 91--><p class="indent">   Again, the result of the evaluation are printed out. You can see here that function in urbiscript can
+be variadic, that is, take different number of arguments, such as the <span class="lstinline"><span 
+class="cmtt-10x-x-109">max</span></span> function. Let&#8217;s now try the
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">echo</span></span> function, that prints out its argument.
+</p><!--l. 96--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 96--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-53007r1"></a></span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 97--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Hello</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">world</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">!</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-53008r2"></a></span><!--l. 98--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Hello</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">world</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">!</span></span></pre>
+   </pre>
+   </div>
+<!--l. 101--><p class="indent">   The server prints out <span class="lstinline"><span 
+class="cmtt-10x-x-109">Hello</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">world</span><span 
+class="cmtt-10x-x-109">!</span></span>, as expected. Note that this output is still prepended with the
+time stamp. Since echo returns void, no evaluation result is printed.
+</p><!--l. 105--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">5.4   </span> <a 
+href="index.html#QQ2-11-59" id="x11-540005.4">Variables</a></h3>
+<a 
+ id="x11-54001"></a>
+<!--l. 106--><p class="noindent">Variables can be introduced with the <span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span></span> keyword, given a name and an initial value. They can be
+assigned new values with the <span class="lstinline"><span 
+class="cmtt-10x-x-109">=</span></span> operator.
+</p><!--l. 110--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 110--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54002r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">42;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54003r2"></a></span><!--l. 112--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">42</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54004r3"></a></span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54005r4"></a></span><!--l. 114--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">42</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54006r5"></a></span><span 
+class="cmtt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">51;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54007r6"></a></span><!--l. 116--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">51</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54008r7"></a></span><span 
+class="cmtt-10x-x-109">x;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54009r8"></a></span><!--l. 118--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">51</span></span></pre>
+   </pre>
+   </div>
+<!--l. 121--><p class="indent">   Note that, just as in C <span 
+class="cmbx-8">++</span>, assignments return the (right-hand side) value, so you can write code
+like &#8220;<span class="lstinline"><span 
+class="cmtt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">y</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">0</span></span>&#8221;. The rule for valid identifiers is also the same as in C <span 
+class="cmbx-8">++</span>: they may contain
+alphanumeric characters and underscores, but they may not start with a digit.
+</p><!--l. 126--><p class="indent">   You may omit the initialization value, in which case it defaults to <span class="lstinline"><span 
+class="cmtt-10x-x-109">void</span></span>.
+</p><!--l. 129--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 129--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54010r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">y;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54011r2"></a></span><span 
+class="cmtt-10x-x-109">y;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54012r3"></a></span><!--l. 132--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Remember,</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">interpreter</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">remains</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">silent</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54013r4"></a></span><!--l. 133--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">because</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">void</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">printed</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">out</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">as</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">nothing</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54014r5"></a></span><!--l. 134--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">You</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">can</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">convince</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">yourself</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">that</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">y</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">actually</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54015r6"></a></span><!--l. 135--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">void</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">with</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">following</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">methods</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54016r7"></a></span><span 
+class="cmtt-10x-x-109">y</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">asString;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54017r8"></a></span><!--l. 137--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">void</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54018r9"></a></span><span 
+class="cmtt-10x-x-109">y</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">isVoid;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-54019r10"></a></span><!--l. 139--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">true</span></span></pre>
+   </pre>
+   </div>
+                                                                                       
+
+                                                                                       
+<!--l. 142--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">5.5   </span> <a 
+href="index.html#QQ2-11-60" id="x11-550005.5">Scopes</a></h3>
+<a 
+ id="x11-55001"></a>
+<!--l. 143--><p class="noindent">Scopes are introduced with curly brackets (<span class="lstinline"><span 
+class="cmtt-10x-x-109">{}</span></span>). They can contain any number of statements. Variables
+declared in a scope only exist within this scope.
+</p><!--l. 147--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 147--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-55002r1"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-55003r2"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 149--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">test</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-55004r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-55005r4"></a></span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-55006r5"></a></span><!--l. 152--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">test</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-55007r6"></a></span><!--l. 153--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">x</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">no</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">longer</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">defined</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">here</span></span></pre>
+   </pre>
+   </div>
+<!--l. 156--><p class="indent">   Note that the interpreter waits for the whole scope to be inputted to evaluate it. Also note the
+mandatory terminating semicolon after the closing curly bracket.
+</p><!--l. 160--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">5.6   </span> <a 
+href="index.html#QQ2-11-61" id="x11-560005.6">Method calls</a></h3>
+<!--l. 162--><p class="noindent">Methods are called on objects with the dot (<span class="lstinline"><span 
+class="cmtt-10x-x-109">.</span></span>) notation as in C <span 
+class="cmbx-8">++</span>. Method calls can be chained.
+Methods with no arguments don&#8217;t require the parentheses.
+</p><!--l. 166--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 166--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-56001r1"></a></span><span 
+class="cmtt-10x-x-109">0.</span><span 
+class="cmtt-10x-x-109">cos</span><span 
+class="cmtt-10x-x-109">();</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-56002r2"></a></span><!--l. 168--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">1</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-56003r3"></a></span><!--l. 169--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">b</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">c</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">split</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 169--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-56004r4"></a></span><!--l. 170--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">a</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">b</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">c</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"]</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-56005r5"></a></span><!--l. 171--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Empty</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">parentheses</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">are</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">optional</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-56006r6"></a></span><!--l. 172--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">foo</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">length</span><span 
+class="cmtt-10x-x-109">();</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-56007r7"></a></span><!--l. 173--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-56008r8"></a></span><!--l. 174--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">foo</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">length;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-56009r9"></a></span><!--l. 175--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-56010r10"></a></span><!--l. 176--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Method</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">call</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">can</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">be</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">chained</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-56011r11"></a></span><!--l. 177--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">length</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">cos;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-56012r12"></a></span><!--l. 178--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">1</span></span></pre>
+   </pre>
+   </div>
+<!--l. 181--><p class="indent">   In <span class="lstinline"><span 
+class="cmtt-10x-x-109">obj</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">method</span></span>, we say that <span class="lstinline"><span 
+class="cmtt-10x-x-109">obj</span></span> is the <span 
+class="cmti-10x-x-109">target</span><a 
+ id="x11-56013"></a>, and that we are sending him the <span class="lstinline"><span 
+class="cmtt-10x-x-109">method</span></span>
+<span 
+class="cmti-10x-x-109">message</span><a 
+ id="x11-56014"></a>.
+</p><!--l. 185--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">5.7   </span> <a 
+href="index.html#QQ2-11-62" id="x11-570005.7">Function definition</a></h3>
+<!--l. 187--><p class="noindent">You know how to call routines, let&#8217;s learn how to write some. Functions can be declared thanks to the
+<span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span></span> keyword, followed by the comma separated, parentheses surrounded list of formal arguments,
+and the body between curly brackets.
+</p><!--l. 192--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 192--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57001r1"></a></span><!--l. 193--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Define</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">myFunction</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57002r2"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">myFunction</span><span 
+class="cmtt-10x-x-109">()</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57003r3"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57004r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 196--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Hello</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">world</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57005r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 197--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">from</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">my</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">!</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57006r6"></a></span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57007r7"></a></span><!--l. 199--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">function</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">()</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">{</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57008r8"></a></span><!--l. 200--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">echo</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">("</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Hello</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">world</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">");</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57009r9"></a></span><!--l. 201--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">echo</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">("</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">from</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">my</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">function</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">!");</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57010r10"></a></span><!--l. 202--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">}</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57011r11"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57012r12"></a></span><!--l. 204--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Invoke</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">it</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57013r13"></a></span><span 
+class="cmtt-10x-x-109">myFunction</span><span 
+class="cmtt-10x-x-109">();</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57014r14"></a></span><!--l. 206--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Hello</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">world</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57015r15"></a></span><!--l. 207--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">from</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">my</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">function</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">!</span></span></pre>
+   </pre>
+                                                                                       
+
+                                                                                       
+   </div>
+<!--l. 210--><p class="indent">   Note the strange output after you defined the function. urbiscript seems to be printing the function
+you just typed in again. This is because a function definition evaluates to the freshly created
+function.
+</p><!--l. 214--><p class="indent">   Functions are first class citizen: they are values, just as <span class="lstinline"><span 
+class="cmtt-10x-x-109">0</span></span> or <span class="lstinline"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">foobar</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></span>. The evaluation of a function
+definition yields the new function, and as always, the interpreter prints out the evaluation result, thus
+showing you the function again:
+</p><!--l. 220--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 220--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57016r1"></a></span><!--l. 221--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Work</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">in</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">scope</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57017r2"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57018r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 223--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Define</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">f</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57019r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">f</span><span 
+class="cmtt-10x-x-109">()</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57020r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57021r6"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 226--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">f</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57022r7"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57023r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 228--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">This</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">does</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">not</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">invoke</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">f,</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">it</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">returns</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">its</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">value</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57024r9"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">f;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57025r10"></a></span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57026r11"></a></span><!--l. 231--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">function</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">()</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">{</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57027r12"></a></span><!--l. 232--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">echo</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">("</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">f</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">")</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57028r13"></a></span><!--l. 233--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">}</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57029r14"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57030r15"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 235--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Define</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">f</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57031r16"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">f</span><span 
+class="cmtt-10x-x-109">()</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57032r17"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57033r18"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 238--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Hello</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">World</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57034r19"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57035r20"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 240--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">This</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">actually</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">calls</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">f</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57036r21"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">f</span><span 
+class="cmtt-10x-x-109">();</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57037r22"></a></span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57038r23"></a></span><!--l. 243--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Hello</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">World</span></span></pre>
+   </pre>
+   </div>
+<!--l. 246--><p class="indent">   Here you can see that <span class="lstinline"><span 
+class="cmtt-10x-x-109">f</span></span> is actually a simple value. You can just evaluate it to see its value, that is,
+its body. By adding the parentheses, you can actually call the function. This is a difference with
+methods calling, where empty parentheses are optional: method are always evaluated, you cannot
+retrieve their functional value &#8212; of course, you can with a different construct, but that&#8217;s not the point
+here.
+</p><!--l. 254--><p class="indent">   Since this output is often irrelevant, most of the time it is hidden in this documentation using the
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">|{};</span></span> trick (or even <span class="lstinline"><span 
+class="cmtt-10x-x-109">|;</span></span>): when evaluating <span class="lstinline"><span 
+class="cmitt-10x-x-109">code</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{};</span></span>, the server first evaluates <span 
+class="cmitt-10x-x-109">code</span>, then evaluates <span class="lstinline"><span 
+class="cmtt-10x-x-109">{}</span></span>
+and return its value, <span class="lstinline"><span 
+class="cmtt-10x-x-109">void</span></span>, which prints to nothing.
+</p><!--l. 260--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 260--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57039r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">sum</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">a,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">b,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">c</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57040r2"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57041r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">return</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">b</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">c;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57042r4"></a></span><span 
+class="cmtt-10x-x-109">}</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57043r5"></a></span><span 
+class="cmtt-10x-x-109">sum</span><span 
+class="cmtt-10x-x-109">(20,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">2,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">20);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57044r6"></a></span><!--l. 266--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">42</span></span></pre>
+   </pre>
+   </div>
+<!--l. 269--><p class="indent">   The <span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">return</span></span></span> keyword enables to return a value from the function. If no <span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">return</span></span></span> statement is
+executed, the evaluation of the last expression is returned.
+</p><!--l. 273--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 273--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57045r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">succ</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">i</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">i</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">1</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">}</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57046r2"></a></span><span 
+class="cmtt-10x-x-109">succ</span><span 
+class="cmtt-10x-x-109">(50);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x11-57047r3"></a></span><!--l. 276--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">51</span></span></pre>
+   </pre>
+   </div>
+<!--l. 279--><p class="noindent">
+</p>
+                                                                                       
+
+                                                                                       
+   <h3 class="sectionHead"><span class="titlemark">5.8   </span> <a 
+href="index.html#QQ2-11-63" id="x11-580005.8">Conclusion</a></h3>
+<!--l. 281--><p class="noindent">You&#8217;re now up and running with basic urbiscript code, and we can dive in details into advanced
+urbiscript code.
+</p><!--l. 9--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 9--><p class="indent">   <div class="footer"><a 
+href="basic-objects-value-model.html" ><p>Next</p></a><a 
+href="urbi-sdkli3.html" ><p>Prev</p></a><a 
+href="urbi-sdkli3.html#tailurbi-sdkli3.html" ><p>Prev-tail</p></a><a 
+href="first-steps.html" ><p>Front</p></a><a 
+href="urbiscript-user-manual.html#first-steps.html" ><p>Up</p></a></div><a 
+ id="tailurbi-sdkch5.html"></a>  </p> 
+</body></html> 

@@ -1,0 +1,18 @@
+<map id="G" name="G">
+<area shape="rect" href="$uprop_8hh.html" title="urbi/uprop.hh" alt="" coords="709,380,824,404" />
+<area shape="rect" href="$uvar_8hh.html" title="urbi/uvar.hh" alt="" coords="700,81,804,105" />
+<area shape="rect" href="$uvalue_8hh.html" title="urbi/uvalue.hh" alt="" coords="1308,455,1428,479" />
+<area shape="rect" href="$uproperty_8hh.html" title="urbi/uproperty.hh" alt="" coords="593,455,732,479" />
+<area shape="rect" href="$fwd_8hh.html" title="Forward declarations." alt="" coords="932,529,1031,553" />
+<area shape="rect" href="$export_8hh.html" title="urbi/export.hh" alt="" coords="671,679,788,703" />
+<area shape="rect" href="$ubinary_8hh.html" title="urbi/ubinary.hh" alt="" coords="396,529,519,553" />
+<area shape="rect" href="$uvalue_8hxx.html" title="urbi/uvalue.hxx" alt="" coords="2139,529,2267,553" />
+<area shape="rect" href="$uimage_8hh.html" title="urbi/uimage.hh" alt="" coords="547,604,672,628" />
+<area shape="rect" href="$usound_8hh.html" title="urbi/usound.hh" alt="" coords="245,604,368,628" />
+<area shape="rect" href="$ubinary_8hxx.html" title="urbi/ubinary.hxx" alt="" coords="392,604,523,628" />
+<area shape="rect" href="$ucontext_8hh.html" title="urbi/ucontext.hh" alt="" coords="1079,156,1212,180" />
+<area shape="rect" href="$uvar_8hxx.html" title="urbi/uvar.hxx" alt="" coords="1811,156,1920,180" />
+<area shape="rect" href="$ucontext_8hxx.html" title="urbi/ucontext.hxx" alt="" coords="1263,231,1404,255" />
+<area shape="rect" href="$ucontext&#45;impl_8hh.html" title="urbi/ucontext&#45;impl.hh" alt="" coords="1280,305,1448,329" />
+<area shape="rect" href="$ucontext&#45;impl_8hxx.html" title="urbi/ucontext&#45;impl.hxx" alt="" coords="2187,380,2363,404" />
+</map>

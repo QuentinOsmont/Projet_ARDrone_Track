@@ -1,0 +1,20 @@
+<map id="G" name="G">
+<area shape="rect" href="$main_8cc.html" title="main.cc" alt="" coords="1315,380,1389,404" />
+<area shape="rect" href="$uobject_8cc.html" title="uobject.cc" alt="" coords="1161,380,1252,404" />
+<area shape="rect" href="$uvar_8cc.html" title="uvar.cc" alt="" coords="411,380,480,404" />
+<area shape="rect" href="$uabstractclient_8cc.html" title="uabstractclient.cc" alt="" coords="157,306,299,330" />
+<area shape="rect" href="$umessage_8cc.html" title="umessage.cc" alt="" coords="1491,82,1600,106" />
+<area shape="rect" href="$usyncclient_8cc.html" title="usyncclient.cc" alt="" coords="533,306,651,330" />
+<area shape="rect" href="$uabstractclient_8hh.html" title="Definition of the URBI interface class." alt="" coords="263,82,407,106" />
+<area shape="rect" href="$compatibility_8hxx.html" title="compatibility.hxx" alt="" coords="501,156,637,180" />
+<area shape="rect" href="$kernel&#45;version_8cc.html" title="kernel&#45;version.cc" alt="" coords="208,231,344,255" />
+<area shape="rect" href="$uclient_8hh.html" title="uclient.hh" alt="" coords="337,156,425,180" />
+<area shape="rect" href="$compatibility_8hh.html" title="compatibility.hh" alt="" coords="560,231,688,255" />
+<area shape="rect" href="$utimer&#45;callback_8cc.html" title="utimer&#45;callback.cc" alt="" coords="675,306,819,330" />
+<area shape="rect" href="$uclient_8cc.html" title="uclient.cc" alt="" coords="323,306,408,330" />
+<area shape="rect" href="$liburbi_2urbi&#45;launch_8cc.html" title="urbi&#45;launch.cc" alt="" coords="419,231,536,255" />
+<area shape="rect" href="$usyncclient_8hh.html" title="Definition of the URBI interface class." alt="" coords="887,231,1007,255" />
+<area shape="rect" href="$remote&#45;ucontext&#45;impl_8hh.html" title="remote&#45;ucontext&#45;impl.hh" alt="" coords="1075,306,1264,330" />
+<area shape="rect" href="$ucallbacks_8cc.html" title="ucallbacks.cc" alt="" coords="1003,380,1115,404" />
+<area shape="rect" href="$qt__umain_8hh.html" title="qt_umain.hh" alt="" coords="893,306,1000,330" />
+</map>

@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>16 Migration from urbiscript 1 to urbiscript 2</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,sections+,xhtml,info --> 
+<meta name="src" content="urbi-sdk.tex" /> 
+<meta name="date" content="2010-09-30 15:52:00" /> 
+<link rel="stylesheet" type="text/css" href="urbi-sdk.css" /> 
+</head><body 
+>
+   <div class="header"><a 
+href="build.html" ><p>Next</p></a><a 
+href="faq.html" ><p>Prev</p></a><a 
+href="faq.html#tailurbi-sdkch15.html" ><p>Prev-tail</p></a><a 
+href="#tailurbi-sdkch16.html"><p>Tail</p></a><a 
+href="guidelines-and-cook-books.html#migration-from-urbiscript-1-to-urbiscript-2.html" ><p>Up</p></a></div><h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;16</span><br /><a 
+href="index.html#QQ2-24-169" id="x24-16400016">Migration from urbiscript 1 to urbiscript 2</a></h2>
+<!--l. 12--><p class="noindent">This chapter is intended to people who want to migrate programs in urbiscript 1 to urbiscript 2.
+Backward compatibility is <span 
+class="cmti-10x-x-109">mostly </span>ensured, but some urbiscript 1 constructs were removed because they
+prevented the introduction of cleaner constructs in urbiscript 2. When possible, urbiscript 2 supports
+the remaining urbiscript 1 constructs. The <a 
+href="#x33-418050r28"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Kernel1</span></span> (<span 
+class="cmbx-10x-x-109">??</span>sec:std-Kernel1)</a> object contains functions that
+support some urbiscript 1 features.
+</p>
+   <div class="sectionTOCS">
+   &#x00A0;<span class="sectionToc">16.1 <a 
+href="#x24-16500016.1">$(Foo)</a></span>
+<br />   &#x00A0;<span class="sectionToc">16.2 <a 
+href="#x24-16600016.2">delete Foo</a></span>
+<br />   &#x00A0;<span class="sectionToc">16.3 <a 
+href="#x24-16700016.3">emit Foo</a></span>
+<br />   &#x00A0;<span class="sectionToc">16.4 <a 
+href="#x24-16800016.4">eval(Foo)</a></span>
+<br />   &#x00A0;<span class="sectionToc">16.5 <a 
+href="#x24-16900016.5">foreach</a></span>
+<br />   &#x00A0;<span class="sectionToc">16.6 <a 
+href="#x24-17000016.6">group</a></span>
+<br />   &#x00A0;<span class="sectionToc">16.7 <a 
+href="#x24-17100016.7">loopn</a></span>
+<br />   &#x00A0;<span class="sectionToc">16.8 <a 
+href="#x24-17200016.8">new Foo</a></span>
+<br />   &#x00A0;<span class="sectionToc">16.9 <a 
+href="#x24-17300016.9">self</a></span>
+<br />   &#x00A0;<span class="sectionToc">16.10 <a 
+href="#x24-17400016.10">stop Foo</a></span>
+<br />   &#x00A0;<span class="sectionToc">16.11 <a 
+href="#x24-17500016.11"># line</a></span>
+<br />   &#x00A0;<span class="sectionToc">16.12 <a 
+href="#x24-17600016.12">tag+end</a></span>
+   </div>
+   <h3 class="sectionHead"><span class="titlemark">16.1   </span> <a 
+href="index.html#QQ2-24-170" id="x24-16500016.1">$(Foo)</a></h3>
+<!--l. 24--><p class="noindent">This construct was designed to build identifiers at run-time. This used to be a common idiom to work
+around some limitations of urbiscript 1 which are typically <span 
+class="cmti-10x-x-109">no longer needed in urbiscript 2</span>.
+For instance, genuine local variables are simpler and safer to use than identifiers forged
+by hand to be unique. In order to associate information to a string, use a <a 
+href="#x33-362030r11"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Dictionary</span></span>
+(<span 
+class="cmbx-10x-x-109">??</span>sec:std-Dictionary)</a>.
+</p><!--l. 31--><p class="indent">   If you really need to forge identifiers at run-time, use <span class="lstinline"><span 
+class="cmtt-10x-x-109">setSlot</span></span>, <span class="lstinline"><span 
+class="cmtt-10x-x-109">updateSlot</span></span>, and <span class="lstinline"><span 
+class="cmtt-10x-x-109">getSlot</span></span>, which
+all work with strings, and possibly <span class="lstinline"><span 
+class="cmtt-10x-x-109">asString</span></span>, which converts arbitrary expressions into strings. The
+following table lists common patterns.
+</p>
+<div class="center" 
+>
+<!--l. 37--><p class="noindent">
+</p>
+                                                                                       
+
+                                                                                       
+<div class="tabular"><table class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-1-1g"><col 
+id="TBL-1-1" /></colgroup><colgroup id="TBL-1-2g"><col 
+id="TBL-1-2" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-1-1-1"  
+class="td11">  <span 
+class="cmbx-10x-x-109">Deprecated          </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-1-1-2"  
+class="td11">  <span 
+class="cmbx-10x-x-109">Updated                               </span></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-1-2-1"  
+class="td11">  <span class="lstinline"><!--l. 42--><p class="noindent"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">Foo</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">...;</span>                                                               </span> </p> </td><td  style="white-space:nowrap; text-align:left;" id="TBL-1-2-2"  
+class="td11"> <span class="lstinline"><!--l. 42--><p class="noindent"><span 
+class="cmtt-10x-x-109">setSlot</span> <span 
+class="cmtt-10x-x-109">(</span> <span 
+class="cmtt-10x-x-109">Foo</span> <span 
+class="cmtt-10x-x-109">.</span> <span 
+class="cmtt-10x-x-109">asString,</span> <span 
+class="cmtt-10x-x-109">&#x00A0;</span> <span 
+class="cmtt-10x-x-109">...);</span>                       </span> </p> </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-1-3-1"  
+class="td11">  <span class="lstinline"><!--l. 43--><p class="noindent"><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">Foo</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">...;</span>                                                                   </span> </p> </td><td  style="white-space:nowrap; text-align:left;" id="TBL-1-3-2"  
+class="td11"> <span class="lstinline"><!--l. 43--><p class="noindent"><span 
+class="cmtt-10x-x-109">updateSlot</span> <span 
+class="cmtt-10x-x-109">(</span> <span 
+class="cmtt-10x-x-109">Foo</span> <span 
+class="cmtt-10x-x-109">.</span> <span 
+class="cmtt-10x-x-109">asString,</span> <span 
+class="cmtt-10x-x-109">&#x00A0;</span> <span 
+class="cmtt-10x-x-109">...);</span>                       </span> </p> </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-1-4-1"  
+class="td11">  <span class="lstinline"><!--l. 44--><p class="noindent"><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">Foo</span><span 
+class="cmtt-10x-x-109">)</span>                                                                          </span> </p> </td><td  style="white-space:nowrap; text-align:left;" id="TBL-1-4-2"  
+class="td11"> <span class="lstinline"><!--l. 44--><p class="noindent"><span 
+class="cmtt-10x-x-109">getSlot</span> <span 
+class="cmtt-10x-x-109">(</span> <span 
+class="cmtt-10x-x-109">Foo</span> <span 
+class="cmtt-10x-x-109">.</span> <span 
+class="cmtt-10x-x-109">asString</span> <span 
+class="cmtt-10x-x-109">);</span>                       </span> </p> </td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-1-5-1"  
+class="td11">                              </td>
+</tr></table></div></div>
+<!--l. 49--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">16.2   </span> <a 
+href="index.html#QQ2-24-171" id="x24-16600016.2">delete Foo</a></h3>
+<!--l. 51--><p class="noindent">In order to maintain an analogy with the C <span 
+class="cmbx-8">++</span> language, urbiscript used to support <span class="lstinline"><span 
+class="cmtt-10x-x-109">delete</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Foo</span></span>, but
+this was removed for a number of reasons: </p>
+     <ul class="itemize1">
+     <li class="itemize">urbiscript 2 features genuine local variables for which <span class="lstinline"><span 
+class="cmtt-10x-x-109">delete</span></span> makes no sense.
+     </li>
+     <li class="itemize">in C <span 
+class="cmbx-8">++</span> <span class="lstinline"><span 
+class="cmtt-10x-x-109">delete</span></span> really targets the object: destroy yourself, then the system will reclaim
+     the memory. In urbiscript one cannot destroy an object and reclaim the memory, it is the
+     task of the system to notice objects that are no longer used, and to reclaim the memory.
+     This is called <span 
+class="cmti-10x-x-109">garbage collection</span><a 
+ id="x24-166001"></a>. Therefore in urbiscript <span class="lstinline"><span 
+class="cmtt-10x-x-109">delete</span></span> is actually bounced to
+     <span class="lstinline"><span 
+class="cmtt-10x-x-109">removeSlot</span></span> sent to the owner of the object.
+     </li>
+     <li class="itemize"><span class="lstinline"><span 
+class="cmtt-10x-x-109">delete</span></span> is an unsafe feature that makes only sense in pointer-based languages such as C and
+     C<span 
+class="cmbx-8">++</span>. It enables nice bugs such as: <div class="urbiunchecked">
+     <!--l. 67--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166002r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">this</span></span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">:=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">A</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166003r2"></a></span><!--l. 69--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">...</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166004r3"></a></span><span 
+class="cmtt-10x-x-109">delete</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">this</span></span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">a;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166005r4"></a></span><!--l. 71--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">...</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166006r5"></a></span><span 
+class="cmtt-10x-x-109">cout</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x003C;&#x003C;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">this</span></span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">a;</span>
+     </pre>
+     </div>
+     </li></ul>
+<!--l. 76--><p class="indent">   For these reasons, and others, <span class="lstinline"><span 
+class="cmtt-10x-x-109">delete</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Foo</span></span> was removed. To remove the <span 
+class="cmti-10x-x-109">name </span>Foo, run
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">removeSlot</span><span 
+class="cmtt-10x-x-109">(</span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Foo</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span 
+class="cmtt-10x-x-109">)</span></span> (<a 
+href="basic-objects-value-model.html#x12-600006.1">Section&#x00A0;6.1<!--tex4ht:ref: sec:tut:objects --></a>) &#8212; the garbage collector will reclaim memory if there
+are no other use of <span class="lstinline"><span 
+class="cmtt-10x-x-109">Foo</span></span>. To remove the contents of <span class="lstinline"><span 
+class="cmtt-10x-x-109">Foo</span></span>, you remove all its slots one by
+one:
+</p><!--l. 83--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 83--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166007r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">class</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Foo</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166008r2"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166009r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">12;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166010r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">b</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">23;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166011r5"></a></span><span 
+class="cmtt-10x-x-109">}</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166012r6"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Object</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">removeAllSlots</span><span 
+class="cmtt-10x-x-109">()</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166013r7"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166014r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">for</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">localSlotNames</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166015r9"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">removeSlot</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166016r10"></a></span><span 
+class="cmtt-10x-x-109">}</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166017r11"></a></span><span 
+class="cmtt-10x-x-109">Foo</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">removeAllSlots;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166018r12"></a></span><span 
+class="cmtt-10x-x-109">Foo</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">localSlotNames;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-166019r13"></a></span><!--l. 96--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000000]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[]</span></span></pre>
+   </pre>
+   </div>
+                                                                                       
+
+                                                                                       
+<!--l. 99--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">16.3   </span> <a 
+href="index.html#QQ2-24-172" id="x24-16700016.3">emit Foo</a></h3>
+<!--l. 101--><p class="noindent">The keyword <span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">emit</span></span></span> is deprecated in favor of <span class="lstinline"><span 
+class="cmtt-10x-x-109">!</span></span>.
+</p>
+<div class="center" 
+>
+<!--l. 103--><p class="noindent">
+</p>
+<div class="tabular"><table class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-2-1g"><col 
+id="TBL-2-1" /></colgroup><colgroup id="TBL-2-2g"><col 
+id="TBL-2-2" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-1-1"  
+class="td11">  <span 
+class="cmbx-10x-x-109">Deprecated        </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-1-2"  
+class="td11">  <span 
+class="cmbx-10x-x-109">Updated      </span></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-2-1"  
+class="td11">  <span class="lstinline"><!--l. 108--><p class="noindent"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">emit</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">e;</span>                                                                         </span> </p> </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-2-2"  
+class="td11"> <span class="lstinline"><!--l. 108--><p class="noindent"><span 
+class="cmtt-10x-x-109">e</span> <span 
+class="cmtt-10x-x-109">!;</span>                     </span> </p> </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-3-1"  
+class="td11">  <span class="lstinline"><!--l. 109--><p class="noindent"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">emit</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">);</span>                                                                      </span> </p> </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-3-2"  
+class="td11"> <span class="lstinline"><!--l. 109--><p class="noindent"><span 
+class="cmtt-10x-x-109">e</span> <span 
+class="cmtt-10x-x-109">!(</span> <span 
+class="cmtt-10x-x-109">a</span> <span 
+class="cmtt-10x-x-109">);</span>                     </span> </p> </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-4-1"  
+class="td11">  <span class="lstinline"><!--l. 110--><p class="noindent"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">emit</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmsy-10x-x-109">~</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">1</span><span 
+class="cmtt-10x-x-109">s;</span>                                                                    </span> </p> </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-4-2"  
+class="td11"> <span class="lstinline"><!--l. 110--><p class="noindent"><span 
+class="cmtt-10x-x-109">e</span> <span 
+class="cmtt-10x-x-109">!</span> <span 
+class="cmtt-10x-x-109">&#x00A0;</span> <span 
+class="cmsy-10x-x-109">~</span> <span 
+class="cmtt-10x-x-109">&#x00A0;</span> <span 
+class="cmtt-10x-x-109">1</span> <span 
+class="cmtt-10x-x-109">s;</span>                     </span> </p> </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-5-1"  
+class="td11">  <span class="lstinline"><!--l. 111--><p class="noindent"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">emit</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmsy-10x-x-109">~</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">1</span><span 
+class="cmtt-10x-x-109">s;</span>                                                                 </span> </p> </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-5-2"  
+class="td11"> <span class="lstinline"><!--l. 111--><p class="noindent"><span 
+class="cmtt-10x-x-109">e</span> <span 
+class="cmtt-10x-x-109">!(</span> <span 
+class="cmtt-10x-x-109">a</span> <span 
+class="cmtt-10x-x-109">)</span> <span 
+class="cmtt-10x-x-109">&#x00A0;</span> <span 
+class="cmsy-10x-x-109">~</span> <span 
+class="cmtt-10x-x-109">&#x00A0;</span> <span 
+class="cmtt-10x-x-109">1</span> <span 
+class="cmtt-10x-x-109">s;</span>                     </span> </p> </td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-6-1"  
+class="td11">                            </td>
+</tr></table></div></div>
+<!--l. 116--><p class="indent">   The <span class="lstinline"><span 
+class="cmtt-10x-x-109">?</span></span> construct is changed for symmetry.
+</p>
+<div class="center" 
+>
+<!--l. 118--><p class="noindent">
+</p>
+<div class="tabular"><table class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-3-1g"><col 
+id="TBL-3-1" /></colgroup><colgroup id="TBL-3-2g"><col 
+id="TBL-3-2" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-1-1"  
+class="td11">  <span 
+class="cmbx-10x-x-109">Deprecated                   </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-3-1-2"  
+class="td11">  <span 
+class="cmbx-10x-x-109">Updated                       </span></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-2-1"  
+class="td11">  <span class="lstinline"><!--l. 123--><p class="noindent"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(?</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">)</span>                                                                         </span> </p> </td><td  style="white-space:nowrap; text-align:left;" id="TBL-3-2-2"  
+class="td11"> <span class="lstinline"><!--l. 123--><p class="noindent"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span> </span><span 
+class="cmtt-10x-x-109">&#x00A0;</span> <span 
+class="cmtt-10x-x-109">(</span> <span 
+class="cmtt-10x-x-109">e</span> <span 
+class="cmtt-10x-x-109">?)</span>                              </span> </p> </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-3-1"  
+class="td11">  <span class="lstinline"><!--l. 124--><p class="noindent"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(?</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">))</span>                                                                  </span> </p> </td><td  style="white-space:nowrap; text-align:left;" id="TBL-3-3-2"  
+class="td11"> <span class="lstinline"><!--l. 124--><p class="noindent"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span> </span><span 
+class="cmtt-10x-x-109">&#x00A0;</span> <span 
+class="cmtt-10x-x-109">(</span> <span 
+class="cmtt-10x-x-109">e</span> <span 
+class="cmtt-10x-x-109">?(</span> <span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span> </span><span 
+class="cmtt-10x-x-109">&#x00A0;</span> <span 
+class="cmtt-10x-x-109">a</span> <span 
+class="cmtt-10x-x-109">))</span>                              </span> </p> </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-4-1"  
+class="td11">  <span class="lstinline"><!--l. 125--><p class="noindent"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(?</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">if</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">==</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">2)</span>                                                        </span> </p> </td><td  style="white-space:nowrap; text-align:left;" id="TBL-3-4-2"  
+class="td11"> <span class="lstinline"><!--l. 125--><p class="noindent"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span> </span><span 
+class="cmtt-10x-x-109">&#x00A0;</span> <span 
+class="cmtt-10x-x-109">(</span> <span 
+class="cmtt-10x-x-109">e</span> <span 
+class="cmtt-10x-x-109">?(</span> <span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span> </span><span 
+class="cmtt-10x-x-109">&#x00A0;</span> <span 
+class="cmtt-10x-x-109">a</span> <span 
+class="cmtt-10x-x-109">)</span> <span 
+class="cmtt-10x-x-109">&#x00A0;</span> <span class="keywordstyle"><span 
+class="cmtt-10x-x-109">if</span> </span><span 
+class="cmtt-10x-x-109">&#x00A0;</span> <span 
+class="cmtt-10x-x-109">a</span> <span 
+class="cmtt-10x-x-109">&#x00A0;</span> <span 
+class="cmtt-10x-x-109">==</span> <span 
+class="cmtt-10x-x-109">&#x00A0;</span> <span 
+class="cmtt-10x-x-109">2)</span>                              </span> </p> </td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-3-5-1"  
+class="td11">                                         </td>
+</tr></table></div></div>
+<!--l. 131--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">16.4   </span> <a 
+href="index.html#QQ2-24-173" id="x24-16800016.4">eval(Foo)</a></h3>
+<!--l. 132--><p class="noindent"><span class="lstinline"><span 
+class="cmtt-10x-x-109">eval</span></span> is still supported, but its use is discouraged: one can often easily do without. For instance, <span class="lstinline"><span 
+class="cmtt-10x-x-109">eval</span></span>
+was often used to manipulate forged identifiers; see <a 
+href="#x24-16500016.1">Section&#x00A0;16.1<!--tex4ht:ref: sec:k122:dollar --></a> for means of getting rid of
+them.
+                                                                                       
+
+                                                                                       
+</p><!--l. 137--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">16.5   </span> <a 
+href="index.html#QQ2-24-174" id="x24-16900016.5">foreach</a></h3>
+<!--l. 138--><p class="noindent">The same feature with a slightly different syntax is now provided by <span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">for</span></span></span>. See <a 
+href="urbiscript-language-reference-manual.html#x29-29100019.6.5.2">Section&#x00A0;19.6.5.2<!--tex4ht:ref: sec:lang:for:each --></a>.
+</p><!--l. 141--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">16.6   </span> <a 
+href="index.html#QQ2-24-175" id="x24-17000016.6">group</a></h3>
+<!--l. 142--><p class="noindent">Where support for groups was a built-in feature in urbiscript 1, it is now provided by the standard
+library, see <a 
+href="#x33-403153r24"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Group</span></span> (<span 
+class="cmbx-10x-x-109">??</span>sec:std-Group)</a>. Instead of <div class="urbiunchecked">
+</p>
+   <!--l. 144--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-170001r1"></a></span><span 
+class="cmtt-10x-x-109">group</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">myGroup</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">a,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">b,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">c</span><span 
+class="cmtt-10x-x-109">}</span>
+   </pre>
+   </div>
+write <div class="urbiunchecked">
+   <!--l. 149--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-170002r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">myGroup</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Group</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">a,b,c</span><span 
+class="cmtt-10x-x-109">)</span>
+   </pre>
+</div>
+<!--l. 153--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">16.7   </span> <a 
+href="index.html#QQ2-24-176" id="x24-17100016.7">loopn</a></h3>
+<!--l. 154--><p class="noindent">The same feature and syntax is now provided by <span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">for</span></span></span>. See <a 
+href="urbiscript-language-reference-manual.html#x29-29200019.6.5.3">Section&#x00A0;19.6.5.3<!--tex4ht:ref: sec:lang:for:n --></a>.
+</p><!--l. 157--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">16.8   </span> <a 
+href="index.html#QQ2-24-177" id="x24-17200016.8">new Foo</a></h3>
+<!--l. 159--><p class="noindent">See <a 
+href="objective-programming-urbiscript-object-model.html#x15-810009.5">Section&#x00A0;9.5<!--tex4ht:ref: sec:tut:ctor --></a> for details on <span class="lstinline"><span 
+class="cmtt-10x-x-109">new</span></span>. The construct <span class="lstinline"><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Foo</span></span> is no longer supported because it is (too)
+ambiguous: what does <span class="lstinline"><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">(1,2).</span><span 
+class="cmtt-10x-x-109">b</span><span 
+class="cmtt-10x-x-109">(3,4)</span></span> mean? Is <span class="lstinline"><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">(1,2).</span><span 
+class="cmtt-10x-x-109">b</span></span> the object to clone and <span class="lstinline"><span 
+class="cmtt-10x-x-109">(3,4)</span></span>
+are the arguments of the constructor? Or is it the result of <span class="lstinline"><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">(1,2).</span><span 
+class="cmtt-10x-x-109">b</span><span 
+class="cmtt-10x-x-109">(3,4)</span></span> that must be
+cloned?
+</p><!--l. 166--><p class="indent">   In temporary versions, urbiscript 2 used to support this <span class="lstinline"><span 
+class="cmtt-10x-x-109">new</span></span> construct, but too many users got it
+wrong, and we decided to keep only the simpler, safer, and more consistent method-call-style construct:
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">Foo</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span></span>. Every single possible interpretation of <span class="lstinline"><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">(1,2).</span><span 
+class="cmtt-10x-x-109">b</span><span 
+class="cmtt-10x-x-109">(3,4)</span></span> is reported below,
+unambiguously. </p>
+                                                                                       
+
+                                                                                       
+     <ul class="itemize1">
+     <li class="itemize"><span class="lstinline"><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">(1,2).</span><span 
+class="cmtt-10x-x-109">b</span><span 
+class="cmtt-10x-x-109">(3,4).</span><span 
+class="cmtt-10x-x-109">new</span></span>
+     </li>
+     <li class="itemize"><span class="lstinline"><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">(1,2).</span><span 
+class="cmtt-10x-x-109">b</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(3,4)</span></span>
+     </li>
+     <li class="itemize"><span class="lstinline"><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">(1,2).</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">b</span><span 
+class="cmtt-10x-x-109">(3,4)</span></span>
+     </li>
+     <li class="itemize"><span class="lstinline"><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(1,2).</span><span 
+class="cmtt-10x-x-109">b</span><span 
+class="cmtt-10x-x-109">(3,4)</span></span>
+     </li>
+     <li class="itemize"><span class="lstinline"><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">a</span><span 
+class="cmtt-10x-x-109">(1,2).</span><span 
+class="cmtt-10x-x-109">b</span><span 
+class="cmtt-10x-x-109">(3,4)</span></span></li></ul>
+<!--l. 179--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">16.9   </span> <a 
+href="index.html#QQ2-24-178" id="x24-17300016.9">self</a></h3>
+<!--l. 180--><p class="noindent">For consistency with the C <span 
+class="cmbx-8">++</span> syntax, urbiscript now uses <span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">this</span></span></span>.
+</p><!--l. 182--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">16.10   </span> <a 
+href="index.html#QQ2-24-179" id="x24-17400016.10">stop Foo</a></h3>
+<!--l. 184--><p class="noindent">Use <span class="lstinline"><span 
+class="cmtt-10x-x-109">Foo</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">stop</span></span> instead, see <a 
+href="#x33-516017r61"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Tag</span></span> (<span 
+class="cmbx-10x-x-109">??</span>sec:std-Tag)</a>.
+</p><!--l. 186--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">16.11   </span> <a 
+href="index.html#QQ2-24-180" id="x24-17500016.11"># line</a></h3>
+<!--l. 188--><p class="noindent">Use <span class="lstinline"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">#</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">line</span></span></span> instead, see <a 
+href="urbiscript-language-reference-manual.html#x29-23200019.1.3">Section&#x00A0;19.1.3<!--tex4ht:ref: sec:specs:synclines --></a>.
+</p><!--l. 190--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">16.12   </span> <a 
+href="index.html#QQ2-24-181" id="x24-17600016.12">tag+end</a></h3>
+<!--l. 192--><p class="noindent">To detect the end of a statement, instead of
+</p><!--l. 194--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 194--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-176001r1"></a></span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">end</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 195--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">foo</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">},</span>
+   </pre>
+                                                                                       
+
+                                                                                       
+   </div>
+<!--l. 198--><p class="noindent">use the <span class="lstinline"><span 
+class="cmtt-10x-x-109">leave</span><span 
+class="cmtt-10x-x-109">?</span></span> method of the <a 
+href="#x33-516017r61"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Tag</span></span> (<span 
+class="cmbx-10x-x-109">??</span>sec:std-Tag)</a> object:
+</p><!--l. 201--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 201--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-176002r1"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-176003r2"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Tag</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 203--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">mytag</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-176004r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">leave</span><span 
+class="cmtt-10x-x-109">?)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-176005r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Channel</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 205--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">mytag</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x003C;&#x003C;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 205--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">code</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">has</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">finished</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-176006r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">mytag</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 206--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">foo</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">},</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-176007r6"></a></span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-176008r7"></a></span><!--l. 208--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000002]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">foo</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x24-176009r8"></a></span><!--l. 209--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000003:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">mytag</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">code</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">has</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">finished</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span></pre>
+   </pre>
+   </div>
+<!--l. 9--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 9--><p class="indent">   <div class="footer"><a 
+href="build.html" ><p>Next</p></a><a 
+href="faq.html" ><p>Prev</p></a><a 
+href="faq.html#tailurbi-sdkch15.html" ><p>Prev-tail</p></a><a 
+href="migration-from-urbiscript-1-to-urbiscript-2.html" ><p>Front</p></a><a 
+href="guidelines-and-cook-books.html#migration-from-urbiscript-1-to-urbiscript-2.html" ><p>Up</p></a></div><a 
+ id="tailurbi-sdkch16.html"></a>  </p> 
+</body></html> 

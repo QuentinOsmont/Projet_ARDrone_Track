@@ -1,0 +1,18 @@
+<map id="G" name="G">
+<area shape="rect" href="$uabstractclient_8hh.html" title="Definition of the URBI interface class." alt="" coords="1808,231,1984,255" />
+<area shape="rect" href="$umessage_8hh.html" title="urbi/umessage.hh" alt="" coords="1232,305,1376,329" />
+<area shape="rect" href="$uconversion_8hh.html" title="Conversion of sounds and images." alt="" coords="2471,380,2628,404" />
+<area shape="rect" href="$utag_8hh.html" title="urbi/utag.hh" alt="" coords="2721,81,2825,105" />
+<area shape="rect" href="$compatibility_8hh.html" title="liburbi/compatibility.hh" alt="" coords="2521,81,2697,105" />
+<area shape="rect" href="$fwd_8hh.html" title="Forward declarations." alt="" coords="1248,529,1347,553" />
+<area shape="rect" href="$export_8hh.html" title="urbi/export.hh" alt="" coords="2233,679,2351,703" />
+<area shape="rect" href="$ubinary_8hh.html" title="urbi/ubinary.hh" alt="" coords="1472,529,1595,553" />
+<area shape="rect" href="$uabstractclient_8hxx.html" title="urbi/uabstractclient.hxx" alt="" coords="1677,305,1859,329" />
+<area shape="rect" href="$uimage_8hh.html" title="urbi/uimage.hh" alt="" coords="1539,604,1664,628" />
+<area shape="rect" href="$usound_8hh.html" title="urbi/usound.hh" alt="" coords="1739,604,1861,628" />
+<area shape="rect" href="$ubinary_8hxx.html" title="urbi/ubinary.hxx" alt="" coords="1885,604,2016,628" />
+<area shape="rect" href="$umessage_8hxx.html" title="urbi/umessage.hxx" alt="" coords="1451,380,1603,404" />
+<area shape="rect" href="$uvalue_8hh.html" title="urbi/uvalue.hh" alt="" coords="1935,455,2055,479" />
+<area shape="rect" href="$kernel&#45;version_8hh.html" title="urbi/kernel&#45;version.hh" alt="" coords="2779,455,2949,479" />
+<area shape="rect" href="$compatibility_8hxx.html" title="compatibility.hxx" alt="" coords="2521,156,2657,180" />
+</map>

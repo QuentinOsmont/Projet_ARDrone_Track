@@ -1,0 +1,18 @@
+<map id="G" name="G">
+<area shape="rect" href="$uvar_8cc.html" title="uvar.cc" alt="" coords="541,305,611,329" />
+<area shape="rect" href="$compatibility_8hxx.html" title="compatibility.hxx" alt="" coords="372,81,508,105" />
+<area shape="rect" href="$uabstractclient_8cc.html" title="uabstractclient.cc" alt="" coords="109,231,251,255" />
+<area shape="rect" href="$kernel&#45;version_8cc.html" title="kernel&#45;version.cc" alt="" coords="1033,156,1169,180" />
+<area shape="rect" href="$uclient_8hh.html" title="uclient.hh" alt="" coords="764,81,852,105" />
+<area shape="rect" href="$compatibility_8hh.html" title="compatibility.hh" alt="" coords="376,156,504,180" />
+<area shape="rect" href="$uobject_8cc.html" title="uobject.cc" alt="" coords="813,305,904,329" />
+<area shape="rect" href="$utimer&#45;callback_8cc.html" title="utimer&#45;callback.cc" alt="" coords="485,231,629,255" />
+<area shape="rect" href="$uclient_8cc.html" title="uclient.cc" alt="" coords="275,231,360,255" />
+<area shape="rect" href="$usyncclient_8cc.html" title="usyncclient.cc" alt="" coords="653,231,771,255" />
+<area shape="rect" href="$liburbi_2urbi&#45;launch_8cc.html" title="urbi&#45;launch.cc" alt="" coords="892,156,1009,180" />
+<area shape="rect" href="$usyncclient_8hh.html" title="Definition of the URBI interface class." alt="" coords="748,156,868,180" />
+<area shape="rect" href="$main_8cc.html" title="main.cc" alt="" coords="1100,305,1175,329" />
+<area shape="rect" href="$remote&#45;ucontext&#45;impl_8hh.html" title="remote&#45;ucontext&#45;impl.hh" alt="" coords="1027,231,1216,255" />
+<area shape="rect" href="$ucallbacks_8cc.html" title="ucallbacks.cc" alt="" coords="1231,305,1343,329" />
+<area shape="rect" href="$qt__umain_8hh.html" title="qt_umain.hh" alt="" coords="896,231,1003,255" />
+</map>

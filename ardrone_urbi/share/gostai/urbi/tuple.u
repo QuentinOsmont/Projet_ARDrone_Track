@@ -1,0 +1,128 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+class Global.Tuple
+{
+  protos = [Global.RangeIterable, Global.Container];
+
+  var members = [];
+
+  function init(m)
+  {
+    members = m
+  };
+
+  function asString ()
+  {
+    var res = "(" |
+    res += members.map(methodToFunction("asPrintable")).join(", ") |
+    if (members.size == 1)
+      res += "," |
+    res + ")"
+  };
+
+  function asList()
+  {
+    members
+  };
+
+  function '=='(other)
+  {
+    return members == other.members
+  };
+
+  function '<' (other)
+  {
+    members < other.members
+  };
+
+  function '[]'(n)
+  {
+    members[n]
+  };
+
+  function '[]='(n, v)
+  {
+    members[n] = v
+  };
+
+  function size()
+  {
+    members.size;
+  };
+
+  function '*'(var rhs)
+  {
+    Tuple.new(members.map(
+      closure (var v) { v * rhs }
+    ))
+  };
+
+  function '+'(var rhs)
+  {
+    Tuple.new(members.zip(
+      closure (var lhs, var rhs) { lhs + rhs },
+      rhs.members
+    ))
+  };
+
+  // Pattern matching.
+  function matchAgainst(handler, pattern)
+  {
+    if (!pattern.isA(Tuple))
+      return false |
+    return members.matchAgainst(handler, pattern.members)
+  };
+};
+
+{
+  function makeTupleClass(name, size)
+  {
+    var names = ["first", "second", "third", "fourth", "fifth", "sixth"];
+
+    class Res : Tuple
+    {
+      type = name;
+      var members = [nil] * size;
+      var size = size;
+
+      function init
+      {
+        if (call.argsCount != size)
+          throw Exception.Arity.new("%s.%s" % [name, "init"],
+                                    call.argsCount,
+                                    size)|
+        var m = call.evalArgs |
+        m += m.range(size - m.size) |
+        Tuple.getSlot("init").apply([this, m])
+      };
+
+      var idx = 0;
+      for (var name: names.range(size))
+      {
+        var n = idx;
+        setSlot(name, function () { members[n] });
+        setProperty(name, "updateHook",
+          function (name, val) {
+            // Copy members if needed before altering it
+            if (!hasLocalSlot("members"))
+              members = members.clone;
+            members[n] = val;
+            void;
+          });
+        idx++;
+      };
+    };
+    Global.setSlot(name, Res);
+  };
+
+  makeTupleClass("Pair", 2);
+  makeTupleClass("Triplet", 3);
+};

@@ -1,0 +1,48 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+do (System.PackageInfo.new("Urbi SDK Remote"))
+{
+  // The SCM date string.
+  var date =
+    "2010-09-30 14:59:53 +0200";
+
+  // The day part of the SCM date string.
+  var day =
+    "September 30, 2010";
+
+  // The SCM complete description string, with slashes.
+  var description =
+    "urbi-sdk-2.3-11-g8380443";
+
+  // The SCM identification string.
+  var id =
+    "8380443 (2010-09-30 14:59:53 +0200 demaille@gostai.com: package: use git-version-gen to un-stub libuvalue's revision information.)";
+
+  // The number of changes since the Version.
+  var patch =
+    "11";
+
+  // The SCM revision string.
+  var revision =
+    "8380443";
+
+  // The SCM complete version string, with dashes.
+  var tarballVersion =
+    "urbi-sdk-2.3-11-g8380443";
+
+  // The SCM version string.
+  var version =
+    "urbi-sdk-2.3";
+
+  // Version and revision together.
+  var versionRev =
+    "version urbi-sdk-2.3 patch 11 revision 8380443";
+};

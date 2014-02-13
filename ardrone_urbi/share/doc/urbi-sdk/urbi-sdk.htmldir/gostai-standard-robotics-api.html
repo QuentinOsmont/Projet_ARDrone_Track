@@ -1,0 +1,3261 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>22 Gostai Standard Robotics API</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,sections+,xhtml,info --> 
+<meta name="src" content="urbi-sdk.tex" /> 
+<meta name="date" content="2010-09-30 15:52:00" /> 
+<link rel="stylesheet" type="text/css" href="urbi-sdk.css" /> 
+</head><body 
+>
+   <div class="header"><a 
+href="ros.html" ><p>Prev</p></a><a 
+href="ros.html#tailurbi-sdkch21.html" ><p>Prev-tail</p></a><a 
+href="#tailurbi-sdkch22.html"><p>Tail</p></a><a 
+href="urbi-sdk-reference-manual.html#gostai-standard-robotics-api.html" ><p>Up</p></a></div><h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;22</span><br /><a 
+href="index.html#QQ2-35-675" id="x35-57300022">Gostai Standard Robotics API</a></h2>
+<!--l. 27--><p class="noindent">This section aims at clarifying the naming conventions in Urbi Engines for standard hardware/software
+devices and components implemented as UObject and the corresponding methods/attributes/events to
+access them. The list of available hardware types and software component is increasing and this
+document will be updated accordingly. Please contact us directly, should you be working on a
+component not described or closely related to one described here:
+</p>
+<div class="center" 
+>
+<!--l. 35--><p class="noindent">
+</p><!--l. 36--><p class="noindent"><a 
+href="mailto:standard@gostai.com" ><span 
+class="cmtt-10x-x-109">standard@gostai.com</span></a></p></div>
+<!--l. 39--><p class="indent">   Any implementation of an Urbi server must comply with the latest version of this standard to get
+the &#8220;Urbi Ready&#8221; certification from Gostai S.A.S.
+</p><!--l. 43--><p class="indent">   Gostai S.A.S. is currently the only authority which has the ability to deliver an &#8220;Urbi Ready&#8221;
+certification.
+</p><!--l. 46--><p class="indent">   &#8220;Urbi Ready&#8221; and the associated logo are trademarks of Gostai S.A.S. and should not be used or
+displayed in any way without an explicit written agreement from Gostai.
+</p>
+   <div class="sectionTOCS">
+   &#x00A0;<span class="sectionToc">22.1 <a 
+href="#x35-57400022.1">The Structure Tree</a></span>
+<br />   &#x00A0;<span class="sectionToc">22.2 <a 
+href="#x35-57500022.2">Frame of Reference</a></span>
+<br />   &#x00A0;<span class="sectionToc">22.3 <a 
+href="#x35-57600022.3">Component naming</a></span>
+<br />   &#x00A0;<span class="sectionToc">22.4 <a 
+href="#x35-57700022.4">Localization</a></span>
+<br />   &#x00A0;<span class="sectionToc">22.5 <a 
+href="#x35-57800022.5">Interface</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.1 <a 
+href="#x35-57900022.5.1">Identity</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.2 <a 
+href="#x35-58000022.5.2">Network</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.3 <a 
+href="#x35-58100022.5.3">Motor</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.4 <a 
+href="#x35-58200022.5.4">LinearMotor (subclass of Motor)</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.5 <a 
+href="#x35-58300022.5.5">LinearSpeedMotor (subclass of Motor)</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.6 <a 
+href="#x35-58400022.5.6">RotationalMotor (subclass of Motor)</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.7 <a 
+href="#x35-58500022.5.7">RotationalSpeedMotor (subclass of Motor)</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.8 <a 
+href="#x35-58600022.5.8">Sensor</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.9 <a 
+href="#x35-58700022.5.9">DistanceSensor (subclass of Sensor)</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.10 <a 
+href="#x35-58800022.5.10">TouchSensor (subclass of Sensor)</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.11 <a 
+href="#x35-58900022.5.11">AccelerationSensor (subclass of Sensor)</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.12 <a 
+href="#x35-59000022.5.12">GyroSensor (subclass of Sensor)</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.13 <a 
+href="#x35-59100022.5.13">TemperatureSensor (subclass of Sensor)</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.14 <a 
+href="#x35-59200022.5.14">Laser (subclass of Sensor)</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.15 <a 
+href="#x35-59300022.5.15">Mobile</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.16 <a 
+href="#x35-59400022.5.16">Tracker</a></span>
+                                                                                       
+
+                                                                                       
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.17 <a 
+href="#x35-59500022.5.17">VideoIn</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.18 <a 
+href="#x35-59600022.5.18">AudioOut</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.19 <a 
+href="#x35-59700022.5.19">AudioIn</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.20 <a 
+href="#x35-59800022.5.20">BlobDetector</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.21 <a 
+href="#x35-59900022.5.21">TextToSpeech</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.22 <a 
+href="#x35-60000022.5.22">SpeechRecognizer</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.23 <a 
+href="#x35-60100022.5.23">Led</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.24 <a 
+href="#x35-60200022.5.24">RGBLed (subclass of Led)</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.5.25 <a 
+href="#x35-60300022.5.25">Battery</a></span>
+<br />   &#x00A0;<span class="sectionToc">22.6 <a 
+href="#x35-60400022.6">Standard Components</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.6.1 <a 
+href="#x35-60500022.6.1">Yaw/Pitch/Roll orientation</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">22.6.2 <a 
+href="#x35-60600022.6.2">Standard Component List</a></span>
+<br />   &#x00A0;<span class="sectionToc">22.7 <a 
+href="#x35-60700022.7">Compact notation</a></span>
+<br />   &#x00A0;<span class="sectionToc">22.8 <a 
+href="#x35-60800022.8">Support classes</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc"> <a 
+href="#Q1-35-711">22.8.1                     Interface</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc"> <a 
+href="#Q1-35-712">22.8.2                     Component</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc"> <a 
+href="#Q1-35-713">22.8.3                     Localizer</a></span>
+   </div>
+   <h3 class="sectionHead"><span class="titlemark">22.1   </span> <a 
+href="index.html#QQ2-35-676" id="x35-57400022.1">The Structure Tree</a></h3>
+<!--l. 52--><p class="noindent">The robot will be described as a set of <span 
+class="cmti-10x-x-109">components</span><a 
+ id="x35-574001"></a> organized in a hierarchical structure called the
+<span 
+class="cmti-10x-x-109">structure tree</span><a 
+ id="x35-574002"></a>. The relationship between a component and a sub-component in the tree is a
+&#8216;part-of&#8217; inclusion relationship. From the point of view of Urbi, each component in the
+tree is an object, and it contains attributes pointing to its sub-components. Here is an
+example illustrating a part of a hierarchy that could be found with a wheeled robot with a
+gripper:
+</p>
+<div class="center" 
+>
+<!--l. 60--><p class="noindent">
+</p><!--l. 61--><p class="noindent"><img 
+src="urbi-sdk35x.png" alt="PIC" class="graphics" width="364.19667pt" height="135.08315pt"  /><!--tex4ht:graphics  
+name="urbi-sdk35x.png" src="img/structure-tree-wheeled.eps"  
+--></p></div>
+<!--l. 64--><p class="indent">   And here is another example for an humanoid robot:
+                                                                                       
+
+                                                                                       
+</p>
+<div class="center" 
+>
+<!--l. 66--><p class="noindent">
+</p><!--l. 67--><p class="noindent"><img 
+src="urbi-sdk36x.png" alt="PIC" class="graphics" width="364.19667pt" height="226.31544pt"  /><!--tex4ht:graphics  
+name="urbi-sdk36x.png" src="img/structure-tree-humanoid.eps"  
+--></p></div>
+<!--l. 70--><p class="indent">   The leaves of the tree are called <span 
+class="cmti-10x-x-109">devices</span>, and they usually match physical devices in the robot:
+motors, sensors, lights, camera, etc. Inside Urbi, the various objects corresponding to the tree
+components are accessed by following the path of objects inclusions, like in the example below
+(shortcuts will be described later):
+</p><!--l. 76--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 76--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-574003r1"></a></span><span 
+class="cmtt-10x-x-109">body</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">leg</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">right</span><span 
+class="cmtt-10x-x-109">].</span><span 
+class="cmtt-10x-x-109">hip</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">tilt;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-574004r2"></a></span><span 
+class="cmtt-10x-x-109">body</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">arm</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">grip;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-574005r3"></a></span><span 
+class="cmtt-10x-x-109">body</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">laser;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-574006r4"></a></span><!--l. 80--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">...</span></span></pre>
+   </pre>
+   </div>
+<!--l. 84--><p class="indent">   The structure tree should not be mistaken for a representation of the kinematics chain of the robot.
+The kinematics chain is built from a subset of the devices corresponding to motor devices, and it
+represents spatial connections between them. Except for these motor devices, the structure tree
+components do not have a direct counterpart in the kinematics chain, or, if they do, it is as a
+subset of the kinematics chain (for example, <span 
+class="cmtt-10x-x-109">leg[right] </span>is a subset of the whole kinematics
+chain).
+</p><!--l. 94--><p class="indent">   The goal of this standard is to provide guidelines on how to define the components and the
+structure tree, knowing the kinematics chain of the robot.
+                                                                                       
+
+                                                                                       
+</p><!--l. 98--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">22.2   </span> <a 
+href="index.html#QQ2-35-677" id="x35-57500022.2">Frame of Reference</a></h3>
+<!--l. 100--><p class="noindent">In many cases, it will be necessary to refer to an absolute frame of reference attached to the
+robot body. To avoid ambiguities, the standard frame of reference will have the following
+definition:
+</p>
+<div class="center" 
+>
+<!--l. 104--><p class="noindent">
+</p><!--l. 105--><p class="noindent"><img 
+src="urbi-sdk37x.png" alt="PIC" class="graphics" width="195.73125pt" height="202.75749pt"  /><!--tex4ht:graphics  
+name="urbi-sdk37x.png" src="img/reference-frame.eps"  
+--></p></div>
+     <dl class="description"><dt class="description">
+<span 
+class="cmbx-10x-x-109">Origin</span> </dt><dd 
+class="description">the center of mass of the robot
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">X axis</span> </dt><dd 
+class="description">oriented towards the front of the robot. If there is a camera, the front is defined by
+     the default direction of the camera, otherwise the front will be seen as the natural frontal
+     orientation for a mobile robot (the direction of &#8220;forward&#8221; movement). If the robot is not
+     naturally oriented, the X axis will be chosen to match the main axis of symmetry of the
+     robot body and it will be oriented towards the smallest side, typically the top of a cone
+     for example. In case of a perfectly symmetrical body, the X axis can be chosen arbitrarily
+     but a clear mark should be made visible on the robot body to indicate it.
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">Z axis</span> </dt><dd 
+class="description">oriented in the opposite direction from the gravity. If there is no gravity or natural
+     up/down orientation in the environment or normal operation mode of the robot, the Z axis
+                                                                                       
+
+                                                                                       
+     should be chosen in the direction of the main axis of symmetry in the orthogonal plane
+     defined by the X axis, oriented towards the smallest side. In case of a perfectly symmetrical
+     plane, the Z axis can be chosen arbitrarily but a clear mark should be made visible on the
+     robot body to indicate it.
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">Y axis</span> </dt><dd 
+class="description">oriented to make a right-handed coordinate system.</dd></dl>
+<!--l. 132--><p class="indent">   The axes are oriented in a counter-clockwise direction, as depicted in the illustration
+above.
+</p><!--l. 135--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">22.3   </span> <a 
+href="index.html#QQ2-35-678" id="x35-57600022.3">Component naming</a></h3>
+<!--l. 137--><p class="noindent">Each component A, which is a sub-component of component B has a name, distinct from the name of
+all the other components at the same level. This name is a generic designation of what A represents,
+such as &#8220;leg&#8221; ,&#8220;head&#8221;, or &#8220;finger&#8221;.
+</p><!--l. 142--><p class="indent">   Using the correct name for each component is a critical part of this standard. No formal
+rule can be given to find this name for any possible robot configuration. However, this
+document includes a table covering many different possible cases. We recommend that robot
+manufacturers pick from this table the name that fits the most the description of their
+component.
+</p><!--l. 148--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">22.4   </span> <a 
+href="index.html#QQ2-35-679" id="x35-57700022.4">Localization</a></h3>
+<!--l. 149--><p class="noindent">When two identical components A1 and A2, such as the two legs of an humanoid robots, are present in
+the same sub-component B, an extra node is inserted in the hierarchy to differentiate them. This node
+is of the <span 
+class="cmtt-10x-x-109">Localizer </span>type, and provides a <span 
+class="cmtt-10x-x-109">[] </span>operator, taking a <span 
+class="cmtt-10x-x-109">Localization </span>argument, used to access
+each of the identical sub-components. The Urbi SDK provides an implementation for the <span 
+class="cmtt-10x-x-109">Localizer</span>
+and <span 
+class="cmtt-10x-x-109">Localization </span>classes. When possible, localization should be simple geometrical qualifier
+like <span 
+class="cmti-10x-x-109">right</span>/<span 
+class="cmti-10x-x-109">center</span>/<span 
+class="cmti-10x-x-109">left</span>, <span 
+class="cmti-10x-x-109">front</span>/<span 
+class="cmti-10x-x-109">middle</span>/<span 
+class="cmti-10x-x-109">back </span>or <span 
+class="cmti-10x-x-109">up</span>/<span 
+class="cmti-10x-x-109">in-between</span>/<span 
+class="cmti-10x-x-109">down</span>. Note that &#8220;right&#8221; or
+&#8220;front&#8221; are understood here from the point of view of a man standing and looking in the
+direction of the X-axis of the robot, and <span 
+class="cmti-10x-x-109">up/pown </span>matches the Z-axis, as depicted in the figure
+below:
+</p>
+<div class="center" 
+>
+<!--l. 165--><p class="noindent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 166--><p class="noindent"><img 
+src="urbi-sdk38x.png" alt="PIC" class="graphics" width="227.62206pt" height="197.61526pt"  /><!--tex4ht:graphics  
+name="urbi-sdk38x.png" src="img/cube.eps"  
+--></p></div>
+<!--l. 169--><p class="indent">   Several geometric qualifiers can be used at the same time to further refine the position. In this case,
+multiple Localizer nodes are used. As a convention, height information (U/I/D) comes first, followed
+by depth information (F/M/H), and then side information (R/C/L).
+</p><!--l. 174--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 174--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577001r1"></a></span><!--l. 175--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Front</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">left</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">wheel</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">four</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">wheeled</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">robot</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">:</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577002r2"></a></span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">body</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">wheel</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">front</span><span 
+class="cmtt-10x-x-109">][</span><span 
+class="cmtt-10x-x-109">left</span><span 
+class="cmtt-10x-x-109">];</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577003r3"></a></span><!--l. 177--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Front</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">laser</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">robot</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">equipped</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">with</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">multiple</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">sonars</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">:</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577004r4"></a></span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">body</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">laser</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">front</span><span 
+class="cmtt-10x-x-109">];</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577005r5"></a></span><!--l. 179--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Left</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">camera</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">from</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">robot</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">with</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">stereo</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">camera</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">at</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">end</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">an</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">arm</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">:</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577006r6"></a></span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">body</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">arm</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">camera</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">left</span><span 
+class="cmtt-10x-x-109">];</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577007r7"></a></span><!--l. 181--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Top</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">left</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">LED</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">left</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">eye</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577008r8"></a></span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">body</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">head</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">eye</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">left</span><span 
+class="cmtt-10x-x-109">].</span><span 
+class="cmtt-10x-x-109">led</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">up</span><span 
+class="cmtt-10x-x-109">][</span><span 
+class="cmtt-10x-x-109">left</span><span 
+class="cmtt-10x-x-109">].</span><span 
+class="cmtt-10x-x-109">val</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">1;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577009r9"></a></span><!--l. 183--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Touch</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">sensor</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">at</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">end</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">front</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">left</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">leg</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">four</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">legged</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">robot</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">:</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577010r10"></a></span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">body</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">leg</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">front</span><span 
+class="cmtt-10x-x-109">][</span><span 
+class="cmtt-10x-x-109">left</span><span 
+class="cmtt-10x-x-109">].</span><span 
+class="cmtt-10x-x-109">foot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">touch;</span>
+   </pre>
+   </div>
+<!--l. 187--><p class="indent">   You can further qualify a side+depth localization with an additional F/B side information. This
+can be used in the typical layout below:
+</p>
+<div class="center" 
+>
+<!--l. 190--><p class="noindent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 191--><p class="noindent"><img 
+src="urbi-sdk39x.png" alt="PIC" class="graphics" width="210.7875pt" height="202.75749pt"  /><!--tex4ht:graphics  
+name="urbi-sdk39x.png" src="img/localizer-multidim.eps"  
+--></p></div>
+<!--l. 194--><p class="indent">   This dual positioning using side+depth can also be used to combine side+height or height+depth
+information.
+</p><!--l. 197--><p class="indent">   Layouts with a sequence of three or more identical components can use numbers as their
+Localization, starting from 0. The smaller the number, the closer to the front, up, or left. For instance,
+an insectoid robot with 3 legs on each side will use <span 
+class="cmtt-10x-x-109">robot.body.leg[left][0] </span>to address the frontleft
+leg.
+</p><!--l. 203--><p class="indent">   Layouts with identical components arranged in a circle can also use numeric localization. The
+component with index 0 should be the uppermost, or front-most if non applicable. Index should
+increase counterclockwise.
+</p><!--l. 207--><p class="indent">   Some components like spines or tails are highly articulated with a set of identical sub-components.
+When talking about these sub-components, the above localization should be replaced by an array with
+a numbering starting at 0. The smaller the number, the closer the sub-component is to the robot
+main body. For surface-like sub-components, like skin touch sensors, the array can be two
+dimensional.
+</p><!--l. 215--><p class="indent">   Other possible localization for sensors are the X, Y and Z axis themselves, like for example for an
+accelerometer or a gyro sensor, available in each of the three directions.
+</p><!--l. 219--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 219--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577011r1"></a></span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">body</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">accel</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">];</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 220--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">accelerometer</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">in</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">x</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">direction</span></span></pre>
+   </pre>
+   </div>
+<!--l. 224--><p class="indent">   Examples of component names including localization:
+</p><!--l. 226--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 226--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577012r1"></a></span><span 
+class="cmtt-10x-x-109">leg</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">right</span><span 
+class="cmtt-10x-x-109">],</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">leg</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">left</span><span 
+class="cmtt-10x-x-109">];</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577013r2"></a></span><span 
+class="cmtt-10x-x-109">finger</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">right</span><span 
+class="cmtt-10x-x-109">],</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">finger</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">center</span><span 
+class="cmtt-10x-x-109">],</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">finger</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">left</span><span 
+class="cmtt-10x-x-109">];</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 228--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">three</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">finger</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">hand</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577014r3"></a></span><span 
+class="cmtt-10x-x-109">joint</span><span 
+class="cmtt-10x-x-109">[0],</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">joint</span><span 
+class="cmtt-10x-x-109">[1]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">...</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">joint</span><span 
+class="cmtt-10x-x-109">[5]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 229--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">from</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">tail</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577015r4"></a></span><span 
+class="cmtt-10x-x-109">touch</span><span 
+class="cmtt-10x-x-109">[478][124]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 230--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">from</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">skin</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577016r5"></a></span><span 
+class="cmtt-10x-x-109">accel</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">],</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">accel</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">y</span><span 
+class="cmtt-10x-x-109">],</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">accel</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">z</span><span 
+class="cmtt-10x-x-109">];</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 231--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">typical</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">accelerometer</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-577017r6"></a></span><span 
+class="cmtt-10x-x-109">gyro</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">],</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">gyro</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">y</span><span 
+class="cmtt-10x-x-109">],</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">gyro</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">z</span><span 
+class="cmtt-10x-x-109">];</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 232--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">typical</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">gyro</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">sensor</span></span></pre>
+   </pre>
+                                                                                       
+
+                                                                                       
+   </div>
+<!--l. 235--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">22.5   </span> <a 
+href="index.html#QQ2-35-680" id="x35-57800022.5">Interface</a></h3>
+<!--l. 238--><p class="noindent">An &#8220;interface&#8221; describes some aspects of a type of device, by specifying the slots and methods that
+implementations must provide. Each child node of the component hierarchy should implement at least
+one interface.
+</p><!--l. 242--><p class="indent">   For example, for a joint, we can have a &#8220;Swivel&#8221; interface, used to define patella joints. For the
+robot body itself, we have a &#8220;Mobile&#8221; interface describing mobile robots, which includes some standard
+way of requesting a move forward, a turn, etc.
+</p><!--l. 247--><p class="indent">   In short, interfaces are standard Urbi objects that components can inherit from to declare that
+they have some functionalities.
+</p><!--l. 250--><p class="indent">   The following pages describe a few of the most standard interfaces. Each device in the component
+hierarchy which falls within the category of an interface should implement it.
+</p><!--l. 254--><p class="indent">   Each interface defines slots, which can be functions, events or plain data. Some of those slots are
+optional: they are grayed and put around square brackets in the following table.
+</p><!--l. 258--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.1   </span> <a 
+href="contents.html#QQ2-35-681" id="x35-57900022.5.1">Identity</a></h4>
+<a 
+ id="x35-579001"></a>
+<!--l. 260--><p class="noindent">Contains information about the robot identity.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.Identity.type"><a 
+ id="x35-579002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">type</span></span></a>&#x00A0;
+     <br class="newline" />This describes the robot category among: humanoid, four-legged, wheeled, industrial arm.
+     It gives a general idea of the robot family, but does not replace a more systematic probe
+     of available services by investigating the list of attributes of the object.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Identity.name"><a 
+ id="x35-579003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">name</span></span></a>&#x00A0;
+     <br class="newline" />Name of the robot.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Identity.model"><a 
+ id="x35-579004"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">model</span></span></a>&#x00A0;
+     <br class="newline" />Model of the robot.
+                                                                                       
+
+                                                                                       
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Identity.serial"><a 
+ id="x35-579005"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">serial</span></span></a>&#x00A0;
+     <br class="newline" />Serial number (if available).</li></ul>
+<!--l. 278--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.2   </span> <a 
+href="contents.html#QQ2-35-682" id="x35-58000022.5.2">Network</a></h4>
+<a 
+ id="x35-580001"></a>
+<!--l. 280--><p class="noindent">Contains information about the network identification of the robot.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.Network.IP"><a 
+ id="x35-580002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">IP</span></span></a>&#x00A0;
+     <br class="newline" />IP address of the robot.</li></ul>
+<!--l. 286--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.3   </span> <a 
+href="contents.html#QQ2-35-683" id="x35-58100022.5.3">Motor</a></h4>
+<a 
+ id="x35-581001"></a>
+<!--l. 288--><p class="noindent">This interface is used to describe a generic motor controller.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.Motor.val"><a 
+ id="x35-581002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">val</span></span></a>&#x00A0;
+     <br class="newline" />This slot is a generic pointer to a more specific slot describing the motor position, like
+     <span 
+class="cmtt-10x-x-109">position </span>or <span 
+class="cmtt-10x-x-109">angle</span>, depending on the type of motor. It is mandatory in the Urbi Ready
+     standard as a universal proxy to control an actuator. The more specific slot is described
+     in a subclass of <span 
+class="cmtt-10x-x-109">Motor</span>.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Motor.PGain?"><a 
+ id="x35-581003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">PGain</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />Controls the P gain of the PID controller.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Motor.IGain?"><a 
+ id="x35-581004"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">IGain</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />Controls the I gain of the PID controller.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Motor.DGain?"><a 
+ id="x35-581005"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">DGain</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />Controls the D gain of the PID controller.</li></ul>
+                                                                                       
+
+                                                                                       
+<!--l. 301--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.4   </span> <a 
+href="contents.html#QQ2-35-684" id="x35-58200022.5.4">LinearMotor (subclass of Motor)</a></h4>
+<a 
+ id="x35-582001"></a>
+<!--l. 304--><p class="noindent">This interface is used to describe a linear motor controller.
+</p><!--l. 306--><p class="indent">   A wheel can fall in this category, if the reported position is the distance traveled by a point at the
+surface of the wheel.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.LinearMotor.position"><a 
+ id="x35-582002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">position</span></span></a>&#x00A0;
+     <br class="newline" />Position of the motor in meters. Pointed to by the <span 
+class="cmtt-10x-x-109">val </span>slot.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.LinearMotor.force"><a 
+ id="x35-582003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">force</span></span></a>&#x00A0;
+     <br class="newline" />Intensity of the measured or estimated force applied on a linear motor.</li></ul>
+<!--l. 317--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.5   </span> <a 
+href="contents.html#QQ2-35-685" id="x35-58300022.5.5">LinearSpeedMotor (subclass of Motor)</a></h4>
+<a 
+ id="x35-583001"></a>
+<!--l. 319--><p class="noindent">Motor similar to <span 
+class="cmtt-10x-x-109">LinearMotor</span>, but controlled by its translation speed.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.LinearSpeedMotor.speed"><a 
+ id="x35-583002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">speed</span></span></a>&#x00A0;
+     <br class="newline" />Translation speed in meters per second. Pointed to by the <span 
+class="cmtt-10x-x-109">val </span>slot.</li></ul>
+<!--l. 327--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.6   </span> <a 
+href="contents.html#QQ2-35-686" id="x35-58400022.5.6">RotationalMotor (subclass of Motor)</a></h4>
+<a 
+ id="x35-584001"></a>
+<!--l. 330--><p class="noindent">This interface is used to describe a position-controlled rotational motor controller.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.RotationalMotor.angle"><a 
+ id="x35-584002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">angle</span></span></a>&#x00A0;
+     <br class="newline" />Angle of the motor in radian, modulo 2<span 
+class="cmmi-10x-x-109">&#x03C0;</span>. Pointed to by the <span 
+class="cmtt-10x-x-109">val </span>slot.
+                                                                                       
+
+                                                                                       
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.RotationalMotor.turn"><a 
+ id="x35-584003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">turn</span></span></a>&#x00A0;
+     <br class="newline" />Absolute angular position of the motor, expressed in number of turns.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.RotationalMotor.torque"><a 
+ id="x35-584004"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">torque</span></span></a>&#x00A0;
+     <br class="newline" />Intensity of the measured or estimated torque applied on the motor.</li></ul>
+<!--l. 344--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.7   </span> <a 
+href="contents.html#QQ2-35-687" id="x35-58500022.5.7">RotationalSpeedMotor (subclass of Motor)</a></h4>
+<a 
+ id="x35-585001"></a>
+<!--l. 346--><p class="noindent">Interface describing a motor similar to <span 
+class="cmtt-10x-x-109">RotationalMotor </span>controlled by its rotation speed.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.RotationalSpeedMotor.speed"><a 
+ id="x35-585002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">speed</span></span></a>&#x00A0;
+     <br class="newline" />Rotation speed in radians per second.</li></ul>
+<!--l. 353--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.8   </span> <a 
+href="contents.html#QQ2-35-688" id="x35-58600022.5.8">Sensor</a></h4>
+<a 
+ id="x35-586001"></a>
+<!--l. 355--><p class="noindent">This interface is used to describe a generic sensor.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.Sensor.val"><a 
+ id="x35-586002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">val</span></span></a>&#x00A0;
+     <br class="newline" />This slot is a generic pointer to a more specific slot describing the sensor value, like
+     <span 
+class="cmtt-10x-x-109">distance </span>or <span 
+class="cmtt-10x-x-109">temperature</span>, depending on the type of sensor. It is mandatory in the Urbi
+     Ready standard as a universal proxy to read a sensor. The more specific slot is described
+     in a subclass of <span 
+class="cmtt-10x-x-109">Sensor</span>.</li></ul>
+<!--l. 366--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.9   </span> <a 
+href="contents.html#QQ2-35-689" id="x35-58700022.5.9">DistanceSensor (subclass of Sensor)</a></h4>
+<a 
+ id="x35-587001"></a>
+                                                                                       
+
+                                                                                       
+<!--l. 368--><p class="noindent">This interface is used to describe a distance sensor (infrared, laser, ultrasonic...).
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.DistanceSensor.distance"><a 
+ id="x35-587002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">distance</span></span></a>&#x00A0;
+     <br class="newline" />Measured distance expressed in meters. Pointed to by the <span 
+class="cmtt-10x-x-109">val </span>slot.</li></ul>
+<!--l. 377--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.10   </span> <a 
+href="contents.html#QQ2-35-690" id="x35-58800022.5.10">TouchSensor (subclass of Sensor)</a></h4>
+<a 
+ id="x35-588001"></a>
+<!--l. 379--><p class="noindent">This interface is used to describe a touch pressure sensor (contact, induction,...).
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.TouchSensor.pressure"><a 
+ id="x35-588002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">pressure</span></span></a>&#x00A0;
+     <br class="newline" />Intensity  of  the  pressure  put  on  the  touch  sensor.  Can  be  0/1  for  simple  buttons  or
+     expressed in Pascal units. Pointed to by the <span 
+class="cmtt-10x-x-109">val </span>slot.</li></ul>
+<!--l. 389--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.11   </span> <a 
+href="contents.html#QQ2-35-691" id="x35-58900022.5.11">AccelerationSensor (subclass of Sensor)</a></h4>
+<a 
+ id="x35-589001"></a>
+<!--l. 391--><p class="noindent">This interface is used to describe an accelerometer.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.AccelerationSensor.acceleration"><a 
+ id="x35-589002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">acceleration</span></span></a>&#x00A0;
+     <br class="newline" />Acceleration expressed in <span 
+class="cmmi-10x-x-109">m&#x2215;s</span><sup><span 
+class="cmr-8">2</span></sup>. Pointed to by the <span 
+class="cmtt-10x-x-109">val </span>slot.</li></ul>
+<!--l. 398--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.12   </span> <a 
+href="contents.html#QQ2-35-692" id="x35-59000022.5.12">GyroSensor (subclass of Sensor)</a></h4>
+<a 
+ id="x35-590001"></a>
+<!--l. 399--><p class="noindent">This interface is used to describe an gyrometer.
+</p>
+                                                                                       
+
+                                                                                       
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.GyroSensor.speed"><a 
+ id="x35-590002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">speed</span></span></a>&#x00A0;
+     <br class="newline" />Rotational speed in rad<span 
+class="cmmi-10x-x-109">&#x2215;s</span>. Pointed to by the <span 
+class="cmtt-10x-x-109">val </span>slot.</li></ul>
+<!--l. 406--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.13   </span> <a 
+href="contents.html#QQ2-35-693" id="x35-59100022.5.13">TemperatureSensor (subclass of Sensor)</a></h4>
+<a 
+ id="x35-591001"></a>
+<!--l. 407--><p class="noindent">This interface is used to describe a temperature sensor.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.TemperatureSensor.temperature"><a 
+ id="x35-591002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">temperature</span></span></a>&#x00A0;
+     <br class="newline" />Measured temperature in Celsius degrees. Pointed to by the <span 
+class="cmtt-10x-x-109">val </span>slot.</li></ul>
+<!--l. 414--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.14   </span> <a 
+href="contents.html#QQ2-35-694" id="x35-59200022.5.14">Laser (subclass of Sensor)</a></h4>
+<a 
+ id="x35-592001"></a>
+<!--l. 415--><p class="noindent">Interface for a scanning laser rangefinder, or other similar technologies.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.Laser.val"><a 
+ id="x35-592002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">val</span></span></a>&#x00A0;
+     <br class="newline" />Last scan result. Can be either a list of ufloat, or a binary containing a packed array of
+     doubles.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Laser.angleMin"><a 
+ id="x35-592003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">angleMin</span></span></a>&#x00A0;
+     <br class="newline" />Start scan angle in radians, relative to the front of the device.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Laser.angleMax"><a 
+ id="x35-592004"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">angleMax</span></span></a>&#x00A0;
+     <br class="newline" />End scan angle in radians, relative to the front of the device.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Laser.resolution"><a 
+ id="x35-592005"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">resolution</span></span></a>&#x00A0;
+     <br class="newline" />Angular resolution of the scan, in radians.
+                                                                                       
+
+                                                                                       
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Laser.distanceMin"><a 
+ id="x35-592006"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">distanceMin</span></span></a>&#x00A0;
+     <br class="newline" />Minimum measurable distance.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Laser.distanceMax"><a 
+ id="x35-592007"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">distanceMax</span></span></a>&#x00A0;
+     <br class="newline" />Maximum measurable distance.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Laser.rate?"><a 
+ id="x35-592008"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">rate</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />Number of scans per second.</li></ul>
+<!--l. 436--><p class="indent">   Depending on the implementation, some of the parameters can be read-only, or can only accept a
+few possible values. In that case it is up to the implementer to select the closest possible value to what
+the user entered. It is the responsibility of the user to read the parameter after setting it to check what
+value will actually be used by the implementation.
+</p><!--l. 443--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.15   </span> <a 
+href="contents.html#QQ2-35-695" id="x35-59300022.5.15">Mobile</a></h4>
+<a 
+ id="x35-593001"></a>
+<!--l. 445--><p class="noindent">Mobile robots all share this generic interface to provide high order level motion control
+capabilities.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.Mobile.go"><a 
+ id="x35-593002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">go</span></span><span class="lstinline"><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">)</span></span></a>&#x00A0;
+     <br class="newline" /> Move approximately <span 
+class="cmitt-10x-x-109">x </span>meters forward if <span 
+class="cmitt-10x-x-109">x </span>is positive, backward otherwise.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Mobile.turn"><a 
+ id="x35-593003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">turn</span></span><span class="lstinline"><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">)</span></span></a>&#x00A0;
+     <br class="newline" /> Turn right approximately <span 
+class="cmitt-10x-x-109">x </span>radians. <span 
+class="cmitt-10x-x-109">x </span>can be a positive or negative value.</li></ul>
+<!--l. 456--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.16   </span> <a 
+href="contents.html#QQ2-35-696" id="x35-59400022.5.16">Tracker</a></h4>
+<a 
+ id="x35-594001"></a>
+<!--l. 458--><p class="noindent">Camera-equipped robots can sometimes move the orientation of the field of view horizontally and
+vertically, which is a very important feature for many applications. In that case, this interface abstracts
+how such motion can be achieved, whether it is done with a pan/tilt camera or with whole body
+motion or a combination of both.
+                                                                                       
+
+                                                                                       
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.Tracker.yaw"><a 
+ id="x35-594002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">yaw</span></span></a>&#x00A0;
+     <br class="newline" />Rotational articulation around the Z axis in the robot, expressed in radians.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Tracker.pitch"><a 
+ id="x35-594003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">pitch</span></span></a>&#x00A0;
+     <br class="newline" />Rotational articulation around the Y axis in the robot, expressed in radians.</li></ul>
+<!--l. 471--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.17   </span> <a 
+href="contents.html#QQ2-35-697" id="x35-59500022.5.17">VideoIn</a></h4>
+<a 
+ id="x35-595001"></a>
+<!--l. 473--><p class="noindent">The VideoIn interface groups every information relative to cameras or any image sensor.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.VideoIn.val"><a 
+ id="x35-595002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">val</span></span></a>&#x00A0;
+     <br class="newline" />Image represented as a <span 
+class="cmtt-10x-x-109">Binary </span>value.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.VideoIn.xfov"><a 
+ id="x35-595003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">xfov</span></span></a>&#x00A0;
+     <br class="newline" />The x field of view of the camera expressed in radians.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.VideoIn.yfov"><a 
+ id="x35-595004"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">yfov</span></span></a>&#x00A0;
+     <br class="newline" />The y field of view of the camera expressed in radians.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.VideoIn.height"><a 
+ id="x35-595005"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">height</span></span></a>&#x00A0;
+     <br class="newline" />Height of the image in the current resolution, expressed in pixels.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.VideoIn.width"><a 
+ id="x35-595006"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">width</span></span></a>&#x00A0;
+     <br class="newline" />Width of the image in the current resolution, expressed in pixels
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.VideoIn.format?"><a 
+ id="x35-595007"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">format</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />Format of the image, expressed as an integer in the enum urbi::UImageFormat. See below
+     for more information.
+                                                                                       
+
+                                                                                       
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.VideoIn.exposure?"><a 
+ id="x35-595008"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">exposure</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />Exposure duration, expressed in seconds. 0 if non applicable.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.VideoIn.wb?"><a 
+ id="x35-595009"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">wb</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />White balance (expressed with an integer value depending on the camera documentation).
+     0 if non applicable.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.VideoIn.gain?"><a 
+ id="x35-595010"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">gain</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />Camera gain amplification (expressed as a coefficient between 0 and infinity). 1 if non
+     applicable.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.VideoIn.resolution?"><a 
+ id="x35-595011"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">resolution</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />Image resolution, expressed as an integer. 0 corresponds to the maximal resolution of the
+     camera. Successive values correspond to all the supported image sizes in decreasing order.
+     Once modified, the effective resolution in X/Y can be checked with the width and height
+     slots.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.VideoIn.quality?"><a 
+ id="x35-595012"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">quality</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />If the image is in the jpeg format, this slot sets the compression quality, from 0 (best
+     compression, worst quality) to 100 (best quality, bigger image).</li></ul>
+<!--l. 511--><p class="indent">   The image sensor is expected to use the cheapest way in term of CPU and/or energy consumption
+to produce images of the requested format. Implementations linked to a physical image sensor do not
+have to implement all the possible formats. In this case, the format closest to what was requested must
+be used. A generic image conversion object will be provided. In order to avoid duplicate image
+conversions when multiple unrelated behaviors need the same format, it is recommended that this
+object be instantiated in a slot of the VideoIn object named after the format it converts to:
+<div class="urbiunchecked">
+</p>
+   <!--l. 520--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-595013r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">if</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(!</span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">body</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">head</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">camera</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">hasSlot</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 521--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">jpeg</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">))</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-595014r2"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-595015r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">body</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">head</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">camera</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">jpeg</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-595016r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">ImageConversion</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">body</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">head</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">camera</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">getSlot</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 524--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">val</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">));</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-595017r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">body</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">head</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">camera</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">jpeg</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">format</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">3;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-595018r6"></a></span><span 
+class="cmtt-10x-x-109">}</span>
+   </pre>
+   </div>
+<!--l. 529--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.18   </span> <a 
+href="contents.html#QQ2-35-698" id="x35-59600022.5.18">AudioOut</a></h4>
+<a 
+ id="x35-596001"></a>
+                                                                                       
+
+                                                                                       
+<!--l. 530--><p class="noindent">The AudioOut interface groups every information relative to speakers.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.AudioOut.val"><a 
+ id="x35-596002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">val</span></span></a>&#x00A0;
+     <br class="newline" />The speaker value, expressed as a binary, in the format given by the binary header during
+     the assignment.
+     <!--l. 536--><p class="noindent">Speakers are write-only devices, so there is not much sense in reading the content of this
+     attribute. At best, it returns the remaining sound to be played if it is not over yet, but
+     this is not a requirement.
+     </p></li>
+     <li class="itemize"><a 
+ id="slot:Interface.AudioOut.remain"><a 
+ id="x35-596003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">remain</span></span></a>&#x00A0;
+     <br class="newline" />The amount of time remaining to play in the speaker sound buffer (expressed in <span 
+class="cmti-10x-x-109">ms </span>as a
+     default unit).
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.AudioOut.playing"><a 
+ id="x35-596004"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">playing</span></span></a>&#x00A0;
+     <br class="newline" />This is a Boolean value which is true when there is a sound currently playing (the buffer
+     is not empty)
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.AudioOut.volume?"><a 
+ id="x35-596005"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">volume</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />Volume of the play back, in decibels.</li></ul>
+<!--l. 553--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.19   </span> <a 
+href="contents.html#QQ2-35-699" id="x35-59700022.5.19">AudioIn</a></h4>
+<a 
+ id="x35-597001"></a>
+<!--l. 555--><p class="noindent">The AudioIn interface groups every information relative to microphones.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.AudioIn.val"><a 
+ id="x35-597002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">val</span></span></a>&#x00A0;
+     <br class="newline" />Binary value corresponding to the sound heard, expressed in the current unit (wav, mp3...).
+     The unit can be changed like any other regular unit in Urbi.
+     <!--l. 562--><p class="noindent">The content is the sound heard by the microphone since the last update event.
+     </p></li>
+     <li class="itemize"><a 
+ id="slot:Interface.AudioIn.duration"><a 
+ id="x35-597003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">duration</span></span></a>&#x00A0;
+     <br class="newline" />Amount of sound in the val attribute, expressed in <span 
+class="cmti-10x-x-109">ms</span>.
+                                                                                       
+
+                                                                                       
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.AudioIn.gain?"><a 
+ id="x35-597004"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">gain</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />Microphone gain amplification (expressed between 0 and 1).</li></ul>
+<!--l. 570--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.20   </span> <a 
+href="contents.html#QQ2-35-700" id="x35-59800022.5.20">BlobDetector</a></h4>
+<a 
+ id="x35-598001"></a>
+<!--l. 572--><p class="noindent">Ball detectors, marker detectors and various feature-based detectors should all share a similar
+interface. They extract a part of the image that fits some criteria and define a <span 
+class="cmti-10x-x-109">blob</span><a 
+ id="x35-598002"></a> accordingly. Here
+are the typical slots expected:
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.BlobDetector.x"><a 
+ id="x35-598003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">x</span></span></a>&#x00A0;
+     <br class="newline" />The x position of the center of the blob in the image
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.BlobDetector.y"><a 
+ id="x35-598004"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">y</span></span></a>&#x00A0;
+     <br class="newline" />The y position of the center of the blob in the image
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.BlobDetector.ratio"><a 
+ id="x35-598005"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">ratio</span></span></a>&#x00A0;
+     <br class="newline" />The size of the blob expressed as a normalized image size: 1 = full image, 0 = nothing.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.BlobDetector.visible"><a 
+ id="x35-598006"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">visible</span></span></a>&#x00A0;
+     <br class="newline" />A Boolean expressing whether there is a blob in the image or not (see <a 
+href="#slot:Interface.BlobDetector.threshold"><span class="lstinline"><span 
+class="cmtt-10x-x-109">threshold</span></span></a>).
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.BlobDetector.threshold"><a 
+ id="x35-598007"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">threshold</span></span></a>&#x00A0;
+     <br class="newline" />The minimum value of ratio to decide that the blob is visible.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.BlobDetector.orientation?"><a 
+ id="x35-598008"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">orientation</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />Angle of the main ellipsoid axis of the blob (0 = horizontal), expressed in radians.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.BlobDetector.elongation?"><a 
+ id="x35-598009"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">elongation</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />Ratio between the main and the second diameter of the blob enveloping ellipse.</li></ul>
+                                                                                       
+
+                                                                                       
+<!--l. 598--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.21   </span> <a 
+href="contents.html#QQ2-35-701" id="x35-59900022.5.21">TextToSpeech</a></h4>
+<a 
+ id="x35-599001"></a>
+<!--l. 599--><p class="noindent">Text to speech allows to read text using a speech synthesizer. Default implementations should use the
+<span 
+class="cmtt-10x-x-109">speaker </span>component (or alias) as their default sound output.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.TextToSpeech.lang?"><a 
+ id="x35-599002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">lang</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />The language used, in international notation (fr, en, it&#x2026;): ISO 639
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.TextToSpeech.speed?"><a 
+ id="x35-599003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">speed</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />How fast the voice should go. A positive number, with 1 standing for &#8220;regular speed&#8221;.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.TextToSpeech.pitch?"><a 
+ id="x35-599004"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">pitch</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />Voice pitch. A positive number, with 1 standing the regular pitch.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.TextToSpeech.gender?"><a 
+ id="x35-599005"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">gender</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />Gender of the speaker (0:male/1:female).
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.TextToSpeech.age?"><a 
+ id="x35-599006"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">age</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />Age of the speaker, if applicable.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.TextToSpeech.voice?"><a 
+ id="x35-599007"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">voice</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />Most TTS engines propose several voices, this attribute allows picking one. It&#8217;s a string
+     identifier specific to the TTS developer.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.TextToSpeech.say"><a 
+ id="x35-599008"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">say</span></span><span class="lstinline"><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">)</span></span></a>&#x00A0;
+     <br class="newline" /> Speak the sentence given in parameter <span 
+class="cmitt-10x-x-109">s</span>.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.TextToSpeech.voicexml?"><a 
+ id="x35-599009"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">voicexml</span><span 
+class="cmtt-10x-x-109">?</span></span><span class="lstinline"><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">)</span></span></a>&#x00A0;
+     <br class="newline" /> Speak the text <span 
+class="cmitt-10x-x-109">s </span>expressed as a VoiceXML string.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.TextToSpeech.script?"><a 
+ id="x35-599010"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">script</span><span 
+class="cmtt-10x-x-109">?</span></span><span class="lstinline"><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">)</span></span></a>&#x00A0;
+     <br class="newline" /> Speak the text <span 
+class="cmitt-10x-x-109">s </span>augmented by script markups (see specific Gostai documentation) to
+     generate Urbi events.</li></ul>
+                                                                                       
+
+                                                                                       
+<!--l. 630--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.22   </span> <a 
+href="contents.html#QQ2-35-702" id="x35-60000022.5.22">SpeechRecognizer</a></h4>
+<a 
+ id="x35-600001"></a>
+<!--l. 632--><p class="noindent">Speech recognition allows to transform a stream of sound into a text using various speech
+recognition algorithms. Implementations should use the <span 
+class="cmtt-10x-x-109">micro </span>component as their default sound
+input.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.SpeechRecognizer.lang?"><a 
+ id="x35-600002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">lang</span><span 
+class="cmtt-10x-x-109">?</span></span></a>&#x00A0;
+     <br class="newline" />The language used, in international notation (fr, en, it&#x2026;): ISO 639.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.SpeechRecognizer.hear"><a 
+ id="x35-600003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">hear</span></span><span class="lstinline"><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">)</span></span></a>&#x00A0;
+     <br class="newline" /> This event has one parameter which is the string describing what the speech engine has
+     recognized (can be a word or a sentence).</li></ul>
+<!--l. 643--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.23   </span> <a 
+href="contents.html#QQ2-35-703" id="x35-60100022.5.23">Led</a></h4>
+<a 
+ id="x35-601001"></a>
+<!--l. 645--><p class="noindent">Simple uni-color Led.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.Led.val"><a 
+ id="x35-601002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">val</span></span></a>&#x00A0;
+     <br class="newline" />Led intensity between 0 and 1.</li></ul>
+<!--l. 652--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.24   </span> <a 
+href="contents.html#QQ2-35-704" id="x35-60200022.5.24">RGBLed (subclass of Led)</a></h4>
+<a 
+ id="x35-602001"></a>
+<!--l. 654--><p class="noindent">Tri-color led.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.RGBLed.r"><a 
+ id="x35-602002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">r</span></span></a>&#x00A0;
+     <br class="newline" />Intensity of the red component, between 0 and 1.
+                                                                                       
+
+                                                                                       
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.RGBLed.g"><a 
+ id="x35-602003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">g</span></span></a>&#x00A0;
+     <br class="newline" />Intensity of the green component, between 0 and 1.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.RGBLed.b"><a 
+ id="x35-602004"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">b</span></span></a>&#x00A0;
+     <br class="newline" />Intensity of the blue component, between 0 and 1.</li></ul>
+<!--l. 662--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.5.25   </span> <a 
+href="contents.html#QQ2-35-705" id="x35-60300022.5.25">Battery</a></h4>
+<a 
+ id="x35-603001"></a>
+<!--l. 664--><p class="noindent">Power source of any kind.
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Interface.Battery.remain"><a 
+ id="x35-603002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">remain</span></span></a>&#x00A0;
+     <br class="newline" />Estimation of the remaining energy between 0 and 1.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Battery.capacity"><a 
+ id="x35-603003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">capacity</span></span></a>&#x00A0;
+     <br class="newline" />Storage capacity in Amp.Hour.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Battery.current"><a 
+ id="x35-603004"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">current</span></span></a>&#x00A0;
+     <br class="newline" />Current current consumption in Amp.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Interface.Battery.voltage"><a 
+ id="x35-603005"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">voltage</span></span></a>&#x00A0;
+     <br class="newline" />Current voltage in Volt.</li></ul>
+<!--l. 674--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">22.6   </span> <a 
+href="index.html#QQ2-35-706" id="x35-60400022.6">Standard Components</a></h3>
+<!--l. 676--><p class="noindent">Standard components correspond to components typically found in wheeled robots, humanoid or
+animaloid robots, or in industrial arms. This section provides a list of such components. Whenever
+possible, robots compatible with the Gostai Standard Robotics API should name all the components in
+the hierarchy using this list.
+                                                                                       
+
+                                                                                       
+</p><!--l. 681--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.6.1   </span> <a 
+href="contents.html#QQ2-35-707" id="x35-60500022.6.1">Yaw/Pitch/Roll orientation</a></h4>
+<!--l. 684--><p class="noindent">Note that Gostai Standard Robotics API considers the orientation to be a component name, and not a
+localizer. So one would write <span class="lstinline"><span 
+class="cmtt-10x-x-109">head</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">yaw</span></span> and not <span class="lstinline"><span 
+class="cmtt-10x-x-109">head</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">joint</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">yaw</span><span 
+class="cmtt-10x-x-109">]</span></span> to refer to a rotational articulation
+of the head around the Z axis.
+</p><!--l. 689--><p class="indent">   It is not always clear which rotational direction corresponds to the yaw, pitch or roll
+components (listed in the table below). This is a quick guideline to help determine the proper
+association.
+</p><!--l. 693--><p class="indent">   Let us consider the robot in its resting, most prototypical position, like &#8220;standing&#8221; on
+two or four legs for a humanoid or animaloid, and let all members &#8220;naturally&#8221; fall under
+gravity. When gravity has no effect on a certain joint (because it is in the orthogonal plan to
+Z, for example), the medium position between rangemin and rangemax should be used.
+The body position achieved will be considered as a reference. Then for each component
+that is described in terms of yaw/pitch/roll sub-decomposition, the association will be as
+follow:
+     </p><dl class="description"><dt class="description">
+<span 
+class="cmbx-10x-x-109">yaw</span> </dt><dd 
+class="description">rotational articulation around the Z axis in the robot.
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">pitch</span> </dt><dd 
+class="description">rotational articulation around the Y axis in the robot.
+     </dd><dt class="description">
+<span 
+class="cmbx-10x-x-109">roll</span> </dt><dd 
+class="description">rotational articulation around the X axis in the robot.</dd></dl>
+<!--l. 708--><p class="indent">   When there is no exact match with the X/Y/Z axis, the closest match, or the default remaining
+available axis, should be selected to determine the yaw/pitch/roll meaning.
+</p><!--l. 712--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">22.6.2   </span> <a 
+href="contents.html#QQ2-35-708" id="x35-60600022.6.2">Standard Component List</a></h4>
+<!--l. 715--><p class="noindent">The following table summarizes the currently referenced standard components, with a description of
+potential components that they could be sub-component of, a description of potential components they
+may contain, and a list of relevant interfaces. This table should be seen as a quick reference guide to
+identify available components in a given robot.
+</p>
+   <div class="supertabular">
+                                                                                       
+
+                                                                                       
+   <table class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-21-1g"><col 
+id="TBL-21-1" /></colgroup><colgroup id="TBL-21-2g"><col 
+id="TBL-21-2" /></colgroup><colgroup id="TBL-21-3g"><col 
+id="TBL-21-3" /></colgroup><colgroup id="TBL-21-4g"><col 
+id="TBL-21-4" /></colgroup><colgroup id="TBL-21-5g"><col 
+id="TBL-21-5" /></colgroup><colgroup id="TBL-21-6g"><col 
+id="TBL-21-6" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-21-1-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-1-1"  
+class="td11">                  </td>
+   </tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-2-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-2-1"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-3-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-3-1"  
+class="td11">  <span 
+class="cmbx-10x-x-109">Name</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-3-2"  
+class="td11">  <span 
+class="cmbx-10x-x-109">Description</span>                                   </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-3-3"  
+class="td11">  <span 
+class="cmbx-10x-x-109">Sub. of</span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-3-4"  
+class="td11">  <span 
+class="cmbx-10x-x-109">Contains</span>   </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-3-5"  
+class="td11">  <span 
+class="cmbx-10x-x-109">Facets</span>      </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-4-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-4-1"  
+class="td11">                  </td>
+   </tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-5-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-5-1"  
+class="td11">                  </td>
+   </tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-6-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-6-1"  
+class="td11">  <a 
+ id="x35-606001"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">robot</span></span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-6-2"  
+class="td11">  This is the main component that represents
+  an abstraction of the robot, and the root
+  node of the whole component hierarchy.     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-6-3"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-6-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-6-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">Identity</span>
+ <span 
+class="cmtt-10x-x-109">Network</span>
+ <span 
+class="cmtt-10x-x-109">Mobile</span>
+ <span 
+class="cmtt-10x-x-109">Tracker</span>    </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-7-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-7-1"  
+class="td11">  <a 
+ id="x35-606002"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">body</span></span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-7-2"  
+class="td11">  This is the main component that contains
+  every  piece  of  hardware  in  the  robot.
+  This   includes   all   primary   kinematics
+  sub-chains (arms, legs, neck, head, etc) and
+  non-localized sensor arrays, typically body
+  skin or heat detectors. Localized sensors,
+  like fingertips touch sensors, will typically
+  be found attached to the finger component
+  they belong and not directly to the body.   </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-7-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">robot</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-7-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">wheel arm</span>
+ <span 
+class="cmtt-10x-x-109">leg neck</span>
+ <span 
+class="cmtt-10x-x-109">head</span>
+ <span 
+class="cmtt-10x-x-109">wheel</span>
+ <span 
+class="cmtt-10x-x-109">tail skin</span>
+ <span 
+class="cmtt-10x-x-109">torso </span><span 
+class="cmtt-10x-x-109">&#x2026;</span>    </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-7-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-8-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-8-1"  
+class="td11">  <a 
+ id="x35-606003"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">wheel</span></span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-8-2"  
+class="td11">  Wheel attached to its parent component.    </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-8-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-8-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-8-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">RotationalMotor</span> </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-9-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-9-1"  
+class="td11">  <a 
+ id="x35-606004"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">leg</span></span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-9-2"  
+class="td11">  Legs are found in humanoid or animaloid
+  robots  and  correspond  to  part  of  the
+  kinematics chain that are attached to the
+  main body by one extremity only and which
+  do touch the ground in normal operation
+  mode (unlike arms). A typical configuration
+  for humanoids contains a hip, a knee and
+  an ankle. If the leg is more segmented, the
+  leg can be described with a simple array of
+  joints.                                                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-9-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-9-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">hip knee</span>
+ <span 
+class="cmtt-10x-x-109">ankle</span>
+ <span 
+class="cmtt-10x-x-109">foot</span>
+ <span 
+class="cmtt-10x-x-109">joint</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-9-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-10-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-10-1"  
+class="td11">  <a 
+ id="x35-606005"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">arm</span></span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-10-2"  
+class="td11">  Unlike   legs,   an   arm&#8217;s   extremity   does
+  not  always  touch  the  ground  in  normal
+  operating mode. This applies to humanoid
+  robots   or   single-arm   industrial   robots.
+  Arms supersede legs in the nomenclature:
+  if a body part behaves alternatively like an
+  arm and like a leg, it will be considered as
+  an arm.                                                </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-10-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-10-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">shoulder</span>
+ <span 
+class="cmtt-10x-x-109">elbow</span>
+ <span 
+class="cmtt-10x-x-109">wrist</span>
+ <span 
+class="cmtt-10x-x-109">hand grip</span>
+ <span 
+class="cmtt-10x-x-109">joint</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-10-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-11-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-11-1"  
+class="td11">  <a 
+ id="x35-606006"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">shoulder</span></span>  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-11-2"  
+class="td11">  The shoulder is the upper part of the arm.
+  It  can  have  one,  two  or  three  degrees  of
+  freedom and is the closest part of the arm
+  relative to the body.                               </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-11-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">arm</span>        </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-11-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">yaw pitch</span>
+ <span 
+class="cmtt-10x-x-109">roll</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-11-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-12-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-12-1"  
+class="td11">  <a 
+ id="x35-606007"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">elbow</span></span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-12-2"  
+class="td11">  Separates the upper arm and the lower arm,
+  this is usually a single rotational axis.        </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-12-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">arm</span>        </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-12-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">pitch</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-12-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-13-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-13-1"  
+class="td11">  <a 
+ id="x35-606008"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">wrist</span></span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-13-2"  
+class="td11">  Connects the hand and the lower part of
+  the arm. Usually three degrees of freedom
+  axis.                                                    </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-13-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">arm</span>        </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-13-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">yaw pitch</span>
+ <span 
+class="cmtt-10x-x-109">roll</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-13-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-14-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-14-1"  
+class="td11">  <a 
+ id="x35-606009"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">hand</span></span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-14-2"  
+class="td11">  The hand is an extension of the arm that
+  usually  holds  fingers.  It&#8217;s  not  the  wrist,
+  which is articulated and between the arm
+  and the hand.                                       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-14-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">arm</span>        </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-14-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">finger</span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-14-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-15-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-15-1"  
+class="td11">  <a 
+ id="x35-606010"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">finger</span></span>    </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-15-2"  
+class="td11">  Fingers are a series of articulated motors at
+  the extremity of the arm, and connected to
+  the hand. They are usually localized with
+  arrays and/or lateral localization respective
+  to the hand.                                          </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-15-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">hand</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-15-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">touch</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-15-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">Motor</span>      </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-16-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-16-1"  
+class="td11">  <a 
+ id="x35-606011"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">grip</span></span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-16-2"  
+class="td11">  Simple two-fingers system.                       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-16-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">arm hand</span>   </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-16-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">touch</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-16-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">Motor</span>      </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-17-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-17-1"  
+class="td11">  <a 
+ id="x35-606012"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">hip</span></span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-17-2"  
+class="td11">  The hip is the upper part of the leg and
+  connects it to the main body. It can have
+  one, two or three degrees of freedom.         </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-17-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">leg</span>        </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-17-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">yaw pitch</span>
+ <span 
+class="cmtt-10x-x-109">roll</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-17-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-18-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-18-1"  
+class="td11">  <a 
+ id="x35-606013"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">knee</span></span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-18-2"  
+class="td11">  Separates the upper leg and the lower leg,
+  this is usually a single rotational axis.        </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-18-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">leg</span>        </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-18-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">pitch</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-18-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-19-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-19-1"  
+class="td11">  <a 
+ id="x35-606014"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">ankle</span></span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-19-2"  
+class="td11">  Connects the foot and the lower part of the
+  leg. Usually three degrees of freedom axis.  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-19-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">leg</span>        </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-19-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">yaw pitch</span>
+ <span 
+class="cmtt-10x-x-109">roll</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-19-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-20-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-20-1"  
+class="td11">  <a 
+ id="x35-606015"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">foot</span></span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-20-2"  
+class="td11">  The  foot  is  an  extension  of  the  leg  that
+  usually holds toes. It&#8217;s not the ankle, which
+  is  articulated  and  between  the  leg  and
+  the foot. The foot can also contain touch
+  sensors in simple configurations.                </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-20-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">leg</span>        </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-20-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">touch</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-20-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-21-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-21-1"  
+class="td11">  <a 
+ id="x35-606016"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">toe</span></span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-21-2"  
+class="td11">  Like fingers, but attached to the foot.        </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-21-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">foot</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-21-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">touch</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-21-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">Motor</span>      </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-22-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-22-1"  
+class="td11">  <a 
+ id="x35-606017"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">neck</span></span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-22-2"  
+class="td11">  The  neck  corresponds  to  a  degree  of
+  freedom not part of the head, but relative
+  to the rigid connection between the head
+  and the main body.                                </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-22-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-22-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">yaw pitch</span>
+ <span 
+class="cmtt-10x-x-109">roll</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-22-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-23-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-23-1"  
+class="td11">  <a 
+ id="x35-606018"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">tail</span></span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-23-2"  
+class="td11">  A tail is a series of articulated motors at
+  the back of the robot.                             </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-23-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-23-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">joint</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-23-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-24-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-24-1"  
+class="td11">  <a 
+ id="x35-606019"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">head</span></span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-24-2"  
+class="td11">  The head main pivotal axis.                     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-24-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body neck</span>  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-24-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">camera</span>
+ <span 
+class="cmtt-10x-x-109">mouth ear</span>
+ <span 
+class="cmtt-10x-x-109">lip eye</span>
+ <span 
+class="cmtt-10x-x-109">eyebrow</span>    </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-24-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-25-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-25-1"  
+class="td11">  <a 
+ id="x35-606020"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">mouth</span></span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-25-2"  
+class="td11">  The robot mouth (open/close)                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-25-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">head</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-25-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">lip</span>        </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-25-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">Motor</span>      </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-26-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-26-1"  
+class="td11">  <a 
+ id="x35-606021"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">ear</span></span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-26-2"  
+class="td11">  Ears may have degrees of freedom in certain
+  robots.                                                 </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-26-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">head</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-26-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-26-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">Motor</span>      </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-27-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-27-1"  
+class="td11">  <a 
+ id="x35-606022"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">joint</span></span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-27-2"  
+class="td11">  Generic articulation in the robot.              </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-27-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">tail arm</span>
+ <span 
+class="cmtt-10x-x-109">leg lip</span>    </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-27-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-27-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">Motor</span>      </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-28-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-28-1"  
+class="td11">  <a 
+ id="x35-606023"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">yaw</span></span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-28-2"  
+class="td11">  Rotational articulation around the Z axis
+  in the robot. See <a 
+href="#x35-60500022.6.1">Section&#x00A0;22.6.1<!--tex4ht:ref: sec:naming:ypr --></a>.               </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-28-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body neck</span>
+ <span 
+class="cmtt-10x-x-109">knee</span>
+ <span 
+class="cmtt-10x-x-109">ankle</span>
+ <span 
+class="cmtt-10x-x-109">shoulder</span>
+ <span 
+class="cmtt-10x-x-109">elbow</span>
+ <span 
+class="cmtt-10x-x-109">wrist</span>
+ <span 
+class="cmtt-10x-x-109">torso</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-28-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-28-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">RotationalMotor</span>
+ <span 
+class="cmtt-10x-x-109">RotationalSpeedMotor</span> </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-29-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-29-1"  
+class="td11">  <a 
+ id="x35-606024"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">pitch</span></span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-29-2"  
+class="td11">  Rotational articulation around the Y axis
+  in the robot. See <a 
+href="#x35-60500022.6.1">Section&#x00A0;22.6.1<!--tex4ht:ref: sec:naming:ypr --></a>.               </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-29-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body neck</span>
+ <span 
+class="cmtt-10x-x-109">knee</span>
+ <span 
+class="cmtt-10x-x-109">ankle</span>
+ <span 
+class="cmtt-10x-x-109">shoulder</span>
+ <span 
+class="cmtt-10x-x-109">elbow</span>
+ <span 
+class="cmtt-10x-x-109">wrist</span>
+ <span 
+class="cmtt-10x-x-109">torso</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-29-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-29-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">RotationalMotor</span>
+ <span 
+class="cmtt-10x-x-109">RotationalSpeedMotor</span> </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-30-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-30-1"  
+class="td11">  <a 
+ id="x35-606025"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">roll</span></span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-30-2"  
+class="td11">  Rotational articulation around the X axis
+  in the robot. See <a 
+href="#x35-60500022.6.1">Section&#x00A0;22.6.1<!--tex4ht:ref: sec:naming:ypr --></a>.               </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-30-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body neck</span>
+ <span 
+class="cmtt-10x-x-109">knee</span>
+ <span 
+class="cmtt-10x-x-109">ankle</span>
+ <span 
+class="cmtt-10x-x-109">shoulder</span>
+ <span 
+class="cmtt-10x-x-109">elbow</span>
+ <span 
+class="cmtt-10x-x-109">wrist</span>
+ <span 
+class="cmtt-10x-x-109">torso</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-30-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-30-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">RotationalMotor</span>
+ <span 
+class="cmtt-10x-x-109">RotationalSpeedMotor</span> </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-31-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-31-1"  
+class="td11">  <a 
+ id="x35-606026"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">x</span></span>         </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-31-2"  
+class="td11">  Translational movement along the X axis.   </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-31-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body arm</span>   </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-31-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-31-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">LinearMotor</span>
+ <span 
+class="cmtt-10x-x-109">LinearSpeedMotor</span> </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-32-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-32-1"  
+class="td11">  <a 
+ id="x35-606027"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">y</span></span>         </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-32-2"  
+class="td11">  Translational movement along the Y axis.   </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-32-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body arm</span>   </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-32-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-32-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">LinearMotor</span>
+ <span 
+class="cmtt-10x-x-109">LinearSpeedMotor</span> </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-33-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-33-1"  
+class="td11">  <a 
+ id="x35-606028"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">z</span></span>         </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-33-2"  
+class="td11">  Translational movement along the Z axis.   </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-33-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body arm</span>   </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-33-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-33-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">LinearMotor</span>
+ <span 
+class="cmtt-10x-x-109">LinearSpeedMotor</span> </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-34-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-34-1"  
+class="td11">  <a 
+ id="x35-606029"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">lip</span></span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-34-2"  
+class="td11">  Corresponds to animated lips.                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-34-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">mouth</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-34-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">joint</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-34-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">Motor</span>      </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-35-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-35-1"  
+class="td11">  <a 
+ id="x35-606030"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">eye</span></span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-35-2"  
+class="td11">  Corresponds to the eyeball pivotal axis.      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-35-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">head</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-35-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">camera</span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-35-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-36-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-36-1"  
+class="td11">  <a 
+ id="x35-606031"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">eyebrow</span></span>   </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-36-2"  
+class="td11">  Some   robots   will   have   eyebrows   with
+  generally one or several degrees of freedom.  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-36-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">head</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-36-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">joint</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-36-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">Motor</span>      </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-37-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-37-1"  
+class="td11">  <a 
+ id="x35-606032"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">torso</span></span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-37-2"  
+class="td11">  This corresponds to a pivotal or rotational
+  axis in the middle of the main body.          </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-37-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-37-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">yaw pitch</span>
+ <span 
+class="cmtt-10x-x-109">roll</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-37-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-38-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-38-1"  
+class="td11">  <a 
+ id="x35-606033"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">spine</span></span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-38-2"  
+class="td11">  This  is  a  more  elaborated  version  of
+  &#8220;torso&#8221;, with a series of articulations to give
+  several degrees of freedom in the back of
+  the robot.                                             </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-38-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">torso</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-38-4"  
+class="td11">  <span 
+class="cmtt-10x-x-109">joint</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-38-5"  
+class="td11">                  </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-39-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-39-1"  
+class="td11">  <a 
+ id="x35-606034"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">clavicle</span></span>  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-39-2"  
+class="td11">  This is not to be mixed up with the &#8220;top of
+  the arm&#8221; body part. It is an independent
+  degree of freedom that can be used to bring
+  the two arms closer in a sort of &#8220;shoulder
+  raising&#8221; movement.                                </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-39-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-39-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-39-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">Motor</span>      </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-40-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-40-1"  
+class="td11">  <a 
+ id="x35-606035"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">touch</span></span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-40-2"  
+class="td11">  Touch sensor.                                        </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-40-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">finger</span>
+ <span 
+class="cmtt-10x-x-109">grip foot</span>
+ <span 
+class="cmtt-10x-x-109">toe</span>        </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-40-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-40-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">TouchSensor</span> </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-41-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-41-1"  
+class="td11">  <a 
+ id="x35-606036"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">gyro</span></span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-41-2"  
+class="td11">  Gyrometer sensor.                                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-41-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-41-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-41-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">GyroSensor</span> </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-42-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-42-1"  
+class="td11">  <a 
+ id="x35-606037"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">accel</span></span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-42-2"  
+class="td11">  Accelerometer sensor.                             </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-42-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">body</span>       </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-42-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-42-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">AccelerationSensor</span> </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-43-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-43-1"  
+class="td11">  <a 
+ id="x35-606038"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">camera</span></span>    </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-43-2"  
+class="td11">  Camera  sensor.  If  several  cameras  are
+  available, localization shall apply; however
+  there must always be an alias from <span 
+class="cmtt-10x-x-109">camera</span>
+ to   one   of   the   effective   cameras   (like
+  <span 
+class="cmtt-10x-x-109">cameraR </span>or <span 
+class="cmtt-10x-x-109">cameraL</span>).                             </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-43-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">head body</span>  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-43-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-43-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">VideoIn</span>    </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-44-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-44-1"  
+class="td11">  <a 
+ id="x35-606039"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">speaker</span></span>   </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-44-2"  
+class="td11">  Speaker  device.  If  several  speakers  are
+  available, localization shall apply; however
+  there must always be an alias from <span 
+class="cmtt-10x-x-109">speaker</span>
+ to   one   of   the   effective   speakers   (like
+  <span 
+class="cmtt-10x-x-109">speakerR </span>or <span 
+class="cmtt-10x-x-109">speakerL</span>).                          </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-44-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">head body</span>  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-44-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-44-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">AudioIn</span>    </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-45-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-45-1"  
+class="td11">  <a 
+ id="x35-606040"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">micro</span></span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-45-2"  
+class="td11">  Microphone devices. If several microphones
+  are   available,   localization   shall   apply;
+  however there must always be an alias from
+  <span 
+class="cmtt-10x-x-109">micro </span>to one of the effective microphones
+  (like <span 
+class="cmtt-10x-x-109">microR </span>or <span 
+class="cmtt-10x-x-109">microL</span>).                          </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-45-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">head body</span>  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-45-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-45-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">AudioOut</span>   </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-46-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-46-1"  
+class="td11">  <a 
+ id="x35-606041"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">speech</span></span>    </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-46-2"  
+class="td11">  Speech recognition component.                 </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-46-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">robot</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-46-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-46-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">SpeechRecognizer</span> </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-47-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-47-1"  
+class="td11">  <a 
+ id="x35-606042"></a>
+  <span class="lstinline"><span 
+class="cmtt-10x-x-109">voice</span></span>     </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-47-2"  
+class="td11">  Voice synthesis component.                      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-47-3"  
+class="td11">  <span 
+class="cmtt-10x-x-109">robot</span>      </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-47-4"  
+class="td11">                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-47-5"  
+class="td11">  <span 
+class="cmtt-10x-x-109">TextToSpeech</span> </td>
+   </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-48-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-21-48-1"  
+class="td11">                  </td>
+      </tr></table>                                                                                
+
+                                                                                       
+</div>
+   <h3 class="sectionHead"><span class="titlemark">22.7   </span> <a 
+href="index.html#QQ2-35-709" id="x35-60700022.7">Compact notation</a></h3>
+<!--l. 1048--><p class="noindent">Components are usually identified with their full-length name, which is the path to access them inside
+the structure tree. For convenience and backward compatibility with pre-2.0 versions of Urbi, there is
+also a compact notation available. We will describe here how to construct the compact notation
+starting from the full name and the structure tree.
+</p>
+   <div class="supertabular"> <table class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-23-1g"><col 
+id="TBL-23-1" /></colgroup><colgroup id="TBL-23-2g"><col 
+id="TBL-23-2" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-23-1-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-1-1"  
+class="td11">                                                                          </td>
+ </tr><tr  
+ style="vertical-align:baseline;" id="TBL-23-2-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-2-1"  
+class="td11">                                                                          </td>
+ </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-23-3-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-3-1"  
+class="td11">  Full name                                                           </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-3-2"  
+class="td11">  Compact name                         </td>
+ </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-23-4-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-4-1"  
+class="td11">                                                                          </td>
+ </tr><tr  
+ style="vertical-align:baseline;" id="TBL-23-5-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-5-1"  
+class="td11">                                                                          </td>
+ </tr><tr  
+ style="vertical-align:baseline;" id="TBL-23-6-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-6-1"  
+class="td11">  <span 
+class="cmtt-10x-x-109">robot.body.armR.elbow</span>                         </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-6-2"  
+class="td11">  <span 
+class="cmtt-10x-x-109">elbowR</span>                      </td>
+ </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-23-7-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-7-1"  
+class="td11">  <span 
+class="cmtt-10x-x-109">robot.body.head.yaw</span>                           </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-7-2"  
+class="td11">  <span 
+class="cmtt-10x-x-109">headYaw</span>                     </td>
+ </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-23-8-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-8-1"  
+class="td11">  <span 
+class="cmtt-10x-x-109">robot.body.legL.knee.pitch</span>                    </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-8-2"  
+class="td11">  <span 
+class="cmtt-10x-x-109">kneeL</span>                       </td>
+ </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-23-9-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-9-1"  
+class="td11">  <span 
+class="cmtt-10x-x-109">robot.body.armR.hand.finger[3][2]</span>             </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-9-2"  
+class="td11">  <span 
+class="cmtt-10x-x-109">fingerR[3][2]</span>               </td>
+ </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-23-10-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-10-1"  
+class="td11">  <span 
+class="cmtt-10x-x-109">robot.body.armL.hand.fingerR</span>                  </td><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-10-2"  
+class="td11">  <span 
+class="cmtt-10x-x-109">fingerLR</span>                    </td>
+ </tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-23-11-"><td  style="white-space:nowrap; text-align:left; vertical-align:middle;" id="TBL-23-11-1"  
+class="td11">                                                                          </td> </tr></table>
+</div>
+<!--l. 1070--><p class="indent">   The rule is to move every localization qualifier at the end of the compact notation, in the order
+where they appear in the full-length name. The remaining component names should then be considered
+one by one to see if they are needed to remove ambiguities. If they are not, like typically the
+robot or body components which are shared with almost every other full-length name,
+they can be ignored. If finally several component names have to be kept, they should be
+separated by using upper case letters for the first character instead of a dot, like in Java-style
+notation.
+</p>
+   <div class="newtheorem">
+<!--l. 1080--><p class="noindent"><span class="head">
+<span 
+class="cmbx-10x-x-109">Example</span><span 
+class="cmbx-10x-x-109">&#x00A0;1</span><span 
+class="cmbx-10x-x-109">&#x00A0;(</span><span 
+class="cmtt-10x-x-109">robot.body.armL.hand.fingerR</span><span 
+class="cmbx-10x-x-109">)</span> </span><span 
+class="cmti-10x-x-109">&#x00A0;</span>
+<br class="newline" />
+     </p><ol  class="enumerate1" >
+     <li class="enumerate"><a 
+ id="x35-607003x1"></a><span 
+class="cmti-10x-x-109">Move all localization at the end: </span><span 
+class="cmitt-10x-x-109">robot.body.arm.hand.fingerLR</span>
+     </li>
+     <li class="enumerate"><a 
+ id="x35-607005x2"></a><span 
+class="cmti-10x-x-109">The full name remaining is: </span><span 
+class="cmitt-10x-x-109">robot.body.arm.hand.finger</span>
+     </li>
+                                                                                       
+
+                                                                                       
+     <li class="enumerate"><a 
+ id="x35-607007x3"></a><span 
+class="cmitt-10x-x-109">finger </span><span 
+class="cmti-10x-x-109">should be kept, </span><span 
+class="cmitt-10x-x-109">hand</span><span 
+class="cmti-10x-x-109">, </span><span 
+class="cmitt-10x-x-109">arm</span><span 
+class="cmti-10x-x-109">, </span><span 
+class="cmitt-10x-x-109">body </span><span 
+class="cmti-10x-x-109">and </span><span 
+class="cmitt-10x-x-109">robot </span><span 
+class="cmti-10x-x-109">are not necessary since every finger</span>
+     <span 
+class="cmti-10x-x-109">component will always be attached only to a hand, itself attached to an arm and a body</span>
+     <span 
+class="cmti-10x-x-109">and a robot.</span>
+     </li>
+     <li class="enumerate"><a 
+ id="x35-607009x4"></a><span 
+class="cmti-10x-x-109">The result is </span><span 
+class="cmitt-10x-x-109">fingerLR</span></li></ol>
+</div>
+   <div class="newtheorem">
+<!--l. 1094--><p class="noindent"><span class="head">
+<span 
+class="cmbx-10x-x-109">Example</span><span 
+class="cmbx-10x-x-109">&#x00A0;2</span><span 
+class="cmbx-10x-x-109">&#x00A0;(</span><span 
+class="cmtt-10x-x-109">robot.body.head.yaw</span><span 
+class="cmbx-10x-x-109">)</span> </span><span 
+class="cmti-10x-x-109">&#x00A0;</span>
+<br class="newline" />
+     </p><ol  class="enumerate1" >
+     <li class="enumerate"><a 
+ id="x35-607012x1"></a><span 
+class="cmti-10x-x-109">No localization to move</span>
+     </li>
+     <li class="enumerate"><a 
+ id="x35-607014x2"></a><span 
+class="cmitt-10x-x-109">yaw </span><span 
+class="cmti-10x-x-109">must be kept because </span><span 
+class="cmitt-10x-x-109">head </span><span 
+class="cmti-10x-x-109">also have a </span><span 
+class="cmitt-10x-x-109">pitch </span><span 
+class="cmti-10x-x-109">sub-component and</span>
+     </li>
+     <li class="enumerate"><a 
+ id="x35-607016x3"></a><span 
+class="cmitt-10x-x-109">head </span><span 
+class="cmti-10x-x-109">must  also  be  kept  to  avoid  ambiguity  with  other  components  having  a  </span><span 
+class="cmitt-10x-x-109">yaw</span>
+     <span 
+class="cmti-10x-x-109">sub-component.</span>
+     </li>
+     <li class="enumerate"><a 
+ id="x35-607018x4"></a><span 
+class="cmti-10x-x-109">The result is </span><span 
+class="cmitt-10x-x-109">headYaw</span></li></ol>
+</div>
+   <div class="newtheorem">
+<!--l. 1105--><p class="noindent"><span class="head">
+<span 
+class="cmbx-10x-x-109">Example</span><span 
+class="cmbx-10x-x-109">&#x00A0;3</span><span 
+class="cmbx-10x-x-109">&#x00A0;(</span><span 
+class="cmtt-10x-x-109">robot.body.legL.knee.pitch</span><span 
+class="cmbx-10x-x-109">)</span> </span><span 
+class="cmti-10x-x-109">&#x00A0;</span>
+<br class="newline" />
+     </p><ol  class="enumerate1" >
+     <li class="enumerate"><a 
+ id="x35-607021x1"></a><span 
+class="cmti-10x-x-109">Move all localization at the end: </span><span 
+class="cmitt-10x-x-109">robot.body.leg.knee.pitchL</span>
+     </li>
+     <li class="enumerate"><a 
+ id="x35-607023x2"></a><span 
+class="cmitt-10x-x-109">pitch </span><span 
+class="cmti-10x-x-109">is not necessary because </span><span 
+class="cmitt-10x-x-109">knee </span><span 
+class="cmti-10x-x-109">has only a </span><span 
+class="cmitt-10x-x-109">pitch</span><span 
+class="cmti-10x-x-109">, so </span><span 
+class="cmitt-10x-x-109">knee </span><span 
+class="cmti-10x-x-109">will be kept only</span>
+     </li>
+     <li class="enumerate"><a 
+ id="x35-607025x3"></a><span 
+class="cmti-10x-x-109">The result is </span><span 
+class="cmitt-10x-x-109">kneeL</span></li></ol>
+</div>
+                                                                                       
+
+                                                                                       
+<!--l. 1115--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">22.8   </span> <a 
+href="index.html#QQ2-35-710" id="x35-60800022.8">Support classes</a></h3>
+<!--l. 1116--><p class="noindent">The Urbi SDK provides a few support urbiscript classes to help you build the component
+hierarchy. You can access to those classes by including the files &#8216;<span 
+class="cmtt-10x-x-109">urbi/naming-standard.u</span>&#8217; and
+&#8216;<span 
+class="cmtt-10x-x-109">urbi/component.h</span>&#8217;.
+</p><!--l. 1123--><p class="indent">
+<a 
+ id="x35-608001r708"></a>
+</p><!--l. 1123--><p class="noindent"><span 
+class="cmbx-12">22.8.1</span>   <span 
+class="cmbx-12">Interface</span>
+<a 
+ id="Q1-35-711"></a>
+<a 
+ id="x35-608002"></a>
+</p><!--l. 1125--><p class="indent">   The <span 
+class="cmtt-10x-x-109">Interface </span>class contains urbiscript objects for all the interfaces defined in this document.
+Implementations must inherit from the correct interface.
+</p><!--l. 1128--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 1128--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608003r1"></a></span><!--l. 1129--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Instantiate</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">camera</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608004r2"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">cam</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">myCamera</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">();</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608005r3"></a></span><!--l. 1131--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Make</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">it</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">inherit</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">from</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">VideoIn</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608006r4"></a></span><span 
+class="cmtt-10x-x-109">cam</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">addProto</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">Interface</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">VideoIn</span><span 
+class="cmtt-10x-x-109">);</span>
+   </pre>
+   </div>
+<!--l. 1135--><p class="indent">   The <span 
+class="cmtt-10x-x-109">Interface.interfaces </span>method can be called to get a list of all the interfaces an object
+implements.
+</p><!--l. 1138--><p class="indent">
+<a 
+ id="x35-608007r708"></a>
+</p><!--l. 1138--><p class="noindent"><span 
+class="cmbx-12">22.8.2</span>   <span 
+class="cmbx-12">Component</span>
+<a 
+ id="Q1-35-712"></a>
+<a 
+ id="x35-608008"></a>
+</p><!--l. 1140--><p class="indent">   The <span 
+class="cmtt-10x-x-109">Component </span>class can be used to create intermediate nodes of the hierarchy. It provides the
+following methods:
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Component.addComponent"><a 
+ id="x35-608009"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">addComponent</span></span><span class="lstinline"><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">)</span></span></a>&#x00A0;
+     <br class="newline" />Add a new sub-component to the current component. <span 
+class="cmitt-10x-x-109">name </span>can be the name of the new
+     component to create, or an instance of <span 
+class="cmtt-10x-x-109">Component</span>.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Component.addDevice"><a 
+ id="x35-608010"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">addDevice</span></span><span class="lstinline"><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmitt-10x-x-109">value</span><span 
+class="cmtt-10x-x-109">)</span></span></a>&#x00A0;
+     <br class="newline" />Add device <span 
+class="cmitt-10x-x-109">value </span>as sub-component, under the name <span 
+class="cmitt-10x-x-109">name</span>. The device must inherit from
+     at least one Interface.
+                                                                                       
+
+                                                                                       
+     </li>
+     <li class="itemize"><a 
+ id="slot:Component.makeCompactNames"><a 
+ id="x35-608011"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">makeCompactNames</span></span></a>&#x00A0;
+     <br class="newline" />This function must be called once on the root node (<span 
+class="cmtt-10x-x-109">robot</span>) after the hierarchy is completed.
+     It automatically computes the short name of all the devices, and insert them as slots of
+     the <span 
+class="cmtt-10x-x-109">Global </span>object.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Component.dump"><a 
+ id="x35-608012"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">dump</span></span></a>&#x00A0;
+     <br class="newline" />Display a hierarchical view of the component hierarchy.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Component.flatDump"><a 
+ id="x35-608013"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">flatDump</span></span></a>&#x00A0;
+     <br class="newline" />Display all the devices in the hierarchy, sorted by the Interface they implement.</li></ul>
+<!--l. 1168--><p class="indent">
+<a 
+ id="x35-608014r708"></a>
+</p><!--l. 1168--><p class="noindent"><span 
+class="cmbx-12">22.8.3</span>   <span 
+class="cmbx-12">Localizer</span>
+<a 
+ id="Q1-35-713"></a>
+<a 
+ id="x35-608015"></a>
+</p><!--l. 1170--><p class="indent">   The <span 
+class="cmtt-10x-x-109">Localizer </span>class is a special type of <span 
+class="cmtt-10x-x-109">Component </span>that stores other components based on their
+localization. It provides a <span 
+class="cmtt-10x-x-109">[] </span>operator that takes a <span 
+class="cmtt-10x-x-109">Localization</span>, such as <span class="lstinline"><span 
+class="cmtt-10x-x-109">top,left,front</span></span>, and that
+can be used to set and get the <span 
+class="cmtt-10x-x-109">Component </span>or device associated with that <span 
+class="cmtt-10x-x-109">Localization</span>.
+</p><!--l. 1176--><p class="indent">   Note that the <span 
+class="cmtt-10x-x-109">[] </span>function is using a mechanisms to automatically look for its argument as a slot of
+<span 
+class="cmtt-10x-x-109">Localizer</span>. As a consequence, you cannot pass a variable to this function, but only one of the
+constant <span 
+class="cmtt-10x-x-109">Localization</span>. To pass a variable, use the <span 
+class="cmtt-10x-x-109">get(loc) </span>or the <span 
+class="cmtt-10x-x-109">set(loc, value)</span>
+function.
+</p><!--l. 1183--><p class="indent">   The following example illustrates a typical instantiation sequence:
+</p><!--l. 1185--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 1185--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608016r1"></a></span><!--l. 1186--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Create</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">top</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">-</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">level</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">node</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608017r2"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Global</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Component</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 1187--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">robot</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608018r3"></a></span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">addComponent</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 1188--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">head</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608019r4"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">cam</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">MyCamera</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608020r5"></a></span><span 
+class="cmtt-10x-x-109">cam</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">addProto</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">Interface</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">VideoIn</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608021r6"></a></span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">head</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">addDevice</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 1191--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">camera</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">cam</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608022r7"></a></span><!--l. 1192--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Add</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">two</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">wheels</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608023r8"></a></span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">addComponent</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">Localizer</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 1193--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">wheel</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">));</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608024r9"></a></span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">wheel</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">left</span><span 
+class="cmtt-10x-x-109">]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">MyWheel</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(0).</span><span 
+class="cmtt-10x-x-109">addProto</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">Interface</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">RotationalMotor</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608025r10"></a></span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">wheel</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">right</span><span 
+class="cmtt-10x-x-109">]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">MyWheel</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(1).</span><span 
+class="cmtt-10x-x-109">addProto</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">Interface</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">RotationalMotor</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608026r11"></a></span><!--l. 1196--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Implement</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Mobile</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">facet</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">in</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">urbiscript</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">:</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608027r12"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">go</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">d</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608028r13"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608029r14"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">wheel</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">val</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">wheel</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">val</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">d</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">wheelRadius</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">adaptive</span><span 
+class="cmtt-10x-x-109">:1</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608030r15"></a></span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608031r16"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">turn</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">r</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608032r17"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608033r18"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">v</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">r</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">*</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">wheelDistance</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">wheelRadius;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608034r19"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">wheel</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">left</span><span 
+class="cmtt-10x-x-109">].</span><span 
+class="cmtt-10x-x-109">val</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">wheel</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">left</span><span 
+class="cmtt-10x-x-109">].</span><span 
+class="cmtt-10x-x-109">val</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">v</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">adaptive</span><span 
+class="cmtt-10x-x-109">:1</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&amp;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608035r20"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">wheel</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">right</span><span 
+class="cmtt-10x-x-109">].</span><span 
+class="cmtt-10x-x-109">val</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">wheel</span><span 
+class="cmtt-10x-x-109">[</span><span 
+class="cmtt-10x-x-109">right</span><span 
+class="cmtt-10x-x-109">].</span><span 
+class="cmtt-10x-x-109">val</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">v</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">adaptive</span><span 
+class="cmtt-10x-x-109">:1</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608036r21"></a></span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608037r22"></a></span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">addProto</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">Interface</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Mobile</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608038r23"></a></span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">makeCompactNames;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608039r24"></a></span><!--l. 1209--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Let</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">us</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">see</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">result</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">:</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608040r25"></a></span><span 
+class="cmtt-10x-x-109">robot</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">flatDump;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608041r26"></a></span><!--l. 1211--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">010130]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Mobile</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">robot</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608042r27"></a></span><!--l. 1212--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">010130]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">RotationalMotor</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">wheelL</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">wheelR</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x35-608043r28"></a></span><!--l. 1213--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">010130]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">VideoIn</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">camera</span></span></pre>
+   </pre>
+   </div>
+<!--l. 9--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 9--><p class="indent">   <div class="footer"><a 
+href="ros.html" ><p>Prev</p></a><a 
+href="ros.html#tailurbi-sdkch21.html" ><p>Prev-tail</p></a><a 
+href="gostai-standard-robotics-api.html" ><p>Front</p></a><a 
+href="urbi-sdk-reference-manual.html#gostai-standard-robotics-api.html" ><p>Up</p></a></div><a 
+ id="tailurbi-sdkch22.html"></a>  </p> 
+</body></html> 

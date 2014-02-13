@@ -1,0 +1,1 @@
+share/doc/urbi-sdk/AUTHORS.txt

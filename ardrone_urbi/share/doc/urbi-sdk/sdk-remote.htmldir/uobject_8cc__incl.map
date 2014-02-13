@@ -1,0 +1,24 @@
+<map id="G" name="G">
+<area shape="rect" href="$compatibility_8hh.html" title="liburbi/compatibility.hh" alt="" coords="2309,81,2485,105" />
+<area shape="rect" href="$uexternal_8hh.html" title="urbi/uexternal.hh" alt="" coords="2147,81,2285,105" />
+<area shape="rect" href="$umessage_8hh.html" title="urbi/umessage.hh" alt="" coords="1065,231,1209,255" />
+<area shape="rect" href="$uobject_8hh.html" title="urbi/uobject.hh" alt="" coords="2560,156,2685,180" />
+<area shape="rect" href="$uvar_8hh.html" title="urbi/uvar.hh" alt="" coords="2916,305,3020,329" />
+<area shape="rect" href="$ustarter_8hh.html" title="urbi/ustarter.hh" alt="" coords="1580,231,1705,255" />
+<area shape="rect" href="$usyncclient_8hh.html" title="Definition of the URBI interface class." alt="" coords="3691,156,3843,180" />
+<area shape="rect" href="$ucontext&#45;factory_8hh.html" title="urbi/ucontext&#45;factory.hh" alt="" coords="3545,81,3729,105" />
+<area shape="rect" href="$remote&#45;ucontext&#45;impl_8hh.html" title="libuobject/remote&#45;ucontext&#45;impl.hh" alt="" coords="3260,81,3521,105" />
+<area shape="rect" href="$kernel&#45;version_8hh.html" title="urbi/kernel&#45;version.hh" alt="" coords="1233,231,1404,255" />
+<area shape="rect" href="$compatibility_8hxx.html" title="compatibility.hxx" alt="" coords="2349,156,2485,180" />
+<area shape="rect" href="$export_8hh.html" title="urbi/export.hh" alt="" coords="1515,380,1632,404" />
+<area shape="rect" href="$fwd_8hh.html" title="Forward declarations." alt="" coords="1524,305,1623,329" />
+<area shape="rect" href="$ubinary_8hh.html" title="urbi/ubinary.hh" alt="" coords="1175,305,1297,329" />
+<area shape="rect" href="$umessage_8hxx.html" title="urbi/umessage.hxx" alt="" coords="897,305,1049,329" />
+<area shape="rect" href="$ucallbacks_8hh.html" title="urbi/ucallbacks.hh" alt="" coords="2775,231,2919,255" />
+<area shape="rect" href="$ucontext_8hh.html" title="urbi/ucontext.hh" alt="" coords="2671,380,2804,404" />
+<area shape="rect" href="$uevent_8hh.html" title="urbi/uevent.hh" alt="" coords="2007,305,2127,329" />
+<area shape="rect" href="$utimer&#45;callback_8hh.html" title="urbi/utimer&#45;callback.hh" alt="" coords="2343,231,2521,255" />
+<area shape="rect" href="$uobject&#45;hub_8hh.html" title="urbi/uobject&#45;hub.hh" alt="" coords="2545,231,2700,255" />
+<area shape="rect" href="$uobject_8hxx.html" title="urbi/uobject.hxx" alt="" coords="3145,231,3276,255" />
+<area shape="rect" href="$ustarter_8hxx.html" title="urbi/ustarter.hxx" alt="" coords="1799,305,1932,329" />
+</map>

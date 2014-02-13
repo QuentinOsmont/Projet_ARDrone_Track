@@ -1,0 +1,11 @@
+<map id="G" name="G">
+<area shape="rect" href="$classurbi_1_1_u_value.html" title="Container for a value that handles all types known to URBI." alt="" coords="693,321,797,345" />
+<area shape="rect" title="STL class." alt="" coords="292,140,383,164" />
+<area shape="rect" href="$classurbi_1_1_u_named_value.html" title="urbi::UNamedValue" alt="" coords="213,412,365,436" />
+<area shape="rect" href="$classurbi_1_1_u_binary.html" title="Binary data of known or unknown type." alt="" coords="860,231,969,255" />
+<area shape="rect" title="STL class." alt="" coords="241,7,433,31" />
+<area shape="rect" href="$classurbi_1_1_u_sound.html" title="Class encapsulating sound information." alt="" coords="781,140,891,164" />
+<area shape="rect" href="$classurbi_1_1_u_image.html" title="Class encapsulating an image." alt="" coords="1048,140,1157,164" />
+<area shape="rect" href="$classurbi_1_1_u_list.html" title="Class storing URBI List type." alt="" coords="743,503,833,527" />
+<area shape="rect" title="STL class." alt="" coords="104,321,237,345" />
+</map>

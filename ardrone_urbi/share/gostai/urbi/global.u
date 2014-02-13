@@ -1,0 +1,68 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+do (Global)
+{
+  // Import the primitives.
+  addProto(System);
+  removeProto(Object);
+
+  function echo
+  {
+    lobby.callMessage(call);
+  };
+
+  /// Returns true if argument is defined. Argument can be of the form a.b.c.
+  function isdef
+  {
+    var base = call.sender |
+    var first = true |
+    for| (var c: call.argString(0).split([".", " "], nil, false, false))
+    {
+      if (base.hasSlot(c))
+      {
+        if (!first && !base.hasLocalSlot(c))
+          return false |
+        var s = base.getSlot(c).acceptVoid |
+        base = s.apply([s]).acceptVoid |
+        first = false
+      }
+        else
+        return false |
+    } |
+    return true
+  };
+
+  /*---------------------------.
+  | Method function wrappers.  |
+  `---------------------------*/
+
+  // Make a function f from a method m, so as f(a, b, c) is equivalent
+  // to a.m(b, c)
+  // FIXME: I'm not satisfied with the name, but can't find anything
+  // better
+  function methodToFunction(name)
+  {
+    function
+    {
+      var args = call.evalArgs |
+      var val = args.head.getSlot(name) |
+      if (val.isA(Executable))
+        return val.apply(args)
+      else
+        return val |
+    }
+  };
+
+  function wall
+  {
+    lobby.callMessage(call);
+  };
+};

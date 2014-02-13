@@ -1,0 +1,17 @@
+<map id="G" name="G">
+<area shape="rect" href="$classurbi_1_1_u_generic_callback.html" title="Function and Event storage mechanism This heavily overloaded class is the only way in C++ to make lif..." alt="" coords="2374,483,2550,507" />
+<area shape="rect" href="$classurbi_1_1_u_context.html" title="Methods available in both UObject and UVar Wrapper around UContextImpl to enable access through inher..." alt="" coords="1112,332,1232,356" />
+<area shape="rect" href="$classurbi_1_1_u_object.html" title="Main UObject class definition Each UObject instance corresponds to an URBI object." alt="" coords="2000,682,2112,706" />
+<area shape="rect" href="$classurbi_1_1_u_object_hub.html" title="Main UObjectHub class definition." alt="" coords="2855,726,2994,750" />
+<area shape="rect" href="$classurbi_1_1_u_var.html" title="UVar class definition." alt="" coords="1528,196,1616,220" />
+<area shape="rect" href="$classurbi_1_1impl_1_1_u_context_impl.html" title="urbi::impl::UContextImpl" alt="" coords="826,332,1012,356" />
+<area shape="rect" title="STL class." alt="" coords="126,332,238,356" />
+<area shape="rect" title="STL class." alt="" coords="1127,892,1218,916" />
+<area shape="rect" href="$classurbi_1_1base_u_r_b_i_starter.html" title="urbi::baseURBIStarter" alt="" coords="1488,796,1656,820" />
+<area shape="rect" title="STL class." alt="" coords="823,892,1015,916" />
+<area shape="rect" title="STL class." alt="" coords="2002,971,2111,995" />
+<area shape="rect" href="$classurbi_1_1_u_prop.html" title="Provides easy access to variable properties." alt="" coords="2008,176,2104,200" />
+<area shape="rect" href="$classurbi_1_1impl_1_1_u_var_impl.html" title="urbi::impl::UVarImpl" alt="" coords="1094,227,1251,251" />
+<area shape="rect" href="$classurbi_1_1impl_1_1_u_object_impl.html" title="urbi::impl::UObjectImpl" alt="" coords="1483,560,1662,584" />
+<area shape="rect" href="$classurbi_1_1impl_1_1_u_generic_callback_impl.html" title="urbi::impl::UGenericCallbackImpl" alt="" coords="1934,572,2179,596" />
+</map>

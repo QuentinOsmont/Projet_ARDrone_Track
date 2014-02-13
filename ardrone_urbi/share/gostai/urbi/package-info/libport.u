@@ -1,0 +1,48 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+do (System.PackageInfo.new("Libport"))
+{
+  // The SCM date string.
+  var date =
+    "2010-09-29 17:09:10 +0200";
+
+  // The day part of the SCM date string.
+  var day =
+    "September 29, 2010";
+
+  // The SCM complete description string, with slashes.
+  var description =
+    "urbi-sdk-2.3-5-g356aeb4";
+
+  // The SCM identification string.
+  var id =
+    "356aeb4 (2010-09-29 17:09:10 +0200 demaille@gostai.com: revision: update the libport library (the binary itself).)";
+
+  // The number of changes since the Version.
+  var patch =
+    "5";
+
+  // The SCM revision string.
+  var revision =
+    "356aeb4";
+
+  // The SCM complete version string, with dashes.
+  var tarballVersion =
+    "urbi-sdk-2.3-5-g356aeb4";
+
+  // The SCM version string.
+  var version =
+    "urbi-sdk-2.3";
+
+  // Version and revision together.
+  var versionRev =
+    "version urbi-sdk-2.3 patch 5 revision 356aeb4";
+};

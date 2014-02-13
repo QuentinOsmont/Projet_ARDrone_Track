@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>I Urbi and UObjects User Manual</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,sections+,xhtml,info --> 
+<meta name="src" content="urbi-sdk.tex" /> 
+<meta name="date" content="2010-09-30 15:52:00" /> 
+<link rel="stylesheet" type="text/css" href="urbi-sdk.css" /> 
+</head><body 
+>
+   <div class="header"><a 
+href="urbiscript-user-manual.html" ><p>Next</p></a><a 
+href="getting-started.html" ><p>Prev</p></a><a 
+href="getting-started.html#tailurbi-sdkch2.html" ><p>Prev-tail</p></a><a 
+href="#tailurbi-sdkpa1.html"><p>Tail</p></a><a 
+href="index.html#uobjects.html" ><p>Up</p></a></div><h1 class="partHead"><span class="titlemark">Part&#x00A0;I<br /></span><a 
+href="index.html#QQ2-5-15" id="x5-10000I">Urbi and UObjects User Manual</a></h1>
+<!--l. 10--><p class="noindent"><!-- tex4ht:FileName="uobjects" -->
+</p><!--l. 27--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 27--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p>
+   <div class="likechapterTOCS">
+   <span class="chapterToc">3 <a 
+href="the-uobject-api.html#x7-120003">The UObject API</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.1 <a 
+href="the-uobject-api.html#x7-130003.1">Compiling UObjects</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.2 <a 
+href="the-uobject-api.html#x7-170003.2">Creating a class, binding variables and functions</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.3 <a 
+href="the-uobject-api.html#x7-180003.3">Creating new instances</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.4 <a 
+href="the-uobject-api.html#x7-190003.4">Binding functions</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.5 <a 
+href="the-uobject-api.html#x7-230003.5">Notification of a variable change or access</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.6 <a 
+href="the-uobject-api.html#x7-240003.6">Data-flow based programming: exchanging UVars</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.7 <a 
+href="the-uobject-api.html#x7-250003.7">Timers</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.8 <a 
+href="the-uobject-api.html#x7-260003.8">The special case of sensor/effector variables</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.9 <a 
+href="the-uobject-api.html#x7-270003.9">Using Urbi variables</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.10 <a 
+href="the-uobject-api.html#x7-280003.10">Emitting events</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.11 <a 
+href="the-uobject-api.html#x7-290003.11">UObject and Threads</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.12 <a 
+href="the-uobject-api.html#x7-300003.12">Using binary types</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.13 <a 
+href="the-uobject-api.html#x7-330003.13">Using hubs to group objects</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.14 <a 
+href="the-uobject-api.html#x7-340003.14">Sending urbiscript code</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.15 <a 
+href="the-uobject-api.html#x7-350003.15">Using RTP transport in remote mode</a></span>
+<br />   <span class="chapterToc">4 <a 
+href="use-cases.html#x8-380004">Use Cases</a></span>
+<br />   &#x00A0;<span class="sectionToc">4.1 <a 
+href="use-cases.html#x8-390004.1">Writing a Servomotor Device</a></span>
+<br />   &#x00A0;<span class="sectionToc">4.2 <a 
+href="use-cases.html#x8-420004.2">Using Hubs to Group Objects</a></span>
+<br />   &#x00A0;<span class="sectionToc">4.3 <a 
+href="use-cases.html#x8-440004.3">Writing a Camera Device</a></span>
+<br />   &#x00A0;<span class="sectionToc">4.4 <a 
+href="use-cases.html#x8-460004.4">Writing a Speaker or Microphone Device</a></span>
+<br />   &#x00A0;<span class="sectionToc">4.5 <a 
+href="use-cases.html#x8-470004.5">Writing a Softdevice: Ball Detection</a></span>
+   </div>
+                                                                                       
+
+                                                                                       
+<!--l. 9--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p>
+                                                                                       
+
+                                                                                       
+
+                                                                                       
+
+                                                                                       
+<!--l. 9--><p class="indent">   <div class="footer"><a 
+href="urbiscript-user-manual.html" ><p>Next</p></a><a 
+href="getting-started.html" ><p>Prev</p></a><a 
+href="getting-started.html#tailurbi-sdkch2.html" ><p>Prev-tail</p></a><a 
+href="uobjects.html" ><p>Front</p></a><a 
+href="index.html#uobjects.html" ><p>Up</p></a></div><a 
+ id="tailurbi-sdkpa1.html"></a> </p> 
+</body></html> 

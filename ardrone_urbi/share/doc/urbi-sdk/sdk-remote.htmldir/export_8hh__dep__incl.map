@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" href="$exit_8hh.html" title="exit.hh" alt="" coords="95,380,162,404" />
+<area shape="rect" href="$fwd_8hh.html" title="Forward declarations." alt="" coords="2304,156,2371,180" />
+<area shape="rect" href="$uabstractclient_8hh.html" title="Definition of the URBI interface class." alt="" coords="686,306,830,330" />
+<area shape="rect" href="$ucallbacks_8hh.html" title="ucallbacks.hh" alt="" coords="2115,380,2230,404" />
+<area shape="rect" href="$uobject_8hh.html" title="uobject.hh" alt="" coords="2176,455,2270,479" />
+<area shape="rect" href="$ustarter_8hh.html" title="ustarter.hh" alt="" coords="2716,530,2812,554" />
+<area shape="rect" href="$umessage_8hh.html" title="umessage.hh" alt="" coords="1008,231,1120,255" />
+<area shape="rect" href="$uvalue_8hh.html" title="uvalue.hh" alt="" coords="1715,231,1803,255" />
+<area shape="rect" href="$uconversion_8hh.html" title="Conversion of sounds and images." alt="" coords="1190,306,1315,330" />
+<area shape="rect" href="$utable_8hh.html" title="Definition of the callback tables." alt="" coords="1992,306,2078,330" />
+<area shape="rect" href="$utimer&#45;callback_8hh.html" title="utimer&#45;callback.hh" alt="" coords="1894,380,2040,404" />
+<area shape="rect" href="$kernel&#45;version_8hh.html" title="kernel&#45;version.hh" alt="" coords="1339,306,1478,330" />
+<area shape="rect" href="$package&#45;info_8hh.html" title="package&#45;info.hh" alt="" coords="411,380,542,404" />
+<area shape="rect" href="$ubinary_8hh.html" title="ubinary.hh" alt="" coords="1560,156,1654,180" />
+<area shape="rect" href="$uimage_8hh.html" title="uimage.hh" alt="" coords="1460,82,1554,106" />
+<area shape="rect" href="$urbi&#45;root_8hh.html" title="urbi&#45;root.hh" alt="" coords="220,380,322,404" />
+<area shape="rect" href="$usound_8hh.html" title="usound.hh" alt="" coords="1628,82,1722,106" />
+<area shape="rect" href="$usystem_8hh.html" title="usystem.hh" alt="" coords="2843,82,2944,106" />
+<area shape="rect" href="$liburbi_2urbi&#45;launch_8cc.html" title="urbi&#45;launch.cc" alt="" coords="248,455,366,479" />
+<area shape="rect" href="$exit_8cc.html" title="exit.cc" alt="" coords="6,455,72,479" />
+<area shape="rect" href="$umain_8hh.html" title="umain.hh" alt="" coords="88,530,174,554" />
+<area shape="rect" href="$main_8cc.html" title="main.cc" alt="" coords="598,604,672,628" />
+<area shape="rect" href="$ucontext&#45;impl_8hh.html" title="ucontext&#45;impl.hh" alt="" coords="2406,231,2542,255" />
+<area shape="rect" href="$ucontext_8hxx.html" title="ucontext.hxx" alt="" coords="2386,306,2495,330" />
+<area shape="rect" href="$uobject&#45;hub_8hh.html" title="uobject&#45;hub.hh" alt="" coords="2566,231,2688,255" />
+<area shape="rect" href="$uvar_8cc.html" title="uvar.cc" alt="" coords="1284,604,1354,628" />
+<area shape="rect" href="$compatibility_8hxx.html" title="compatibility.hxx" alt="" coords="1355,380,1491,404" />
+<area shape="rect" href="$uabstractclient_8cc.html" title="uabstractclient.cc" alt="" coords="904,530,1046,554" />
+<area shape="rect" href="$kernel&#45;version_8cc.html" title="kernel&#45;version.cc" alt="" coords="592,455,728,479" />
+<area shape="rect" href="$uclient_8hh.html" title="uclient.hh" alt="" coords="590,380,678,404" />
+<area shape="rect" href="$compatibility_8hh.html" title="compatibility.hh" alt="" coords="1306,455,1434,479" />
+<area shape="rect" href="$uobject_8cc.html" title="uobject.cc" alt="" coords="2046,604,2136,628" />
+<area shape="rect" href="$utimer&#45;callback_8cc.html" title="utimer&#45;callback.cc" alt="" coords="1458,530,1602,554" />
+<area shape="rect" href="$usyncclient_8cc.html" title="usyncclient.cc" alt="" coords="1070,530,1187,554" />
+<area shape="rect" href="$utable_8cc.html" title="utable.cc" alt="" coords="2052,455,2135,479" />
+<area shape="rect" href="$ucallbacks_8cc.html" title="ucallbacks.cc" alt="" coords="2551,604,2663,628" />
+<area shape="rect" href="$uevent_8cc.html" title="uevent.cc" alt="" coords="1783,530,1871,554" />
+<area shape="rect" href="$uobject&#45;common_8cc.html" title="uobject&#45;common.cc" alt="" coords="2687,604,2842,628" />
+<area shape="rect" href="$uobject&#45;hub&#45;common_8cc.html" title="uobject&#45;hub&#45;common.cc" alt="" coords="2260,530,2444,554" />
+<area shape="rect" href="$uvar&#45;common_8cc.html" title="uvar&#45;common.cc" alt="" coords="1626,530,1759,554" />
+<area shape="rect" href="$remote&#45;ucontext&#45;impl_8hh.html" title="remote&#45;ucontext&#45;impl.hh" alt="" coords="1996,530,2186,554" />
+<area shape="rect" href="$usystem_8cc.html" title="Implementation of the USystem class." alt="" coords="2887,530,2986,554" />
+<area shape="rect" href="$customuvar_8hh.html" title="customuvar.hh" alt="" coords="2468,530,2591,554" />
+<area shape="rect" href="$umessage_8cc.html" title="umessage.cc" alt="" coords="1056,306,1166,330" />
+<area shape="rect" href="$ubinary_8cc.html" title="ubinary.cc" alt="" coords="1552,306,1643,330" />
+<area shape="rect" href="$uvalue&#45;common_8cc.html" title="uvalue&#45;common.cc" alt="" coords="1667,306,1816,330" />
+<area shape="rect" href="$uconversion_8cc.html" title="uconversion.cc" alt="" coords="1158,380,1280,404" />
+<area shape="rect" href="$package&#45;info_8cc.html" title="package&#45;info.cc" alt="" coords="390,455,518,479" />
+<area shape="rect" href="$uimage_8cc.html" title="uimage.cc" alt="" coords="1446,156,1536,180" />
+</map>

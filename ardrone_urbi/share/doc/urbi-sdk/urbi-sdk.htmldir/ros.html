@@ -1,0 +1,1668 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>21 Communication with ROS</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,sections+,xhtml,info --> 
+<meta name="src" content="urbi-sdk.tex" /> 
+<meta name="date" content="2010-09-30 15:52:00" /> 
+<link rel="stylesheet" type="text/css" href="urbi-sdk.css" /> 
+</head><body 
+>
+   <div class="header"><a 
+href="gostai-standard-robotics-api.html" ><p>Next</p></a><a 
+href="urbiscript-standard-library.html" ><p>Prev</p></a><a 
+href="urbiscript-standard-library.html#tailurbi-sdkch20.html" ><p>Prev-tail</p></a><a 
+href="#tailurbi-sdkch21.html"><p>Tail</p></a><a 
+href="urbi-sdk-reference-manual.html#ros.html" ><p>Up</p></a></div><h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;21</span><br /><a 
+href="index.html#QQ2-34-659" id="x34-55700021">Communication with ROS</a></h2>
+<!--l. 10--><p class="noindent"><!-- tex4ht:FileName="ros" -->
+</p><!--l. 13--><p class="indent">   This chapter is not an introduction to using ROS from Urbi, see <a 
+href="ros-tutorial.html#x19-9500013">Chapter&#x00A0;13<!--tex4ht:ref: sec:tut:ros --></a> for a tutorial.
+</p><!--l. 16--><p class="indent">   Urbi provides a set of tools to communicate with ROS (Robot Operating System). For more
+information about ROS, please refer to <a 
+href="http://www.ros.org" ><span 
+class="cmtt-10x-x-109">http://www.ros.org</span></a>. Urbi, acting as a ROS node, is able to
+interact with the ROS world.
+</p>
+   <div class="paragraphTOCS">
+   &#x00A0;<span class="sectionToc">21.1 <a 
+href="#x34-56000021.1">Ros</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">21.1.1 <a 
+href="#x34-56100021.1.1">Construction</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">21.1.2 <a 
+href="#x34-56200021.1.2">Slots</a></span>
+<br />   &#x00A0;<span class="sectionToc">21.2 <a 
+href="#x34-56300021.2">Ros.Topic</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">21.2.1 <a 
+href="#x34-56400021.2.1">Construction</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">21.2.2 <a 
+href="#x34-56500021.2.2">Slots</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">21.2.3 <a 
+href="#x34-56900021.2.3">Example</a></span>
+<br />   &#x00A0;<span class="sectionToc">21.3 <a 
+href="#x34-57000021.3">Ros.Service</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">21.3.1 <a 
+href="#x34-57100021.3.1">Construction</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">21.3.2 <a 
+href="#x34-57200021.3.2">Slots</a></span>
+   </div>
+<!--l. 22--><p class="noindent"><span class="paragraphHead"><a 
+href="#x34-55800021" id="x34-55800021"><span 
+class="cmbx-10x-x-109">Requirements</span></a></span>
+   You need to have installed ROS (possibly a recent version), and compiled all of the common ROS
+tools (<span 
+class="cmtt-10x-x-109">rxconsole</span>, <span 
+class="cmtt-10x-x-109">roscore</span>, <span 
+class="cmtt-10x-x-109">roscpp</span>, &#x2026;).
+</p><!--l. 28--><p class="indent">   You also need to have a few environment variables set, normally provided with ROS installation:
+<span 
+class="cmtt-10x-x-109">ROS</span><span 
+class="cmtt-10x-x-109">_ROOT</span>, <span 
+class="cmtt-10x-x-109">ROS</span><span 
+class="cmtt-10x-x-109">_MASTER</span><span 
+class="cmtt-10x-x-109">_URI </span>and <span 
+class="cmtt-10x-x-109">ROS</span><span 
+class="cmtt-10x-x-109">_PACKAGE</span><span 
+class="cmtt-10x-x-109">_PATH</span>.
+</p>
+<!--l. 33--><p class="noindent"><span class="paragraphHead"><a 
+href="#x34-55900021" id="x34-55900021"><span 
+class="cmbx-10x-x-109">Usage</span></a></span>
+   The classes are implemented as uobjects (see <a 
+href="uobjects.html#x5-10000I">Chapter&#x00A0;I<!--tex4ht:ref: part:uobject --></a>): <a 
+href="#x34-57000021.3"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Service</span></span> (<span 
+class="cmbx-10x-x-109">??</span>sec:std-Ros.Service)</a>,
+<a 
+href="#x34-56300021.2"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Topic</span></span> (<span 
+class="cmbx-10x-x-109">??</span>sec:std-Ros.Topic)</a>, and <a 
+href="#x34-56000021.1"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Ros</span></span> (<span 
+class="cmbx-10x-x-109">??</span>sec:std-Ros)</a>.
+</p><!--l. 38--><p class="indent">   This module is loaded automatically if <span 
+class="cmtt-10x-x-109">ROS</span><span 
+class="cmtt-10x-x-109">_ROOT </span>is set in your environment. If <span 
+class="cmtt-10x-x-109">roscore </span>is not
+launched, you will be noticed by a warning and Urbi will check regularly for <span 
+class="cmtt-10x-x-109">roscore</span>.
+</p><!--l. 42--><p class="indent">   If for any reason you need to load this module manually, use: <div class="urbiunchecked">
+</p>
+   <!--l. 43--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-559001r1"></a></span><span 
+class="cmtt-10x-x-109">loadModule</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 44--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">urbi</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">ros</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span>
+   </pre>
+   </div>
+                                                                                       
+
+                                                                                       
+<!--l. 48--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">21.1   </span> <a 
+href="index.html#QQ2-34-662" id="x34-56000021.1">Ros</a></h3>
+<a 
+ id="x34-560001"></a>
+<!--l. 51--><p class="noindent">This object provides some handy tools to know the status of <span 
+class="cmtt-10x-x-109">roscore</span>, to list the different nodes,
+topics, services, &#x2026;. It also serves as a namespace entry point for ROS entities, such as <a 
+href="#x34-56300021.2"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Topic</span></span>
+(<span 
+class="cmbx-10x-x-109">??</span>sec:std-Ros.Topic)</a> and so forth.
+</p><!--l. 56--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">21.1.1   </span> <a 
+href="contents.html#QQ2-34-663" id="x34-56100021.1.1">Construction</a></h4>
+<!--l. 58--><p class="noindent">There is no construction, since this class only provides a set of tools related to ROS in general, or the
+current node (which is unique per instance of Urbi).
+</p><!--l. 62--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">21.1.2   </span> <a 
+href="contents.html#QQ2-34-664" id="x34-56200021.1.2">Slots</a></h4>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Ros.checkMaster"><a 
+ id="x34-562001"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">checkMaster</span></span></a>&#x00A0;
+     <br class="newline" />Whether <span 
+class="cmtt-10x-x-109">roscore </span>is accessible.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.name"><a 
+ id="x34-562002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">name</span></span></a>&#x00A0;
+     <br class="newline" />The name of the current node associated with Urbi (as a string). The name of an Urbi
+     node is generally composed of &#8216;<span 
+class="cmtt-10x-x-109">/urbi</span><span 
+class="cmtt-10x-x-109">_+random</span>&#8217; sequence.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.nodes"><a 
+ id="x34-562003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">nodes</span></span></a>&#x00A0;
+     <br class="newline" />A dictionary containing all the nodes known by <span 
+class="cmtt-10x-x-109">roscore</span>. Each key of the dictionary is a node
+     name. The associated value is an other dictionary, with the following keys: <span class="lstinline"><span 
+class="cmtt-10x-x-109">publish</span></span>,
+     <span class="lstinline"><span 
+class="cmtt-10x-x-109">subscribe</span></span>, <span class="lstinline"><span 
+class="cmtt-10x-x-109">services</span></span>. Each of these keys is associated with a list of topics or services.
+     <div class="urbiassert">
+     <!--l. 78--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562004r1"></a></span><!--l. 79--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">rosout</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">in</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">nodes;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562005r2"></a></span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">in</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">nodes;</span>
+     </pre>
+     </div>
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.Service"><a 
+ id="x34-562006"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">Service</span></span></a>&#x00A0;
+     <br class="newline" />The <a 
+href="#x34-57000021.3"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Service</span></span> (<span 
+class="cmbx-10x-x-109">??</span>sec:std-Ros.Service)</a> class.
+                                                                                       
+
+                                                                                       
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.services"><a 
+ id="x34-562007"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">services</span></span></a>&#x00A0;
+     <br class="newline" />A dictionary containing all the services known by <span 
+class="cmtt-10x-x-109">roscore</span>. Each key is the name of a service,
+     and the associated value is a list of nodes that provide this service. <div class="urbiscript">
+     <!--l. 91--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562008r1"></a></span><!--l. 92--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">#</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">roscore</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562009r2"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">services</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">services|</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562010r3"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">name|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562011r4"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">assert</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562012r5"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562013r6"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 97--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">rosout</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">get_loggers</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">in</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">services;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562014r7"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 98--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">rosout</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">set_logger_level</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">in</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">services;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562015r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 99--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">get_loggers</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">in</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">services;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562016r9"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 100--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">set_logger_level</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">in</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">services;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562017r10"></a></span><span 
+class="cmtt-10x-x-109">};</span>
+     </pre>
+     </div>
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.Topic"><a 
+ id="x34-562018"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">Topic</span></span></a>&#x00A0;
+     <br class="newline" />The <a 
+href="#x34-56300021.2"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Topic</span></span> (<span 
+class="cmbx-10x-x-109">??</span>sec:std-Ros.Topic)</a> class.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.topics"><a 
+ id="x34-562019"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">topics</span></span></a>&#x00A0;
+     <br class="newline" />A dictionary containing all the topics advertised to <span 
+class="cmtt-10x-x-109">roscore</span>. Each key is the name of a topic,
+     and the associated value is an other dictionary, with the following keys: <span class="lstinline"><span 
+class="cmtt-10x-x-109">subscribers</span></span>,
+     <span class="lstinline"><span 
+class="cmtt-10x-x-109">publishers</span></span>, <span class="lstinline"><span 
+class="cmtt-10x-x-109">type</span></span>. <div class="urbiscript">
+     <!--l. 112--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562020r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">topics</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">topics|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562021r2"></a></span><span 
+class="cmtt-10x-x-109">topics</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">keys;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562022r3"></a></span><span 
+class="cmtt-10x-x-109">[03316144]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">[</span><!--l. 115--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">rosout_agg</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562023r4"></a></span><span 
+class="cmtt-10x-x-109">topics</span><span 
+class="cmtt-10x-x-109">[</span><!--l. 116--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">rosout_agg</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">];</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-562024r5"></a></span><span 
+class="cmtt-10x-x-109">[03325634]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">[</span><!--l. 117--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">publishers</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=&#x003E;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">[</span><!--l. 117--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">rosout</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">],</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 117--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">subscribers</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=&#x003E;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">[],</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 117--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">type</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=&#x003E;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 117--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">roslib</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Log</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">]</span>
+     </pre>
+     </div>
+     </li></ul>
+<!--l. 122--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">21.2   </span> <a 
+href="index.html#QQ2-34-665" id="x34-56300021.2">Ros.Topic</a></h3>
+<a 
+ id="x34-563001"></a>
+<!--l. 125--><p class="noindent">This <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span></span> provides a handy way to communicate through ROS topics, by subscribing to existent
+topics or advertising to them.
+</p><!--l. 128--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">21.2.1   </span> <a 
+href="contents.html#QQ2-34-666" id="x34-56400021.2.1">Construction</a></h4>
+<!--l. 130--><p class="noindent">To create a new topic, call <span class="lstinline"><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">topic</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span></span> with a string (the name of the topic you want to subscribe
+to / advertise on).
+</p><!--l. 133--><p class="indent">   The topic name can only contain alphanumerical characters, &#8216;<span 
+class="cmtt-10x-x-109">/</span>&#8217; and &#8216;<span 
+class="cmtt-10x-x-109">_</span>&#8217;, and cannot be empty. If
+the topic name is invalid, an exception is thrown and the topic is not created.
+</p><!--l. 137--><p class="indent">   Until you decide what you want to do with your topic (<a 
+href="#slot:Ros.Topic.subscribe"><span class="lstinline"><span 
+class="cmtt-10x-x-109">subscribe</span></span></a> or <a 
+href="#slot:Ros.Topic.advertise"><span class="lstinline"><span 
+class="cmtt-10x-x-109">advertise</span></span></a>), you are free to
+call <span class="lstinline"><span 
+class="cmtt-10x-x-109">init</span></span> to change its name.
+                                                                                       
+
+                                                                                       
+</p><!--l. 142--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">21.2.2   </span> <a 
+href="contents.html#QQ2-34-667" id="x34-56500021.2.2">Slots</a></h4>
+<!--l. 144--><p class="noindent">Some slots on this <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span></span> have no interest once the type of instance is determined. For example, you
+cannot call unsubscribe if you advertise, and in the same way you cannot call publish if you subscribed
+to a topic.
+</p><!--l. 148--><p class="noindent">
+</p>
+   <h5 class="subsubsectionHead"><span class="titlemark">21.2.2.1   </span> <a 
+href="contents.html#QQ2-34-668" id="x34-56600021.2.2.1">Common</a></h5>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Ros.Topic.name"><a 
+ id="x34-566001"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">name</span></span></a>&#x00A0;
+     <br class="newline" />The name of the topic you provided in <span class="lstinline"><span 
+class="cmtt-10x-x-109">init</span></span>. <div class="urbiscript">
+     <!--l. 154--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-566002r1"></a></span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Topic</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 155--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">test</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">).</span><span 
+class="cmtt-10x-x-109">name;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-566003r2"></a></span><!--l. 156--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">011644]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">test</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span></pre>
+     </pre>
+     </div>
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.Topic.subscriberCount"><a 
+ id="x34-566004"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">subscriberCount</span></span></a>&#x00A0;
+     <br class="newline" />The number of subscribers for the topic given in <span class="lstinline"><span 
+class="cmtt-10x-x-109">init</span></span>; 0 if the topic is not registered.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.Topic.structure"><a 
+ id="x34-566005"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">structure</span></span></a>&#x00A0;
+     <br class="newline" />Once <a 
+href="#slot:Ros.Topic.advertise"><span class="lstinline"><span 
+class="cmtt-10x-x-109">advertise</span></span></a> or <a 
+href="#slot:Ros.Topic.subscribe"><span class="lstinline"><span 
+class="cmtt-10x-x-109">subscribe</span></span></a> has been called, this slot contains a template of the message type,
+     with default values for each type (empty strings, zeros, &#x2026;). This template is made of <a 
+href="#x33-362030r11"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Dictionary</span></span>s
+     (<span 
+class="cmbx-10x-x-109">??</span>sec:std-Dictionary)</a>. <div class="urbiscript">
+     <!--l. 169--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-566006r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">logTopic</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Topic</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 170--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">rosout_agg</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)|</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-566007r2"></a></span><span 
+class="cmtt-10x-x-109">logTopic</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">subscribe|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-566008r3"></a></span><span 
+class="cmtt-10x-x-109">logTopic</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">structure</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">keys;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-566009r4"></a></span><!--l. 173--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">133519]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">file</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">function</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">header</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">level</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">line</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">msg</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">name</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">topics</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"]</span></span></pre>
+     </pre>
+     </div>
+     </li></ul>
+<!--l. 178--><p class="noindent">
+</p>
+   <h5 class="subsubsectionHead"><span class="titlemark">21.2.2.2   </span> <a 
+href="contents.html#QQ2-34-669" id="x34-56700021.2.2.2">Subscription</a></h5>
+                                                                                       
+
+                                                                                       
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Ros.Topic.subscribe"><a 
+ id="x34-567001"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">subscribe</span></span></a>&#x00A0;
+     <br class="newline" />Subscribe  to  the  provided  topic.  Throw  an  exception  it  doesn&#8217;t  exist,  or  if  the  type
+     advertised by ROS for this topic does not exist. From the call of this method, a direct
+     connection is made between the advertiser and the subscriber which starts deserializing
+     the received messages.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.Topic.unsubscribe"><a 
+ id="x34-567002"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">unsubscribe</span></span></a>&#x00A0;
+     <br class="newline" />Unsubscribe from a previously subscribed channel, and set the state of the instance as if
+     <span class="lstinline"><span 
+class="cmtt-10x-x-109">init</span></span> was called but not subscribe.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.Topic.onMessage"><a 
+ id="x34-567003"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">onMessage</span></span></a>&#x00A0;
+     <br class="newline" />Event triggered when a new message is received from a subscribed channel, the payload
+     of this event contains the message.
+     <!--l. 196--><p class="noindent"><div class="urbiunchecked">
+</p>
+     <!--l. 196--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-567004r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">t</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Topic</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 197--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">test</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-567005r2"></a></span><span 
+class="cmtt-10x-x-109">msg</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">t</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">onMessage</span><span 
+class="cmtt-10x-x-109">?(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">m</span><span 
+class="cmtt-10x-x-109">))</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">m</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-567006r3"></a></span><span 
+class="cmtt-10x-x-109">t</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">subscribe;</span>
+     </pre>
+     </div>
+     </li></ul>
+<!--l. 204--><p class="noindent">
+</p>
+   <h5 class="subsubsectionHead"><span class="titlemark">21.2.2.3   </span> <a 
+href="contents.html#QQ2-34-670" id="x34-56800021.2.2.3">Advertising</a></h5>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Ros.Topic.advertise"><a 
+ id="x34-568001"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">advertise</span></span><span class="lstinline"><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">type</span><span 
+class="cmtt-10x-x-109">)</span></span></a>&#x00A0;
+     <br class="newline" />Tells ROS that this node will advertise on the topic given in <span class="lstinline"><span 
+class="cmtt-10x-x-109">init</span></span>, with the type <span 
+class="cmitt-10x-x-109">type</span>. <span 
+class="cmitt-10x-x-109">type</span>
+     must be a valid ROS type, such as &#8216;<span 
+class="cmtt-10x-x-109">roslib/Log</span>&#8217;. If <span 
+class="cmitt-10x-x-109">type </span>is an empty string, the method
+     will try to check whether a node is already advertising on this topic, and its type.
+     <div class="urbiscript">
+     <!--l. 214--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-568002r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">stringPub</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Topic</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 215--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">mytest</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-568003r2"></a></span><span 
+class="cmtt-10x-x-109">stringPub</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">advertise</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 216--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">std_msgs</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">String</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-568004r3"></a></span><span 
+class="cmtt-10x-x-109">stringPub</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">structure;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-568005r4"></a></span><!--l. 218--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">670809]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">data</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">""]</span></span></pre>
+     </pre>
+     </div>
+                                                                                       
+
+                                                                                       
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.Topic.onConnect"><a 
+ id="x34-568006"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">onConnect</span></span><span class="lstinline"><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">)</span></span></a>&#x00A0;
+     <br class="newline" />This event is triggered when the current instance is advertising on a topic and a node
+     subscribes to this topic. The payload <span 
+class="cmitt-10x-x-109">name </span>is the name of the node that subscribed.
+     <div class="urbiunchecked">
+     <!--l. 226--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-568007r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">p</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Topic</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 227--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">test</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">publisher</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-568008r2"></a></span><span 
+class="cmtt-10x-x-109">con</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">p</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">onConnect</span><span 
+class="cmtt-10x-x-109">?(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">n</span><span 
+class="cmtt-10x-x-109">))</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-568009r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">n</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 229--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">has</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">subscribed</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">to</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">p</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-568010r4"></a></span><span 
+class="cmtt-10x-x-109">p</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">advertise</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 230--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">roslib</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Log</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span>
+     </pre>
+     </div>
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.Topic.onDisconnect"><a 
+ id="x34-568011"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">onDisconnect</span></span><span class="lstinline"><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">)</span></span></a>&#x00A0;
+     <br class="newline" />This event is triggered when the current instance is advertising on a topic, and a node
+     unsubscribes from this topic. The payload is the name of the node that unsubscribed.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.Topic.publish"><a 
+ id="x34-568012"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">publish</span></span><span class="lstinline"><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">message</span><span 
+class="cmtt-10x-x-109">)</span></span></a>&#x00A0;
+     <br class="newline" />Publish <span 
+class="cmitt-10x-x-109">message </span>to the current topic. This method is usable only if <a 
+href="#slot:Ros.Topic.advertise"><span class="lstinline"><span 
+class="cmtt-10x-x-109">advertise</span></span></a> was called. The
+     message must follow the same structure as the one in the slot <span class="lstinline"><span 
+class="cmtt-10x-x-109">structure</span></span>, or it will throw an
+     exception telling which key is missing / wrong in the dictionary.
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.Topic.'<<'"><a 
+ id="x34-568013"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">&#8217;&#x003C;&#x003C;&#8217;</span></span><span class="lstinline"><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">message</span><span 
+class="cmtt-10x-x-109">)</span></span></a>&#x00A0;
+     <br class="newline" />An alias for <a 
+href="#slot:Ros.Topic.publish"><span class="lstinline"><span 
+class="cmtt-10x-x-109">publish</span></span></a>. <div class="urbiunchecked">
+     <!--l. 246--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-568014r1"></a></span><span 
+class="cmtt-10x-x-109">stringPub</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x003C;&#x003C;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">[</span><!--l. 247--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">data</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=&#x003E;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 247--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Hello</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">world</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">!</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">];</span>
+     </pre>
+     </div>
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.Topic.unadvertise"><a 
+ id="x34-568015"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">unadvertise</span></span></a>&#x00A0;
+     <br class="newline" />Tells ROS that we stop publishing on this topic. The <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span></span> then gets back to a state where it
+     could call <span class="lstinline"><span 
+class="cmtt-10x-x-109">init</span></span>, <a 
+href="#slot:Ros.Topic.subscribe"><span class="lstinline"><span 
+class="cmtt-10x-x-109">subscribe</span></span></a> or <a 
+href="#slot:Ros.Topic.advertise"><span class="lstinline"><span 
+class="cmtt-10x-x-109">advertise</span></span></a>.</li></ul>
+<!--l. 258--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">21.2.3   </span> <a 
+href="contents.html#QQ2-34-671" id="x34-56900021.2.3">Example</a></h4>
+<!--l. 260--><p class="noindent">This is a typical example of the creation of a publisher, a subscriber, and message transmission
+between both of them.
+                                                                                       
+
+                                                                                       
+</p><!--l. 263--><p class="indent">   First we need to declare our Publisher, the topic name is &#8216;<span 
+class="cmtt-10x-x-109">/example</span>&#8217;, and the type of message that
+will be sent on this topic is &#8216;<span 
+class="cmtt-10x-x-109">std</span><span 
+class="cmtt-10x-x-109">_msgs/String</span>&#8217;. This type contains a single field called &#8216;<span 
+class="cmtt-10x-x-109">data</span>&#8217;, holding
+a string. We also set up handlers for <a 
+href="#slot:Ros.Topic.onConnect"><span class="lstinline"><span 
+class="cmtt-10x-x-109">onConnect</span></span></a> and <a 
+href="#slot:Ros.Topic.onDisconnect"><span class="lstinline"><span 
+class="cmtt-10x-x-109">onDisconnect</span></span></a> to be noticed when someone
+subscribes to us.
+</p><!--l. 270--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 270--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569001r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">publisher</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Topic</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 271--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">example</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)|</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569002r2"></a></span><span 
+class="cmtt-10x-x-109">con</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">publisher</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">onConnect</span><span 
+class="cmtt-10x-x-109">?(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">))</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569003r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">[0,5]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 273--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">now</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">listening</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">on</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">publisher</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569004r4"></a></span><span 
+class="cmtt-10x-x-109">dcon</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">publisher</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">onDisconnect</span><span 
+class="cmtt-10x-x-109">?(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">))</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569005r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">[0,5]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 275--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">no</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">longer</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">listening</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">on</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">publisher</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569006r6"></a></span><span 
+class="cmtt-10x-x-109">publisher</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">advertise</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 276--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">std_msgs</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">String</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span>
+   </pre>
+   </div>
+<!--l. 279--><p class="indent">   Then we subscribe to the freshly created topic, and for each message, we display the &#8216;<span 
+class="cmtt-10x-x-109">data</span>&#8217; section
+(which is the content of the message). Thanks to the previous <span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span></span></span> above, a message is displayed at
+subscription time.
+</p><!--l. 284--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 284--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569007r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">subscriber</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Topic</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 285--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">example</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)|</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569008r2"></a></span><span 
+class="cmtt-10x-x-109">msg</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">subscriber</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">onMessage</span><span 
+class="cmtt-10x-x-109">?(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">m</span><span 
+class="cmtt-10x-x-109">))</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569009r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">m</span><span 
+class="cmtt-10x-x-109">[</span><!--l. 287--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">data</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">]);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569010r4"></a></span><span 
+class="cmtt-10x-x-109">subscriber</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">subscribe;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569011r5"></a></span><!--l. 289--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">026580]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">urbi</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">is</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">now</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">listening</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">on</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">example</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569012r6"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569013r7"></a></span><!--l. 291--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">The</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">types</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">should</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">be</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">same,</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">ensure</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">that</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569014r8"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">assert</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">subscriber</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">structure</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">==</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">publisher</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">structure</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">};</span>
+   </pre>
+   </div>
+<!--l. 303--><p class="indent">   Now we can send a message, and get it back through the at in the section above. To do this we first
+copy the template structure and then fill the field &#8216;<span 
+class="cmtt-10x-x-109">data</span>&#8217; with our message.
+</p><!--l. 307--><p class="indent">   <div class="urbiscript">
+</p>
+   <!--l. 307--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569015r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">message</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">publisher</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">structure</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569016r2"></a></span><!--l. 309--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">098963]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">data</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">""]</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569017r3"></a></span><span 
+class="cmtt-10x-x-109">message</span><span 
+class="cmtt-10x-x-109">[</span><!--l. 310--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">data</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 310--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Hello</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">world</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">!</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569018r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569019r5"></a></span><!--l. 312--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">publish</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">message</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569020r6"></a></span><span 
+class="cmtt-10x-x-109">publisher</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x003C;&#x003C;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">message;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569021r7"></a></span><!--l. 314--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Leave</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">some</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">time</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">to</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">asynchronous</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">communications</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">before</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">shutting</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">down</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569022r8"></a></span><span 
+class="cmtt-10x-x-109">sleep</span><span 
+class="cmtt-10x-x-109">(200</span><span 
+class="cmtt-10x-x-109">ms</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569023r9"></a></span><!--l. 316--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">098964]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Hello</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">world</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">!</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569024r10"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569025r11"></a></span><span 
+class="cmtt-10x-x-109">subscriber</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">unsubscribe;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-569026r12"></a></span><!--l. 319--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">252566]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">urbi</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">is</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">no</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">longer</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">listening</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">on</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">example</span></span></pre>
+   </pre>
+   </div>
+<!--l. 324--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">21.3   </span> <a 
+href="index.html#QQ2-34-672" id="x34-57000021.3">Ros.Service</a></h3>
+<a 
+ id="x34-570001"></a>
+<!--l. 327--><p class="noindent">This <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span></span> provides a handy way to call services provided by other ROS nodes.
+</p><!--l. 331--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">21.3.1   </span> <a 
+href="contents.html#QQ2-34-673" id="x34-57100021.3.1">Construction</a></h4>
+                                                                                       
+
+                                                                                       
+<!--l. 333--><p class="noindent">To create a new instance of this object, call <span class="lstinline"><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Service</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span></span> with a string representing which
+service you want to use, and a Boolean stating whether the connection between you and the
+service provider should be kept opened (pass <span class="lstinline"><span 
+class="cmtt-10x-x-109">true</span></span> for better performances on multiple
+requests).
+</p><!--l. 339--><p class="indent">   The service name can only contain alphanumerical characters, &#8216;<span 
+class="cmtt-10x-x-109">/</span>&#8217;, &#8216;<span 
+class="cmtt-10x-x-109">_</span>&#8217;, and cannot be empty. If the
+service name is invalid, an exception is thrown, and the object is not created.
+</p><!--l. 343--><p class="indent">   Then if the service does not exist, an other exception is thrown. Since the initialization is
+asynchronous internally, you need to wait for <span class="lstinline"><span 
+class="cmitt-10x-x-109">service</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">initialized</span></span> to be true to be able to call
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">request</span></span>.
+</p><!--l. 349--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">21.3.2   </span> <a 
+href="contents.html#QQ2-34-674" id="x34-57200021.3.2">Slots</a></h4>
+     <ul class="itemize1">
+     <li class="itemize"><a 
+ id="slot:Ros.Service.initialized"><a 
+ id="x34-572001"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">initialized</span></span></a>&#x00A0;
+     <br class="newline" />Boolean. Whether the method <span 
+class="cmitt-10x-x-109">request </span>is ready to be called, and whether <a 
+href="#slot:Ros.Service.resStruct"><span class="lstinline"><span 
+class="cmtt-10x-x-109">resStruct</span></span></a> and
+     <a 
+href="#slot:Ros.Service.reqStruct"><span class="lstinline"><span 
+class="cmtt-10x-x-109">reqStruct</span></span></a> are filled. <div class="urbiscript">
+     <!--l. 356--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-572002r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">logService</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Service</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 357--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">rosout</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">get_loggers</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">false</span><span 
+class="cmtt-10x-x-109">)|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-572003r2"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">waituntil</span></span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">logService</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">initialized</span><span 
+class="cmtt-10x-x-109">);</span>
+     </pre>
+     </div>
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.Service.name"><a 
+ id="x34-572004"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">name</span></span></a>&#x00A0;
+     <br class="newline" />The name of the current service. <div class="urbiscript">
+     <!--l. 363--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-572005r1"></a></span><span 
+class="cmtt-10x-x-109">logService</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">name;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-572006r2"></a></span><!--l. 365--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">036689]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">rosout</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">get_loggers</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span></pre>
+     </pre>
+     </div>
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.Service.resStruct"><a 
+ id="x34-572007"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">resStruct</span></span></a>&#x00A0;
+     <br class="newline" />Get the template of the response message type, with default values for each type (empty strings,
+     zeros, &#x2026;). This template is made of dictionaries. <div class="urbiscript">
+     <!--l. 372--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-572008r1"></a></span><span 
+class="cmtt-10x-x-109">logService</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">resStruct;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-572009r2"></a></span><!--l. 374--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">029399]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">loggers</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[]]</span></span></pre>
+     </pre>
+     </div>
+                                                                                       
+
+                                                                                       
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.Service.reqStruct"><a 
+ id="x34-572010"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">reqStruct</span></span></a>&#x00A0;
+     <br class="newline" />Get the template of the request message type, with default values for each type (empty strings,
+     zeros, &#x2026;). This template is made of dictionaries. <div class="urbiscript">
+     <!--l. 381--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-572011r1"></a></span><span 
+class="cmtt-10x-x-109">logService</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">reqStruct;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-572012r2"></a></span><!--l. 383--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">029399]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">]</span></span></pre>
+     </pre>
+     </div>
+     </li>
+     <li class="itemize"><a 
+ id="slot:Ros.Service.request"><a 
+ id="x34-572013"></a><span class="lstinline"><span 
+class="cmtt-10x-x-109">request</span></span><span class="lstinline"><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">req</span><span 
+class="cmtt-10x-x-109">)</span></span></a>&#x00A0;
+     <br class="newline" />Synchronous call to the service, providing <span 
+class="cmitt-10x-x-109">req </span>as your request (following the structure of
+     <a 
+href="#slot:Ros.Service.reqStruct"><span class="lstinline"><span 
+class="cmtt-10x-x-109">reqStruct</span></span></a>). The returned value is a dictionary following the structure of <a 
+href="#slot:Ros.Service.resStruct"><span class="lstinline"><span 
+class="cmtt-10x-x-109">resStruct</span></span></a>, containing
+     the response to your request. <div class="urbiscript">
+     <!--l. 392--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-572014r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">for</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">item</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">in</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">logService</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">request</span><span 
+class="cmtt-10x-x-109">([=&#x003E;])[</span><!--l. 393--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">loggers</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">])</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-572015r2"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">item</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-572016r3"></a></span><!--l. 395--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">236349]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">level</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">INFO</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">name</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ros</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"]</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-572017r4"></a></span><!--l. 396--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">236349]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">level</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">INFO</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">name</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ros</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">roscpp</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"]</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-572018r5"></a></span><!--l. 397--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">236350]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">level</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">WARN</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">name</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ros</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">roscpp</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">superdebug</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"]</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x34-572019r6"></a></span><!--l. 398--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">236350]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">level</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">DEBUG</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">name</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">roscpp_internal</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"]</span></span></pre>
+     </pre>
+     </div>
+     </li></ul>
+<!--l. 23--><p class="noindent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 23--><p class="indent">   <div class="footer"><a 
+href="gostai-standard-robotics-api.html" ><p>Next</p></a><a 
+href="urbiscript-standard-library.html" ><p>Prev</p></a><a 
+href="urbiscript-standard-library.html#tailurbi-sdkch20.html" ><p>Prev-tail</p></a><a 
+href="ros.html" ><p>Front</p></a><a 
+href="urbi-sdk-reference-manual.html#ros.html" ><p>Up</p></a></div><a 
+ id="tailurbi-sdkch21.html"></a>   </p> 
+</body></html> 

@@ -1,0 +1,108 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+// Global.load is not defined, yet.
+
+/*-------.
+| void.  |
+`-------*/
+
+// FIXME: Can't do this in urbi
+// void.addProto(Singleton);
+
+do (Object)
+{
+  var isVoid = false;
+  function acceptVoid()   { this };
+  function unacceptVoid() { this };
+};
+do (void.acceptVoid)
+{
+  function acceptVoid()   { new };
+  function unacceptVoid() { protos.front };
+};
+
+System.loadFile(System.searchFile("urbi/system.u"));
+System.load("urbi/object.u");
+System.load("urbi/global.u");
+System.load("urbi/platform.u");
+load("urbi/traceable.u");
+load("urbi/exception.u");
+load("urbi/call-message.u");
+load("urbi/comparable.u");
+load("urbi/container.u");
+load("urbi/lazy.u");
+load("urbi/range-iterable.u");
+load("urbi/list.u");
+load("urbi/singleton.u");
+
+load("urbi/boolean.u");
+load("urbi/nil.u");
+load("urbi/control.u");
+load("urbi/channel.u");
+
+// Disable top-level display
+Channel.topLevel.enabled = false;
+
+// Provide !=.
+Object.addProto(Comparable);
+
+load("urbi/orderable.u");
+List.protos.insertBack(Global.Orderable);
+
+load("urbi/updatehook-stack.u");
+
+load("urbi/binary.u");
+load("urbi/code.u");
+load("urbi/date.u");
+load("urbi/dictionary.u");
+load("urbi/duration.u");
+load("urbi/event.u");
+load("urbi/file.u");
+load("urbi/float.u");
+load("urbi/formatter.u");
+load("urbi/group.u");
+load("urbi/input-stream.u");
+load("urbi/job.u");
+load("urbi/kernel1.u");
+load("urbi/loadable.u");
+load("urbi/lobby.u");
+load("urbi/math.u");
+load("urbi/mutex.u");
+load("urbi/package-info.u");
+load("urbi/path.u");
+load("urbi/pattern.u");
+load("urbi/profiling.u");
+load("urbi/pubsub.u");
+load("urbi/regexp.u");
+load("urbi/socket.u");
+load("urbi/stack-frame.u");
+load("urbi/string.u");
+load("urbi/tag.u");
+load("urbi/timeout.u");
+load("urbi/trajectory-generator.u");
+load("urbi/tuple.u");
+load("urbi/weak-pointer.u");
+
+/*----------.
+| UObject.  |
+`----------*/
+
+"Initializing uobjects NOW";
+load("urbi/uobject.u");
+
+if ("ros" in Platform.enabledModules && System.getenv("ROS_ROOT"))
+  loadModule("urbi/ros");
+
+// This variable is used by initialization code to detect the end of
+// urbi.u.
+Channel.topLevel.enabled = true |
+System.defaultIsSystem = false |
+var Object.loaded = 1 |;

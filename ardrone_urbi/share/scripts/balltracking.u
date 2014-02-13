@@ -1,0 +1,32 @@
+/*
+ * Ball tracking sample
+ * See http://www.youtube.com/watch?v=wJ5seNd-U2g
+ */
+
+
+var Global.drone = ARDrone.new;
+drone.load = 1;
+while(!drone.stateConnected)
+{
+        echo("Waiting connection.");
+        sleep(1);
+};
+
+echo ("Successfuly connected :)");
+
+var Global.ball = colormap.new("drone.cameraVal", 200, 255, 0, 120, 0, 255, 0.0015, true);
+
+myTag:every(0.1s)
+{
+        if (ball.visible)
+        {
+                drone.speedYaw = -(ball.x * 2);
+                drone.speedZ = (ball.y * 2.5);
+        }
+        else
+        {
+                drone.speedYaw = 0;
+                drone.speedZ = 0;
+        };
+},
+

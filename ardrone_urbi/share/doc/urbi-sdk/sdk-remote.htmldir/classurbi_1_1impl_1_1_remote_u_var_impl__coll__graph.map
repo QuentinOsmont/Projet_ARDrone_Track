@@ -1,0 +1,25 @@
+<map id="G" name="G">
+<area shape="rect" href="$classurbi_1_1impl_1_1_u_var_impl.html" title="urbi::impl::UVarImpl" alt="" coords="560,1879,718,1903" />
+<area shape="rect" href="$classurbi_1_1_u_var.html" title="UVar class definition." alt="" coords="983,1905,1071,1929" />
+<area shape="rect" href="$classurbi_1_1_u_value.html" title="Container for a value that handles all types known to URBI." alt="" coords="1510,1015,1614,1039" />
+<area shape="rect" href="$classurbi_1_1_u_message.html" title="Class containing all informations related to an URBI message." alt="" coords="1978,588,2103,612" />
+<area shape="rect" href="$classurbi_1_1_u_binary.html" title="Binary data of known or unknown type." alt="" coords="972,1231,1082,1255" />
+<area shape="rect" href="$classurbi_1_1_u_sound.html" title="Class encapsulating sound information." alt="" coords="584,1180,694,1204" />
+<area shape="rect" href="$classurbi_1_1_u_image.html" title="Class encapsulating an image." alt="" coords="584,1121,694,1145" />
+<area shape="rect" href="$classurbi_1_1_u_list.html" title="Class storing URBI List type." alt="" coords="2474,1039,2564,1063" />
+<area shape="rect" href="$classurbi_1_1_u_abstract_client.html" title="Interface for an URBI wrapper object." alt="" coords="946,584,1108,608" />
+<area shape="rect" href="$classurbi_1_1_u_generic_callback.html" title="Function and Event storage mechanism This heavily overloaded class is the only way in C++ to make lif..." alt="" coords="1474,1665,1650,1689" />
+<area shape="rect" href="$classurbi_1_1_u_sync_client.html" title="UClient linux implementation with support for synchronous extra functions." alt="" coords="2856,467,2995,491" />
+<area shape="rect" href="$classurbi_1_1_u_client.html" title="Linux implementation of UAbstractClient." alt="" coords="1508,417,1615,441" />
+<area shape="rect" title="STL class." alt="" coords="594,637,684,661" />
+<area shape="rect" href="$classurbi_1_1_u_object_struct.html" title="urbi::UObjectStruct" alt="" coords="951,871,1103,895" />
+<area shape="rect" title="STL class." alt="" coords="159,604,351,628" />
+<area shape="rect" href="$structurbi_1_1_u_sync_client_1_1send__options.html" title="Options for send(), rather than multiplying the overloads." alt="" coords="1443,289,1680,313" />
+<area shape="rect" title="STL class." alt="" coords="188,940,322,964" />
+<area shape="rect" href="$classurbi_1_1impl_1_1_remote_u_generic_callback_impl.html" title="urbi::impl::RemoteUGenericCallbackImpl" alt="" coords="1892,1701,2188,1725" />
+<area shape="rect" href="$classurbi_1_1impl_1_1_u_generic_callback_impl.html" title="urbi::impl::UGenericCallbackImpl" alt="" coords="904,1757,1150,1781" />
+<area shape="rect" href="$classurbi_1_1_u_context.html" title="Methods available in both UObject and UVar Wrapper around UContextImpl to enable access through inher..." alt="" coords="579,1763,699,1787" />
+<area shape="rect" href="$classurbi_1_1impl_1_1_u_context_impl.html" title="urbi::impl::UContextImpl" alt="" coords="162,1763,348,1787" />
+<area shape="rect" href="$classurbi_1_1_u_prop.html" title="Provides easy access to variable properties." alt="" coords="1514,2041,1610,2065" />
+<area shape="rect" href="$classlibport_1_1_socket.html" title="libport::Socket" alt="" coords="967,372,1087,396" />
+</map>

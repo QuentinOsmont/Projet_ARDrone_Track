@@ -1,0 +1,71 @@
+<map id="G" name="G">
+<area shape="rect" href="$classurbi_1_1_u_context.html" title="Methods available in both UObject and UVar Wrapper around UContextImpl to enable access through inher..." alt="" coords="5,1541,125,1565" />
+<area shape="rect" href="$classurbi_1_1_u_event.html" title="UEvent class definition." alt="" coords="209,1445,316,1469" />
+<area shape="rect" href="$classurbi_1_1_u_generic_callback.html" title="Function and Event storage mechanism This heavily overloaded class is the only way in C++ to make lif..." alt="" coords="175,1493,351,1517" />
+<area shape="rect" href="$classurbi_1_1_u_object.html" title="Main UObject class definition Each UObject instance corresponds to an URBI object." alt="" coords="207,1541,319,1565" />
+<area shape="rect" href="$classurbi_1_1_u_object_hub.html" title="Main UObjectHub class definition." alt="" coords="193,1589,332,1613" />
+<area shape="rect" href="$classurbi_1_1_u_var.html" title="UVar class definition." alt="" coords="219,2309,307,2333" />
+<area shape="rect" href="$classurbi_1_1_u_boost_function_callback0.html" title="urbi::UBoostFunctionCallback0\&lt; R \&gt;" alt="" coords="625,5,895,29" />
+<area shape="rect" href="$classurbi_1_1_u_boost_function_callback1.html" title="urbi::UBoostFunctionCallback1\&lt; R, P1 \&gt;" alt="" coords="613,53,907,77" />
+<area shape="rect" href="$classurbi_1_1_u_boost_function_callback10.html" title="urbi::UBoostFunctionCallback10\&lt; R, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10 \&gt;" alt="" coords="492,101,1028,125" />
+<area shape="rect" href="$classurbi_1_1_u_boost_function_callback2.html" title="urbi::UBoostFunctionCallback2\&lt; R, P1, P2 \&gt;" alt="" coords="601,149,919,173" />
+<area shape="rect" href="$classurbi_1_1_u_boost_function_callback3.html" title="urbi::UBoostFunctionCallback3\&lt; R, P1, P2, P3 \&gt;" alt="" coords="588,197,932,221" />
+<area shape="rect" href="$classurbi_1_1_u_boost_function_callback4.html" title="urbi::UBoostFunctionCallback4\&lt; R, P1, P2, P3, P4 \&gt;" alt="" coords="576,245,944,269" />
+<area shape="rect" href="$classurbi_1_1_u_boost_function_callback5.html" title="urbi::UBoostFunctionCallback5\&lt; R, P1, P2, P3, P4, P5 \&gt;" alt="" coords="563,293,957,317" />
+<area shape="rect" href="$classurbi_1_1_u_boost_function_callback6.html" title="urbi::UBoostFunctionCallback6\&lt; R, P1, P2, P3, P4, P5, P6 \&gt;" alt="" coords="551,341,969,365" />
+<area shape="rect" href="$classurbi_1_1_u_boost_function_callback7.html" title="urbi::UBoostFunctionCallback7\&lt; R, P1, P2, P3, P4, P5, P6, P7 \&gt;" alt="" coords="539,389,981,413" />
+<area shape="rect" href="$classurbi_1_1_u_boost_function_callback8.html" title="urbi::UBoostFunctionCallback8\&lt; R, P1, P2, P3, P4, P5, P6, P7, P8 \&gt;" alt="" coords="525,437,995,461" />
+<area shape="rect" href="$classurbi_1_1_u_boost_function_callback9.html" title="urbi::UBoostFunctionCallback9\&lt; R, P1, P2, P3, P4, P5, P6, P7, P8, P9 \&gt;" alt="" coords="513,485,1007,509" />
+<area shape="rect" href="$classurbi_1_1_u_callback0.html" title="urbi::UCallback0\&lt; OBJ, R \&gt;" alt="" coords="657,533,863,557" />
+<area shape="rect" href="$classurbi_1_1_u_callback1.html" title="urbi::UCallback1\&lt; OBJ, R, P1 \&gt;" alt="" coords="645,581,875,605" />
+<area shape="rect" href="$classurbi_1_1_u_callback10.html" title="urbi::UCallback10\&lt; OBJ, R, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10 \&gt;" alt="" coords="524,629,996,653" />
+<area shape="rect" href="$classurbi_1_1_u_callback11.html" title="urbi::UCallback11\&lt; OBJ, R, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11 \&gt;" alt="" coords="507,677,1013,701" />
+<area shape="rect" href="$classurbi_1_1_u_callback12.html" title="urbi::UCallback12\&lt; OBJ, R, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12 \&gt;" alt="" coords="491,725,1029,749" />
+<area shape="rect" href="$classurbi_1_1_u_callback13.html" title="urbi::UCallback13\&lt; OBJ, R, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13 \&gt;" alt="" coords="473,773,1047,797" />
+<area shape="rect" href="$classurbi_1_1_u_callback14.html" title="urbi::UCallback14\&lt; OBJ, R, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14 \&gt;" alt="" coords="457,821,1063,845" />
+<area shape="rect" href="$classurbi_1_1_u_callback15.html" title="urbi::UCallback15\&lt; OBJ, R, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15 \&gt;" alt="" coords="440,869,1080,893" />
+<area shape="rect" href="$classurbi_1_1_u_callback16.html" title="urbi::UCallback16\&lt; OBJ, R, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16 \&gt;" alt="" coords="423,917,1097,941" />
+<area shape="rect" href="$classurbi_1_1_u_callback2.html" title="urbi::UCallback2\&lt; OBJ, R, P1, P2 \&gt;" alt="" coords="632,965,888,989" />
+<area shape="rect" href="$classurbi_1_1_u_callback3.html" title="urbi::UCallback3\&lt; OBJ, R, P1, P2, P3 \&gt;" alt="" coords="620,1013,900,1037" />
+<area shape="rect" href="$classurbi_1_1_u_callback4.html" title="urbi::UCallback4\&lt; OBJ, R, P1, P2, P3, P4 \&gt;" alt="" coords="608,1061,912,1085" />
+<area shape="rect" href="$classurbi_1_1_u_callback5.html" title="urbi::UCallback5\&lt; OBJ, R, P1, P2, P3, P4, P5 \&gt;" alt="" coords="595,1109,925,1133" />
+<area shape="rect" href="$classurbi_1_1_u_callback6.html" title="urbi::UCallback6\&lt; OBJ, R, P1, P2, P3, P4, P5, P6 \&gt;" alt="" coords="583,1157,937,1181" />
+<area shape="rect" href="$classurbi_1_1_u_callback7.html" title="urbi::UCallback7\&lt; OBJ, R, P1, P2, P3, P4, P5, P6, P7 \&gt;" alt="" coords="571,1205,949,1229" />
+<area shape="rect" href="$classurbi_1_1_u_callback8.html" title="urbi::UCallback8\&lt; OBJ, R, P1, P2, P3, P4, P5, P6, P7, P8 \&gt;" alt="" coords="557,1253,963,1277" />
+<area shape="rect" href="$classurbi_1_1_u_callback9.html" title="urbi::UCallback9\&lt; OBJ, R, P1, P2, P3, P4, P5, P6, P7, P8, P9 \&gt;" alt="" coords="545,1301,975,1325" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend0.html" title="urbi::UCallbacknotifyend0\&lt; OBJ \&gt;" alt="" coords="635,1349,885,1373" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend1.html" title="urbi::UCallbacknotifyend1\&lt; OBJ, P1 \&gt;" alt="" coords="621,1397,899,1421" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend10.html" title="urbi::UCallbacknotifyend10\&lt; OBJ, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10 \&gt;" alt="" coords="501,1445,1019,1469" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend11.html" title="urbi::UCallbacknotifyend11\&lt; OBJ, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11 \&gt;" alt="" coords="484,1493,1036,1517" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend12.html" title="urbi::UCallbacknotifyend12\&lt; OBJ, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12 \&gt;" alt="" coords="467,1541,1053,1565" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend13.html" title="urbi::UCallbacknotifyend13\&lt; OBJ, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13 \&gt;" alt="" coords="451,1589,1069,1613" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend14.html" title="urbi::UCallbacknotifyend14\&lt; OBJ, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14 \&gt;" alt="" coords="433,1637,1087,1661" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend15.html" title="urbi::UCallbacknotifyend15\&lt; OBJ, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15 \&gt;" alt="" coords="417,1685,1103,1709" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend16.html" title="urbi::UCallbacknotifyend16\&lt; OBJ, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16 \&gt;" alt="" coords="400,1733,1120,1757" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend2.html" title="urbi::UCallbacknotifyend2\&lt; OBJ, P1, P2 \&gt;" alt="" coords="609,1781,911,1805" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend3.html" title="urbi::UCallbacknotifyend3\&lt; OBJ, P1, P2, P3 \&gt;" alt="" coords="597,1829,923,1853" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend4.html" title="urbi::UCallbacknotifyend4\&lt; OBJ, P1, P2, P3, P4 \&gt;" alt="" coords="584,1877,936,1901" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend5.html" title="urbi::UCallbacknotifyend5\&lt; OBJ, P1, P2, P3, P4, P5 \&gt;" alt="" coords="572,1925,948,1949" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend6.html" title="urbi::UCallbacknotifyend6\&lt; OBJ, P1, P2, P3, P4, P5, P6 \&gt;" alt="" coords="560,1973,960,1997" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend7.html" title="urbi::UCallbacknotifyend7\&lt; OBJ, P1, P2, P3, P4, P5, P6, P7 \&gt;" alt="" coords="547,2021,973,2045" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend8.html" title="urbi::UCallbacknotifyend8\&lt; OBJ, P1, P2, P3, P4, P5, P6, P7, P8 \&gt;" alt="" coords="535,2069,985,2093" />
+<area shape="rect" href="$classurbi_1_1_u_callbacknotifyend9.html" title="urbi::UCallbacknotifyend9\&lt; OBJ, P1, P2, P3, P4, P5, P6, P7, P8, P9 \&gt;" alt="" coords="523,2117,997,2141" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback0.html" title="urbi::UFCallback0\&lt; R \&gt;" alt="" coords="669,2165,851,2189" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback1.html" title="urbi::UFCallback1\&lt; R, P1 \&gt;" alt="" coords="657,2213,863,2237" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback10.html" title="urbi::UFCallback10\&lt; R, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10 \&gt;" alt="" coords="536,2261,984,2285" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback11.html" title="urbi::UFCallback11\&lt; R, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11 \&gt;" alt="" coords="520,2309,1000,2333" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback12.html" title="urbi::UFCallback12\&lt; R, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12 \&gt;" alt="" coords="503,2357,1017,2381" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback13.html" title="urbi::UFCallback13\&lt; R, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13 \&gt;" alt="" coords="485,2405,1035,2429" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback14.html" title="urbi::UFCallback14\&lt; R, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14 \&gt;" alt="" coords="469,2453,1051,2477" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback15.html" title="urbi::UFCallback15\&lt; R, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15 \&gt;" alt="" coords="452,2501,1068,2525" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback16.html" title="urbi::UFCallback16\&lt; R, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16 \&gt;" alt="" coords="436,2549,1084,2573" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback2.html" title="urbi::UFCallback2\&lt; R, P1, P2 \&gt;" alt="" coords="645,2597,875,2621" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback3.html" title="urbi::UFCallback3\&lt; R, P1, P2, P3 \&gt;" alt="" coords="632,2645,888,2669" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback4.html" title="urbi::UFCallback4\&lt; R, P1, P2, P3, P4 \&gt;" alt="" coords="620,2693,900,2717" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback5.html" title="urbi::UFCallback5\&lt; R, P1, P2, P3, P4, P5 \&gt;" alt="" coords="607,2741,913,2765" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback6.html" title="urbi::UFCallback6\&lt; R, P1, P2, P3, P4, P5, P6 \&gt;" alt="" coords="595,2789,925,2813" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback7.html" title="urbi::UFCallback7\&lt; R, P1, P2, P3, P4, P5, P6, P7 \&gt;" alt="" coords="583,2837,937,2861" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback8.html" title="urbi::UFCallback8\&lt; R, P1, P2, P3, P4, P5, P6, P7, P8 \&gt;" alt="" coords="569,2885,951,2909" />
+<area shape="rect" href="$classurbi_1_1_u_f_callback9.html" title="urbi::UFCallback9\&lt; R, P1, P2, P3, P4, P5, P6, P7, P8, P9 \&gt;" alt="" coords="557,2933,963,2957" />
+<area shape="rect" href="$classurbi_1_1_custom_u_var.html" title="UVar wrapper with a custom data field." alt="" coords="671,2981,849,3005" />
+</map>

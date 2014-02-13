@@ -1,0 +1,65 @@
+/*
+ * Copyright (C) 2008-2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+#ifndef LIBPORT_CSTDIO
+# define LIBPORT_CSTDIO
+
+# include <cstdio>
+# include <string>
+# include <sstream>
+
+# include <libport/export.hh>
+# include <libport/detect-win32.h>
+
+# ifdef _MSC_VER
+#  include <io.h>
+#  define snprintf _snprintf
+#  define vsnprintf _vsnprintf
+
+extern "C"
+{
+  inline
+  int fileno(FILE* stream)
+  {
+    return _fileno(stream);
+  }
+}
+
+# endif
+
+# ifdef WIN32
+#  include <cstdarg>
+
+int asprintf(char **strp, const char *fmt, ...);
+int vasprintf(char **strp, const char *fmt, va_list ap);
+
+# endif
+
+namespace libport
+{
+
+  /// Convenience wrapper for C++.
+  LIBPORT_API
+  void perror(const std::string& s);
+
+  /// Convenience wrapper for C++.
+  LIBPORT_API
+  void perror(const std::ostringstream& s);
+
+  /// Portable for Windows.
+  LIBPORT_API
+  void perror(const char* s);
+}
+
+#endif // !LIBPORT_CSTDIO
+
+// Local Variables:
+// mode: C++
+// End:

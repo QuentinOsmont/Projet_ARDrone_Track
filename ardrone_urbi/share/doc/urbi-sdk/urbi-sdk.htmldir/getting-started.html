@@ -1,0 +1,921 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>2 Getting Started</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,sections+,xhtml,info --> 
+<meta name="src" content="urbi-sdk.tex" /> 
+<meta name="date" content="2010-09-30 15:52:00" /> 
+<link rel="stylesheet" type="text/css" href="urbi-sdk.css" /> 
+</head><body 
+>
+   <div class="header"><a 
+href="uobjects.html" ><p>Next</p></a><a 
+href="contents.html" ><p>Prev</p></a><a 
+href="contents.html#tailurbi-sdkli1.html" ><p>Prev-tail</p></a><a 
+href="#tailurbi-sdkch2.html"><p>Tail</p></a><a 
+href="index.html#getting-started.html" ><p>Up</p></a></div><h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;2</span><br /><a 
+href="index.html#QQ2-4-9" id="x4-90002">Getting Started</a></h2>
+<!--l. 12--><p class="noindent">urbiscript comes with a set of tools, two of which being of particular importance:
+     </p><dl class="description"><dt class="description">
+<span 
+class="cmbxti-10x-x-109">urbi</span><a 
+ id="x4-9001"></a> </dt><dd 
+class="description">launches an Urbi server. There are several means to interact with it, which we will see
+     later.
+     </dd><dt class="description">
+<span 
+class="cmbxti-10x-x-109">urbi-launch</span><a 
+ id="x4-9002"></a> </dt><dd 
+class="description">runs Urbi components, the UObjects, and connects them to an Urbi server.</dd></dl>
+<!--l. 21--><p class="indent">   Please, first make sure that these tools are properly installed. If you encounter problems, please see
+the frequently asked questions (<a 
+href="faq.html#x23-11100015">Chapter&#x00A0;15<!--tex4ht:ref: sec:faq --></a>), and the detailed installation instructions
+(<a 
+href="installation.html#x22-10500014">Chapter&#x00A0;14<!--tex4ht:ref: sec:installation --></a>).
+</p><!--l. 26--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 26--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9003r1"></a></span><!--l. 27--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">#</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Make</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">sure</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">urbi</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">properly</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">installed</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9004r2"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">version</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9005r3"></a></span><span 
+class="cmtt-10x-x-109">Urbi</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Kernel</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">version</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">preview</span><span 
+class="cmtt-10x-x-109">/2.0/</span><span 
+class="cmtt-10x-x-109">beta3</span><span 
+class="cmtt-10x-x-109">-425</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">rev</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">000913</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9006r4"></a></span><span 
+class="cmtt-10x-x-109">Copyright</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">2005-2010</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Gostai</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">SAS</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9007r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9008r6"></a></span><span 
+class="cmtt-10x-x-109">URBI</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">SDK</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Remote</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">version</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">preview</span><span 
+class="cmtt-10x-x-109">/1.6/</span><span 
+class="cmtt-10x-x-109">beta1</span><span 
+class="cmtt-10x-x-109">-666</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">rev</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">92</span><span 
+class="cmtt-10x-x-109">ec3b4</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9009r7"></a></span><span 
+class="cmtt-10x-x-109">Copyright</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">2004-2010</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Gostai</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">SAS</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9010r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9011r9"></a></span><span 
+class="cmtt-10x-x-109">Libport</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">version</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">preview</span><span 
+class="cmtt-10x-x-109">/1.0/</span><span 
+class="cmtt-10x-x-109">beta1</span><span 
+class="cmtt-10x-x-109">-1048</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">rev</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">f1c5170</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9012r10"></a></span><span 
+class="cmtt-10x-x-109">Copyright</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">2005-2010</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Gostai</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">SAS</span><span 
+class="cmtt-10x-x-109">.</span>
+   </pre>
+   </div>
+<!--l. 39--><p class="indent">   There are several means to interact with a server spawned by <span 
+class="cmtt-10x-x-109">urbi</span>, see <a 
+href="programs.html#x28-20300018.3">Section&#x00A0;18.3<!--tex4ht:ref: sec:tools:urbi --></a> for details.
+First of all, you may use the options &#8216;<span 
+class="cmtt-10x-x-109">-e</span>&#8217;/&#8216;<span 
+class="cmtt-10x-x-109">--expression </span><span 
+class="cmitt-10x-x-109">code </span>&#8217; and &#8216;<span 
+class="cmtt-10x-x-109">-f</span>&#8217;/&#8216;<span 
+class="cmtt-10x-x-109">--file </span><span 
+class="cmitt-10x-x-109">file </span>&#8217; to send some
+<span 
+class="cmitt-10x-x-109">code </span>or the contents of some <span 
+class="cmitt-10x-x-109">file </span>to the newly run server. The option &#8216;<span 
+class="cmtt-10x-x-109">q</span>&#8217;/&#8216;<span 
+class="cmtt-10x-x-109">--quiet</span>&#8217; discards the
+banner.
+</p><!--l. 46--><p class="indent">   You may combine any number of these options, but beware that being event-driven, the server does
+not &#8220;know&#8221; when a program ends. Therefore, batch programs should end by calling <span class="lstinline"><span 
+class="cmtt-10x-x-109">shutdown</span></span>. Using a
+Unix shell:
+</p><!--l. 51--><p class="indent">   <div class="shell">
+<a 
+ id="x4-9013r1"></a>
+<a 
+ id="x4-9014"></a>
+</p>
+   <!--l. 51--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9015r1"></a></span><!--l. 52--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">#</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">A</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">classical</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">program</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9016r2"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">q</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 53--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">echo</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">("</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Hello,</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">World</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">!");</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 53--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">shutdown;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9017r3"></a></span><!--l. 54--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000004]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Hello,</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">World</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">!</span></span></pre>
+   </pre>
+ <table class="caption" 
+><tr style="vertical-align:baseline;" class="caption"><td class="id">Listing&#x00A0;2.1: </td><td  
+class="content">A batch session under Unix.</td></tr></table><!--tex4ht:label?: x4-9013r2 -->
+   </div>
+<!--l. 57--><p class="indent">   If you are running Windows, then, since the quotation rules differ, run:
+</p><!--l. 59--><p class="indent">   <div class="shell">
+<a 
+ id="x4-9018r2"></a>
+<a 
+ id="x4-9019"></a>
+</p>
+   <!--l. 59--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9020r1"></a></span><!--l. 60--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">#</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">A</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">classical</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">program</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9021r2"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">q</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 61--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">echo</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">(</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><!--l. 61--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Hello,</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">World</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">!</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><!--l. 61--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">);</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 61--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">shutdown;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9022r3"></a></span><!--l. 62--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000004]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Hello,</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">World</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">!</span></span></pre>
+                                                                                       
+
+                                                                                       
+   </pre>
+ <table class="caption" 
+><tr style="vertical-align:baseline;" class="caption"><td class="id">Listing&#x00A0;2.2: </td><td  
+class="content">A batch session under Windows.</td></tr></table><!--tex4ht:label?: x4-9018r2 -->
+   </div>
+<!--l. 66--><p class="indent">   To run an interactive session, use option &#8216;<span 
+class="cmtt-10x-x-109">-i</span>&#8217;/&#8216;<span 
+class="cmtt-10x-x-109">--interactive</span>&#8217;. Like most interactive interpreters,
+Urbi will evaluate the given commands and print out the results.
+</p><!--l. 70--><p class="indent">   <div class="shell">
+<a 
+ id="x4-9023r3"></a>
+<a 
+ id="x4-9024"></a>
+</p>
+   <!--l. 70--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9025r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">i</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9026r2"></a></span><!--l. 72--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000987]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">********************************************************</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9027r3"></a></span><!--l. 73--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000990]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Urbi</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">SDK</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">version</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">2.0.3</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">rev</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">d6a568d</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9028r4"></a></span><!--l. 74--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001111]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Copyright</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">(</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">C</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">)</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">2005-2010</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Gostai</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">S</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">A</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">S</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9029r5"></a></span><!--l. 75--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001111]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9030r6"></a></span><!--l. 76--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001111]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">This</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">program</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">comes</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">with</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ABSOLUTELY</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">NO</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">WARRANTY</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">It</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">can</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9031r7"></a></span><!--l. 77--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001112]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">be</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">used</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">under</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">certain</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">conditions</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Type</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#8216;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">license;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#8217;,</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9032r8"></a></span><!--l. 78--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001112]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#8216;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">authors;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#8217;,</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">or</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#8216;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">copyright;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">for</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">more</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">information</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9033r9"></a></span><!--l. 79--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001112]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9034r10"></a></span><!--l. 80--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001112]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Check</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">our</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">community</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">site</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">http</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">://</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">www</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">urbiforge</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">org</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9035r11"></a></span><!--l. 81--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001112]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">********************************************************</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9036r12"></a></span><span 
+class="cmtt-10x-x-109">1+2;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9037r13"></a></span><!--l. 83--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001200]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">3</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9038r14"></a></span><span 
+class="cmtt-10x-x-109">shutdown;</span>
+   </pre>
+ <table class="caption" 
+><tr style="vertical-align:baseline;" class="caption"><td class="id">Listing&#x00A0;2.3: </td><td  
+class="content">An interactive session under Unix.</td></tr></table><!--tex4ht:label?: x4-9023r2 -->
+   </div>
+<!--l. 87--><p class="indent">   The output from the server is prefixed by a number surrounded by square brackets: this is the date
+(in milliseconds since the server was launched) at which that line was sent by the server. This is
+useful at occasions, since Urbi is meant to run many parallel commands. But since these
+timestamps are irrelevant in most examples, they will often be filled with zeroes through this
+documentation.
+</p><!--l. 94--><p class="indent">   Under Unix, the program <span 
+class="cmtt-10x-x-109">rlwrap </span>provides additional services (history of commands, advanced
+command line edition etc.); run &#8216;<span 
+class="cmtt-10x-x-109">rlwrap urbi -i</span>&#8217;.
+</p><!--l. 98--><p class="indent">   In either case the server can also be made available for network-based interactions using option
+&#8216;<span 
+class="cmtt-10x-x-109">--port </span><span 
+class="cmitt-10x-x-109">port </span>&#8217;. Note that while <span class="lstinline"><span 
+class="cmtt-10x-x-109">shutdown</span></span> asks the server to quit, <span class="lstinline"><span 
+class="cmtt-10x-x-109">quit</span></span> only quits one interactive
+session. In the following example (under Unix) the server is still available for other, possibly
+concurrent, sessions.
+</p><!--l. 104--><p class="indent">   <div class="shell">
+<a 
+ id="x4-9039r4"></a>
+<a 
+ id="x4-9040"></a>
+</p>
+   <!--l. 104--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9041r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">port</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">54000</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&amp;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9042r2"></a></span><span 
+class="cmtt-10x-x-109">[1]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">77024</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9043r3"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">telnet</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">localhost</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">54000</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9044r4"></a></span><span 
+class="cmtt-10x-x-109">Trying</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">127.0.0.1...</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9045r5"></a></span><span 
+class="cmtt-10x-x-109">Connected</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">to</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">localhost</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9046r6"></a></span><span 
+class="cmtt-10x-x-109">Escape</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">character</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">is</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 110--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">^]</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span></pre><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9047r7"></a></span><!--l. 111--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000987]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">********************************************************</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9048r8"></a></span><!--l. 112--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000990]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Urbi</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">SDK</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">version</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">2.0.3</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">rev</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">d6a568d</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9049r9"></a></span><!--l. 113--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001111]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Copyright</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">(</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">C</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">)</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">2005-2010</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Gostai</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">S</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">A</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">S</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9050r10"></a></span><!--l. 114--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001111]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9051r11"></a></span><!--l. 115--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001111]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">This</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">program</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">comes</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">with</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">ABSOLUTELY</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">NO</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">WARRANTY</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">It</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">can</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9052r12"></a></span><!--l. 116--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001112]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">be</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">used</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">under</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">certain</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">conditions</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Type</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#8216;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">license;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#8217;,</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9053r13"></a></span><!--l. 117--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001112]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#8216;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">authors;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#8217;,</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">or</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#8216;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">copyright;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">for</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">more</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">information</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9054r14"></a></span><!--l. 118--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001112]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9055r15"></a></span><!--l. 119--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001112]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Check</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">our</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">community</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">site</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">:</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">http</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">://</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">www</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">urbiforge</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">org</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9056r16"></a></span><!--l. 120--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">001112]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">********************************************************</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9057r17"></a></span><span 
+class="cmtt-10x-x-109">12345679*8;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9058r18"></a></span><!--l. 122--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">018032]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">98765432</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9059r19"></a></span><span 
+class="cmtt-10x-x-109">quit;</span>
+   </pre>
+ <table class="caption" 
+><tr style="vertical-align:baseline;" class="caption"><td class="id">Listing&#x00A0;2.4: </td><td  
+class="content">An interactive session under Unix.</td></tr></table><!--tex4ht:label?: x4-9039r2 -->
+   </div>
+<!--l. 126--><p class="indent">   Under Windows, instead of using <span 
+class="cmtt-10x-x-109">telnet</span>, you may use <span 
+class="cmtt-10x-x-109">Gostai Console </span>(part of the package),
+which provides a Graphical User Interface to a network-connection to an Urbi server. To launch the
+server, run:
+</p><!--l. 131--><p class="indent">   <div class="shell">
+<a 
+ id="x4-9060r5"></a>
+                                                                                       
+
+                                                                                       
+<a 
+ id="x4-9061"></a>
+</p>
+   <!--l. 131--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9062r1"></a></span><span 
+class="cmtt-10x-x-109">C</span><span 
+class="cmtt-10x-x-109">:\...&#x003E;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">start</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">port</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">54000</span>
+   </pre>
+ <table class="caption" 
+><tr style="vertical-align:baseline;" class="caption"><td class="id">Listing&#x00A0;2.5: </td><td  
+class="content">Starting an interactive session under Windows.</td></tr></table><!--tex4ht:label?: x4-9060r2 -->
+   </div>
+<!--l. 135--><p class="noindent">and to launch the client, click on <span 
+class="cmtt-10x-x-109">Gostai Console </span>which is installed by the installer.
+</p><!--l. 139--><p class="indent">   Then, the interaction proceeds in the <span 
+class="cmtt-10x-x-109">Gostai Console </span>windows. Specify the host name and port to
+use (&#8216;<span 
+class="cmtt-10x-x-109">127.0.0.1:54000</span>&#8217;) in the text field in the top of the window and click on the right to start the
+connection.
+</p>
+<div class="center" 
+>
+<!--l. 144--><p class="noindent">
+</p><!--l. 145--><p class="noindent"><img 
+src="urbi-sdk2x.png" alt="PIC" class="graphics" width="364.19667pt" height="255.17142pt"  /><!--tex4ht:graphics  
+name="urbi-sdk2x.png" src="img/gostai-console.eps"  
+--></p></div>
+<!--l. 148--><p class="indent">   The program <span 
+class="cmtt-10x-x-109">urbi-send </span>(see <a 
+href="programs.html#x28-22100018.6">Section&#x00A0;18.6<!--tex4ht:ref: sec:tools:urbi-send --></a>) provides a nice interface to send batches of instructions
+(and/or files) to a running server.
+</p><!--l. 152--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 152--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9063r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">send</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">P</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">54000</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 153--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">1+2*3;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">Q</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9064r2"></a></span><!--l. 154--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">018032]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">7</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9065r3"></a></span><!--l. 155--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">#</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Have</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">server</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">shutdown;</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x4-9066r4"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">send</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">P</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">54000</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 156--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">shutdown;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre>
+   </pre>
+   </div>
+                                                                                       
+
+                                                                                       
+<!--l. 161--><p class="indent">   You can now send commands to your Urbi server. If at any point you get lost, or want a fresh start,
+you can simply close and reopen your connection to the server to get a clean environment. In some
+cases, particularly if you made global changes in the environment, it is simpler to start
+anew: shut your current server down using the command <span class="lstinline"><span 
+class="cmtt-10x-x-109">shutdown</span></span>, and spawn a new one.
+In interactive mode you can also use the shortcut sequence Ctrl-D, like in many other
+interpreters.
+</p><!--l. 169--><p class="indent">   In case of a foreground task preventing you to execute other commands, you can use Ctrl-C to kill
+the foreground task, clear queued commands and restore interactive mode.
+</p><!--l. 175--><p class="indent">   You are now ready to proceed to the urbiscript tutorial: see <a 
+href="urbiscript-user-manual.html#x9-48000II">Section&#x00A0;II<!--tex4ht:ref: part:tut --></a>.
+</p><!--l. 177--><p class="indent">   Enjoy!
+</p><!--l. 9--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 9--><p class="indent">   <div class="footer"><a 
+href="uobjects.html" ><p>Next</p></a><a 
+href="contents.html" ><p>Prev</p></a><a 
+href="contents.html#tailurbi-sdkli1.html" ><p>Prev-tail</p></a><a 
+href="getting-started.html" ><p>Front</p></a><a 
+href="index.html#getting-started.html" ><p>Up</p></a></div><a 
+ id="tailurbi-sdkch2.html"></a> </p> 
+</body></html> 

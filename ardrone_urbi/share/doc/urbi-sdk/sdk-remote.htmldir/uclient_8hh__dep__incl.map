@@ -1,0 +1,14 @@
+<map id="G" name="G">
+<area shape="rect" href="$kernel&#45;version_8cc.html" title="kernel&#45;version.cc" alt="" coords="5,81,141,105" />
+<area shape="rect" href="$uclient_8cc.html" title="uclient.cc" alt="" coords="165,81,251,105" />
+<area shape="rect" href="$liburbi_2urbi&#45;launch_8cc.html" title="urbi&#45;launch.cc" alt="" coords="275,81,392,105" />
+<area shape="rect" href="$usyncclient_8hh.html" title="Definition of the URBI interface class." alt="" coords="416,81,536,105" />
+<area shape="rect" href="$main_8cc.html" title="main.cc" alt="" coords="100,231,175,255" />
+<area shape="rect" href="$remote&#45;ucontext&#45;impl_8hh.html" title="remote&#45;ucontext&#45;impl.hh" alt="" coords="224,156,413,180" />
+<area shape="rect" href="$ucallbacks_8cc.html" title="ucallbacks.cc" alt="" coords="201,231,313,255" />
+<area shape="rect" href="$uobject_8cc.html" title="uobject.cc" alt="" coords="341,231,432,255" />
+<area shape="rect" href="$uvar_8cc.html" title="uvar.cc" alt="" coords="465,231,535,255" />
+<area shape="rect" href="$utimer&#45;callback_8cc.html" title="utimer&#45;callback.cc" alt="" coords="539,156,683,180" />
+<area shape="rect" href="$usyncclient_8cc.html" title="usyncclient.cc" alt="" coords="707,156,824,180" />
+<area shape="rect" href="$qt__umain_8hh.html" title="qt_umain.hh" alt="" coords="848,156,955,180" />
+</map>

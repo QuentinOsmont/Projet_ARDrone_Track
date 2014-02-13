@@ -1,0 +1,21 @@
+<map id="G" name="G">
+<area shape="rect" href="$umessage_8hh.html" title="umessage.hh" alt="" coords="669,81,781,105" />
+<area shape="rect" href="$main_8cc.html" title="main.cc" alt="" coords="1315,455,1389,479" />
+<area shape="rect" href="$uobject_8cc.html" title="uobject.cc" alt="" coords="1161,455,1252,479" />
+<area shape="rect" href="$uvar_8cc.html" title="uvar.cc" alt="" coords="411,455,480,479" />
+<area shape="rect" href="$uabstractclient_8cc.html" title="uabstractclient.cc" alt="" coords="157,380,299,404" />
+<area shape="rect" href="$umessage_8cc.html" title="umessage.cc" alt="" coords="1491,156,1600,180" />
+<area shape="rect" href="$usyncclient_8cc.html" title="usyncclient.cc" alt="" coords="533,380,651,404" />
+<area shape="rect" href="$uabstractclient_8hh.html" title="Definition of the URBI interface class." alt="" coords="263,156,407,180" />
+<area shape="rect" href="$compatibility_8hxx.html" title="compatibility.hxx" alt="" coords="501,231,637,255" />
+<area shape="rect" href="$kernel&#45;version_8cc.html" title="kernel&#45;version.cc" alt="" coords="208,305,344,329" />
+<area shape="rect" href="$uclient_8hh.html" title="uclient.hh" alt="" coords="337,231,425,255" />
+<area shape="rect" href="$compatibility_8hh.html" title="compatibility.hh" alt="" coords="560,305,688,329" />
+<area shape="rect" href="$utimer&#45;callback_8cc.html" title="utimer&#45;callback.cc" alt="" coords="675,380,819,404" />
+<area shape="rect" href="$uclient_8cc.html" title="uclient.cc" alt="" coords="323,380,408,404" />
+<area shape="rect" href="$liburbi_2urbi&#45;launch_8cc.html" title="urbi&#45;launch.cc" alt="" coords="419,305,536,329" />
+<area shape="rect" href="$usyncclient_8hh.html" title="Definition of the URBI interface class." alt="" coords="887,305,1007,329" />
+<area shape="rect" href="$remote&#45;ucontext&#45;impl_8hh.html" title="remote&#45;ucontext&#45;impl.hh" alt="" coords="1075,380,1264,404" />
+<area shape="rect" href="$ucallbacks_8cc.html" title="ucallbacks.cc" alt="" coords="1003,455,1115,479" />
+<area shape="rect" href="$qt__umain_8hh.html" title="qt_umain.hh" alt="" coords="893,380,1000,404" />
+</map>

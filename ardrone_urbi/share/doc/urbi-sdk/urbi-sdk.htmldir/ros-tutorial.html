@@ -1,0 +1,1440 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>13 Urbi for ROS Users</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,sections+,xhtml,info --> 
+<meta name="src" content="urbi-sdk.tex" /> 
+<meta name="date" content="2010-09-30 15:52:00" /> 
+<link rel="stylesheet" type="text/css" href="urbi-sdk.css" /> 
+</head><body 
+>
+   <div class="header"><a 
+href="event-based-programming.html" ><p>Prev</p></a><a 
+href="event-based-programming.html#tailurbi-sdkch12.html" ><p>Prev-tail</p></a><a 
+href="#tailurbi-sdkch13.html"><p>Tail</p></a><a 
+href="urbiscript-user-manual.html#ros-tutorial.html" ><p>Up</p></a></div><h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;13</span><br /><a 
+href="index.html#QQ2-19-100" id="x19-9500013">Urbi for ROS Users</a></h2>
+<!--l. 9--><p class="noindent"><!-- tex4ht:FileName="ros-tutorial" -->
+</p><!--l. 13--><p class="indent">   This chapter extends the ROS official tutorials (<a 
+href="http://www.ros.org/wiki/ROS/Tutorials" ><span 
+class="cmtt-10x-x-109">http://www.ros.org/wiki/ROS/Tutorials</span></a>). Be
+sure to complete this tutorial before reading this document.
+</p>
+   <div class="sectionTOCS">
+   &#x00A0;<span class="sectionToc">13.1 <a 
+href="#x19-9600013.1">Communication on topics</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">13.1.1 <a 
+href="#x19-9700013.1.1">Starting a process from Urbi</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">13.1.2 <a 
+href="#x19-9800013.1.2">Listening to Topics</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">13.1.3 <a 
+href="#x19-9900013.1.3">Advertising on Topics</a></span>
+<br />   &#x00A0;<span class="sectionToc">13.2 <a 
+href="#x19-10200013.2">Using Services</a></span>
+   </div>
+   <h3 class="sectionHead"><span class="titlemark">13.1   </span> <a 
+href="index.html#QQ2-19-101" id="x19-9600013.1">Communication on topics</a></h3>
+<!--l. 19--><p class="noindent">First we will take back examples about topics; make sure that talker and listener in the
+&#8216;<span 
+class="cmtt-10x-x-109">beginner</span><span 
+class="cmtt-10x-x-109">_tutorial</span>&#8217; package are compiled. You can recompile it with the following command:
+</p><!--l. 23--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 23--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-96001r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">rosmake</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">beginner_tutorial</span>
+   </pre>
+   </div>
+<!--l. 27--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">13.1.1   </span> <a 
+href="contents.html#QQ2-19-102" id="x19-9700013.1.1">Starting a process from Urbi</a></h4>
+<!--l. 29--><p class="noindent">To communicate with ROS components, you need to launch them. You can do it by hand, or ask Urbi
+to do it for you. To launch new processes through Urbi, we will use the class <a 
+href="#x33-472009r45"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Process</span></span>
+(<span 
+class="cmbx-10x-x-109">??</span>sec:std-Process)</a>.
+</p><!--l. 33--><p class="indent">   Let&#8217;s say we want to start <span 
+class="cmtt-10x-x-109">roscore</span>, and the talker of the beginner tutorial. Open an Urbi shell by
+typing the command &#8216;<span 
+class="cmtt-10x-x-109">rlwrap urbi -i</span>&#8217;. Here <span 
+class="cmtt-10x-x-109">rlwrap </span>makes &#8216;<span 
+class="cmtt-10x-x-109">urbi -i</span>&#8217; acts like a shell prompt, with
+features like line editing, history, &#x2026;
+</p><!--l. 38--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 38--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-97001r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">core</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Process</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 39--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">roscore</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">[]);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-97002r2"></a></span><!--l. 40--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000001]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Process</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">roscore</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-97003r3"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">talker</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Process</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 41--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">rosrun</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">[</span><!--l. 41--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">beginner_tutorial</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 41--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">talker</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">]);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-97004r4"></a></span><!--l. 42--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000002]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Process</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">rosrun</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-97005r5"></a></span><span 
+class="cmtt-10x-x-109">core</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">run;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-97006r6"></a></span><span 
+class="cmtt-10x-x-109">talker</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">run;</span>
+   </pre>
+                                                                                       
+
+                                                                                       
+   </div>
+<!--l. 47--><p class="indent">   At this point, the processes are launched. The first argument of <span class="lstinline"><span 
+class="cmtt-10x-x-109">Process</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span></span> is the name of the
+command to launch, the second is a list of arguments.
+</p><!--l. 51--><p class="indent">   Then you can check the status of the processes, get their stdout/stderr buffers, kill them in
+urbiscript (see <a 
+href="#x33-472009r45"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Process</span></span> (<span 
+class="cmbx-10x-x-109">??</span>sec:std-Process)</a>).
+</p><!--l. 55--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">13.1.2   </span> <a 
+href="contents.html#QQ2-19-103" id="x19-9800013.1.2">Listening to Topics</a></h4>
+<!--l. 57--><p class="noindent">First you need to make sure that <span 
+class="cmtt-10x-x-109">roscore </span>is running, and the Ros module is loaded correctly:
+</p><!--l. 60--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 60--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98001r1"></a></span><span 
+class="cmtt-10x-x-109">Global</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">hasLocalSlot</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 61--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Ros</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98002r2"></a></span><!--l. 62--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">016931]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">true</span></span></pre>
+   </pre>
+   </div>
+<!--l. 65--><p class="noindent">Then we can get the list of launched nodes:
+</p><!--l. 68--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 68--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98003r1"></a></span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">nodes;</span>
+   </pre>
+   </div>
+<!--l. 72--><p class="indent">   This returns a <a 
+href="#x33-362030r11"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Dictionary</span></span> (<span 
+class="cmbx-10x-x-109">??</span>sec:std-Dictionary)</a> with the name of the node as key, and a
+dictionary with topics subscribed, topics advertised, topics advertised as value.
+</p><!--l. 76--><p class="indent">   We can check that our talker is registered, and on which channel it advertises:
+</p><!--l. 79--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 79--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98004r1"></a></span><!--l. 80--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Get</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">structure</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98005r2"></a></span><!--l. 81--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">"|;"</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">an</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">idiom</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">to</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">discard</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">display</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">return</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">value</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98006r3"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">nodes</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">nodes|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98007r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98008r5"></a></span><!--l. 84--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">List</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">nodes</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">(</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">keys</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">).</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98009r6"></a></span><span 
+class="cmtt-10x-x-109">nodes</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">keys;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98010r7"></a></span><!--l. 86--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000002]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">rosout</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">urbi_1273060422295250703</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">talker</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"]</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98011r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98012r9"></a></span><!--l. 88--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Details</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">node</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">talker</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">".</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98013r10"></a></span><span 
+class="cmtt-10x-x-109">nodes</span><span 
+class="cmtt-10x-x-109">[</span><!--l. 89--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">talker</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">][</span><!--l. 89--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">publish</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">];</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98014r11"></a></span><!--l. 90--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000003]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">rosout</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">chatter</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"]</span></span></pre>
+   </pre>
+   </div>
+<!--l. 93--><p class="indent">   Here we see that this node advertises &#8216;<span 
+class="cmtt-10x-x-109">/rosout</span>&#8217; and &#8216;<span 
+class="cmtt-10x-x-109">/chatter</span>&#8217;. Let&#8217;s subscribe to
+&#8216;<span 
+class="cmtt-10x-x-109">/chatter</span>&#8217;:
+</p><!--l. 96--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 96--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98015r1"></a></span><!--l. 97--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Initialize</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">subscription</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">object</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98016r2"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">chatter</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Topic</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 98--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">chatter</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98017r3"></a></span><!--l. 99--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Subscribe</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98018r4"></a></span><span 
+class="cmtt-10x-x-109">chatter</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">subscribe;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98019r5"></a></span><!--l. 101--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">This</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">way</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">we</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">are</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">called</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">on</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">new</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">message</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98020r6"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">chatTag</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Tag</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98021r7"></a></span><span 
+class="cmtt-10x-x-109">chatTag</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">chatter</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">onMessage</span><span 
+class="cmtt-10x-x-109">?(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">))</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98022r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 104--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">This</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">will</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">be</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">executed</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">on</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">each</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">message</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98023r9"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">e</span><span 
+class="cmtt-10x-x-109">);</span>
+   </pre>
+                                                                                       
+
+                                                                                       
+   </div>
+<!--l. 108--><p class="indent">   In this code, <span class="lstinline"><span 
+class="cmtt-10x-x-109">e</span></span> is a Dictionary that follows the structure of the ROS message. Here is an example of
+what this code produces:
+</p><!--l. 111--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 111--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98024r1"></a></span><!--l. 112--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000004]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">data</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Hello</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">there</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">!</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">This</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">is</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">message</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[4]"]</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98025r2"></a></span><!--l. 113--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000005]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">data</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Hello</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">there</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">!</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">This</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">is</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">message</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[5]"]</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98026r3"></a></span><!--l. 114--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000006]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">***</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">data</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Hello</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">there</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">!</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">This</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">is</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">message</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[6]"]</span></span></pre>
+   </pre>
+   </div>
+<!--l. 117--><p class="indent">   We can also get a template for the message structure on this channel with:
+</p><!--l. 119--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 119--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98027r1"></a></span><span 
+class="cmtt-10x-x-109">chatter</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">structure;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-98028r2"></a></span><!--l. 121--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000007]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">data</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">""]</span></span></pre>
+   </pre>
+   </div>
+<!--l. 124--><p class="indent">   To stop temporarily the <a 
+href="urbiscript-standard-library.html#slot:Global.echo"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Global</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">echo</span></span></a>, we take advantages of tags (<a 
+href="parallelism-concurrent-flow-control.html#x17-9000011.3">Section&#x00A0;11.3<!--tex4ht:ref: sec:tut:tags --></a>), by doing
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">chatTag</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">freeze</span></span>. Same thing goes with unfreeze. Of course you could also call <span class="lstinline"><span 
+class="cmtt-10x-x-109">chatter</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">unsubscribe</span></span>,
+which unsubscribes you completely from this channel.
+</p><!--l. 131--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">13.1.3   </span> <a 
+href="contents.html#QQ2-19-104" id="x19-9900013.1.3">Advertising on Topics</a></h4>
+<!--l. 133--><p class="noindent">To advertise a topic, this is roughly the same procedure.
+</p><!--l. 136--><p class="noindent">
+</p>
+   <h5 class="subsubsectionHead"><span class="titlemark">13.1.3.1   </span> <a 
+href="contents.html#QQ2-19-105" id="x19-10000013.1.3.1">Simple Talker</a></h5>
+<!--l. 138--><p class="noindent">Here is a quick example:
+</p><!--l. 140--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 140--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-100001r1"></a></span><!--l. 141--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Initialize</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">our</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">object</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-100002r2"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">talker</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Topic</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 142--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">chatter</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-100003r3"></a></span><!--l. 143--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Advertise</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">(</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">providing</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">ROS</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Type</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">this</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">topic</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">).</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-100004r4"></a></span><span 
+class="cmtt-10x-x-109">talker</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">advertise</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 144--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">std_msgs</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">String</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-100005r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-100006r6"></a></span><!--l. 146--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Get</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">template</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">our</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">structure</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-100007r7"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">msg</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">talker</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">structure</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-100008r8"></a></span><span 
+class="cmtt-10x-x-109">msg</span><span 
+class="cmtt-10x-x-109">[</span><!--l. 148--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">data</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 148--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Hello</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">ROS</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">world</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-100009r9"></a></span><span 
+class="cmtt-10x-x-109">talker</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x003C;&#x003C;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">msg;</span>
+   </pre>
+   </div>
+<!--l. 152--><p class="indent">   We have just sent our first message to ROS, here if you launch the chatter, you will be able to get
+the message we have just sent.
+</p><!--l. 155--><p class="indent">   The <span class="lstinline"><span 
+class="cmtt-10x-x-109">&#x003C;&#x003C;</span></span> operator is an convenient alias for <a 
+href="ros.html#slot:Ros.Topic.publish"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Topic</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">publish</span></span></a>.
+                                                                                       
+
+                                                                                       
+</p><!--l. 160--><p class="noindent">
+</p>
+   <h5 class="subsubsectionHead"><span class="titlemark">13.1.3.2   </span> <a 
+href="contents.html#QQ2-19-106" id="x19-10100013.1.3.2">Turtle Simulation</a></h5>
+<!--l. 163--><p class="noindent">Now we are going to move the turtle with Urbi. First let&#8217;s launch the turtle node:
+</p><!--l. 166--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 166--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101001r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">turtle</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Process</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 167--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">rosrun</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">[</span><!--l. 167--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">turtlesim</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 167--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">turtlesim_node</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">])|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101002r2"></a></span><span 
+class="cmtt-10x-x-109">turtle</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">run;</span>
+   </pre>
+   </div>
+<!--l. 171--><p class="indent">   With the help of <a 
+href="ros.html#slot:Ros.topics"><span class="lstinline"><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">topics</span></span></a>, we can see that this turtle subscribes to a topic
+&#8216;<span 
+class="cmtt-10x-x-109">/turtle1/command</span><span 
+class="cmtt-10x-x-109">_velocity</span>&#8217;. Let&#8217;s advertise on it:
+</p><!--l. 175--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 175--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101003r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">velocity</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Topic</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 176--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">turtle1</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">command_velocity</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101004r2"></a></span><span 
+class="cmtt-10x-x-109">velocity</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">advertise</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 177--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">turtlesim</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Velocity</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101005r3"></a></span><span 
+class="cmtt-10x-x-109">velocity</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">structure;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101006r4"></a></span><!--l. 179--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000001]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">linear</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">0,</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">angular</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">0]</span></span></pre>
+   </pre>
+   </div>
+<!--l. 183--><p class="indent">   Now we want to have it moving in circle with a small sinusoid wave. This goes in two step.
+First, we set up the infrastructure so that changes in Urbi are seamlessly published in
+ROS.
+</p><!--l. 187--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 187--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101007r1"></a></span><!--l. 188--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Get</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">our</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">template</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">structure</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101008r2"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">m</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">velocity</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">structure</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101009r3"></a></span><span 
+class="cmtt-10x-x-109">m</span><span 
+class="cmtt-10x-x-109">[</span><!--l. 190--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">linear</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">0.8</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101010r4"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">angular</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">0</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101011r5"></a></span><!--l. 192--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Every</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">time</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">angular</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">changed,</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">we</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">send</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">message</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101012r6"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">angular</span><span 
+class="cmtt-10x-x-109">-&#x003E;</span><span 
+class="cmtt-10x-x-109">changed</span><span 
+class="cmtt-10x-x-109">?)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101013r7"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101014r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">m</span><span 
+class="cmtt-10x-x-109">[</span><!--l. 195--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">angular</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">angular;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101015r9"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">velocity</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x003C;&#x003C;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">m</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101016r10"></a></span><span 
+class="cmtt-10x-x-109">};</span>
+   </pre>
+   </div>
+<!--l. 200--><p class="noindent">In the future Urbi will provide helping functions to spare the user from the need to perform this
+&#8220;binding&#8221;. But once this is done, all the features of urbiscript can be used transparently. For instance
+we can assign a sinusoidal trajectory to &#8216;<span 
+class="cmtt-10x-x-109">angular</span>&#8217;, which results in the screen-shot on the right-hand
+side.
+</p>
+   <table class="multicols" id="multicols-1"><tr><td class="multicol-1">
+<!--l. 208--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 208--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101017r1"></a></span><!--l. 209--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">A</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Tag</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">to</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">control</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">following</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">endless</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101018r2"></a></span><!--l. 210--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">statement</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101019r3"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">angTag</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Tag</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101020r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101021r5"></a></span><span 
+class="cmtt-10x-x-109">angTag</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101022r6"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 214--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Bind</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">angular</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">to</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">trajectory</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101023r7"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 215--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Put</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">in</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">background</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">thanks</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">to</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">",",</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101024r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 216--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">since</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">this</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">statement</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">never</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">ending</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101025r9"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">angular</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">0.3</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">sin</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">2</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">ampli</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">2,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101026r10"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101027r11"></a></span><!--l. 219--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Leave</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">20</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">seconds</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">to</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">turtle</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">...</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101028r12"></a></span><span 
+class="cmtt-10x-x-109">sleep</span><span 
+class="cmtt-10x-x-109">(20</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101029r13"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101030r14"></a></span><!--l. 222--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">before</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">freezing</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">it</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-101031r15"></a></span><span 
+class="cmtt-10x-x-109">angTag</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">freeze;</span>
+   </pre>
+                                                                                       
+
+                                                                                       
+   </div>
+   </td><td class="multicol-2">
+<div class="center" 
+>
+<!--l. 228--><p class="noindent">
+</p><!--l. 229--><p class="noindent"><img 
+src="urbi-sdk6x.png" alt="PIC" class="graphics" width="204.85846pt" height="214.13664pt"  /><!--tex4ht:graphics  
+name="urbi-sdk6x.png" src="img/turtlesim-tutorial.eps"  
+--></p></div>
+   </td></tr></table>
+<!--l. 234--><p class="indent">   We won&#8217;t cover this code in details, but the general principle is that <span class="lstinline"><span 
+class="cmtt-10x-x-109">angular</span></span> is updated every
+20ms with the values of a sinusoid wave trajectory with 0.3 as average value, 2 seconds for the period
+and 2 for the amplitude. See <a 
+href="#x33-531027r64"><span class="lstinline"><span 
+class="cmtt-10x-x-109">TrajectoryGenerator</span></span> (<span 
+class="cmbx-10x-x-109">??</span>sec:std-TrajectoryGenerator)</a> for more
+information.
+</p><!--l. 239--><p class="indent">   Every time <span class="lstinline"><span 
+class="cmtt-10x-x-109">angular</span></span> is changed, a new message is sent on the Topic &#8216;<span 
+class="cmtt-10x-x-109">/turtle1/command</span><span 
+class="cmtt-10x-x-109">_velocity</span>&#8217;,
+thus updating the position of the turtle. After 20 seconds the tag is frozen, pausing the trajectory
+generation and the <span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span></span></span>.
+</p><!--l. 244--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">13.2   </span> <a 
+href="index.html#QQ2-19-107" id="x19-10200013.2">Using Services</a></h3>
+<!--l. 246--><p class="noindent">Services work the same way topics do, with minor differences.
+</p><!--l. 248--><p class="indent">   Let&#8217;s take back the turtle simulation example (<a 
+href="#x19-10100013.1.3.2">Section&#x00A0;13.1.3.2<!--tex4ht:ref: sec:turtlesim --></a>). Then we can list the available
+services, and filter out loggers:
+</p><!--l. 251--><p class="indent">   <div class="urbiunchecked">
+</p>
+                                                                                       
+
+                                                                                       
+   <!--l. 251--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-102001r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">logger</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Regexp</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 252--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">(</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">get|set</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">)</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">_logger</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-102002r2"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">services</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">services</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">keys</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-102003r3"></a></span><span 
+class="cmtt-10x-x-109">services</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">filter</span><span 
+class="cmtt-10x-x-109">(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">closure</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">item</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">item</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">not</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">in</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">logger</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">});</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-102004r4"></a></span><!--l. 255--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000001]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">clear</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">kill</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">turtle1</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">teleport_absolute</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">turtle1</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">teleport_relative</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">turtle1</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">set_pen</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">reset</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">",</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"/</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">spawn</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"]</span></span></pre>
+   </pre>
+   </div>
+<!--l. 258--><p class="indent">   The <span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">closure</span></span></span> construct allows us to keep access to the local variables, here <span class="lstinline"><span 
+class="cmtt-10x-x-109">logger</span></span>.
+</p><!--l. 261--><p class="indent">   Now there is a service called &#8216;<span 
+class="cmtt-10x-x-109">/spawn</span>&#8217;; to initialize it:
+</p><!--l. 263--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 263--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-102005r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">spawn</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Ros</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">Service</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 264--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">/</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">spawn</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">false</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-102006r2"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">waituntil</span></span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">spawn</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">initialized</span><span 
+class="cmtt-10x-x-109">);</span>
+   </pre>
+   </div>
+<!--l. 268--><p class="indent">   The <span class="lstinline"><span 
+class="cmtt-10x-x-109">new</span></span> function takes the service name as first argument, and whether or not the connection
+should be kept alive as second argument.
+</p><!--l. 271--><p class="indent">   Since the creation of this object checks the service name, you should wait until <span class="lstinline"><span 
+class="cmtt-10x-x-109">initialized</span></span> is true
+to use this service. You can also see the structure of the request through <span class="lstinline"><span 
+class="cmtt-10x-x-109">spawn</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">reqStruct</span></span>, and the
+structure of the response by doing <span class="lstinline"><span 
+class="cmtt-10x-x-109">spawn</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">resStruct</span></span>.
+</p><!--l. 276--><p class="indent">   Now let&#8217;s spawn a turtle called Jenny, at position (4, 4).
+</p><!--l. 278--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 278--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-102007r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">req</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">spawn</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">reqStruct</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-102008r2"></a></span><span 
+class="cmtt-10x-x-109">req</span><span 
+class="cmtt-10x-x-109">[</span><!--l. 280--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">x</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">4</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-102009r3"></a></span><span 
+class="cmtt-10x-x-109">req</span><span 
+class="cmtt-10x-x-109">[</span><!--l. 281--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">y</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">4</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-102010r4"></a></span><span 
+class="cmtt-10x-x-109">req</span><span 
+class="cmtt-10x-x-109">[</span><!--l. 282--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">name</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">]</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 282--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">Jenny</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">|;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-102011r5"></a></span><span 
+class="cmtt-10x-x-109">spawn</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">request</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">req</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x19-102012r6"></a></span><!--l. 284--><pre class="listings"><span class="urbianswer"><span 
+class="cmtt-10x-x-109">[00</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">000001]</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">["</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">name</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">=&#x003E;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">Jenny</span></span><span class="urbianswer"><span 
+class="cmtt-10x-x-109">"]</span></span></pre>
+   </pre>
+   </div>
+<!--l. 289--><p class="indent">   Now, if you want to go further, please see the reference manual section about ROS,
+<a 
+href="ros.html#x34-55700021">Chapter&#x00A0;21<!--tex4ht:ref: sec:specs:ros --></a>.
+</p><!--l. 9--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 9--><p class="indent">   <div class="footer"><a 
+href="event-based-programming.html" ><p>Prev</p></a><a 
+href="event-based-programming.html#tailurbi-sdkch12.html" ><p>Prev-tail</p></a><a 
+href="ros-tutorial.html" ><p>Front</p></a><a 
+href="urbiscript-user-manual.html#ros-tutorial.html" ><p>Up</p></a></div><a 
+ id="tailurbi-sdkch13.html"></a>  </p> 
+</body></html> 

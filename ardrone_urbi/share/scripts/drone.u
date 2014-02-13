@@ -1,0 +1,142 @@
+// Create drone object
+var Global.drone = ARDrone.new;
+
+// Connect to the device
+drone.load = true;
+
+// Wait until the connexion is done
+while(!drone.stateConnected)
+{
+        echo("Waiting connection.");
+        sleep(1);
+};
+
+echo ("Successfuly connected to the drone :)");
+echo ("Now, open a new terminal and type \"telnet localhost 54000\"");
+
+
+
+
+//// Drone documentation ////
+
+
+// Reset the trim
+//drone.trim();
+
+// Set/Unset the emergency status
+//drone.emergency(true);
+
+
+// Landing
+//drone.landing();
+
+
+// Takeoff
+//drone.takeoff();
+
+
+// Change the camera view
+// values are :
+// 0 : Front camera
+// 1 : Bottom camera
+// 2 : Front and Bottom in PiP
+// 3 : Bottom and Front in PiP
+//drone.cameraMode = 0;
+
+
+// Drone camera image
+//drone.cameraVal;
+
+
+// Get drone velocity
+//drone.velocity;
+
+
+// Get drone attitude
+//drone.attitude;
+
+
+// Get drone altitude
+//drone.altitude;
+
+
+// Get drone battery (in %)
+//drone.battery;
+
+
+// Get/set drone speed yaw [-1:1]
+// You have to take off before
+//drone.speedYaw;
+
+
+// Get/set drone speed on Z axis [-1:1]
+// You have to take off before
+//drone.speedZ;
+
+
+// Get/set drone speed on Y axis [-1:1]
+// You have to take off before
+//drone.speedY";
+
+
+// Get/set drone speed on X axis [-1:1]
+// You have to take off before
+//drone.speedX;
+
+
+// Get emergency state
+//drone.stateEmergencyLanding;
+
+// Get Cut out state
+//drone.stateCutout;
+
+// Get sonar failure state
+//drone.stateSonarFailure;
+
+
+
+// Get angle out of range state
+//drone.stateAngleOutOfRange;
+
+// Get user emergency state
+//drone.stateUserEmergencyLanding;
+
+// Get low battery state
+//drone.stateBatteryLow;
+
+// Get motor failure state
+//drone.stateMotorFailure;
+
+// Get altitude control state
+//drone.stateAltitudeControl;
+
+// Get vision state
+//drone.stateVisionEnable;
+
+// Get video state
+//drone.stateVideoEnable;
+
+// Get flight state
+//drone.stateFlight;
+
+// Get connected state
+//drone.stateConnected;
+
+
+
+// Connect to the drone
+//drone.load = true;
+
+
+
+/// Sample ///
+
+/*
+
+drone.takeoff();
+sleep(3);
+drone.speedYaw = 0.5;
+sleep(2);
+drone.landing();
+
+*/

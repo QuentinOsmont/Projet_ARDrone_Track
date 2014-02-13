@@ -1,0 +1,59 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+const var Global.Timeout = Tag.new;
+do (Timeout)
+{
+  var type = "Timeout" |
+  var asTimeout = this |
+  var timedOut = false |
+  var asString = Object.getSlot("asString");
+
+  function init(time_, thrower_ = true)
+  {
+    this.timedOut = false|
+    var this.running = false|
+    var this.thrower = thrower_|
+    var this.time = time_|
+    var this.e = Event.new|
+    at (enter?)
+      launch|
+    at (leave?)
+      end|
+    at (e?)
+      count|
+  };
+
+  function launch()
+  {
+    if (running)
+      throw Exception.new(asString + " is already running")|
+    running = true|
+    e!
+  };
+
+  function count()
+  {
+    timeout (time)
+      while (running)
+        |
+    timedOut = running|
+    if (timedOut)
+      stop
+  };
+
+  function end()
+  {
+    running = false|
+    if (thrower && timedOut)
+      throw Exception.new(asString + " has timed out.")
+  };
+
+};

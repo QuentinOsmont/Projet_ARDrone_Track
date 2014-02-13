@@ -1,0 +1,117 @@
+/*
+ * Copyright (C) 2008-2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+#ifndef LIBPORT_CSTDLIB
+# define LIBPORT_CSTDLIB
+
+# include <cstdlib>
+# include <string>
+
+# include <libport/compiler.hh>
+# include <libport/detect-win32.h>
+# include <libport/export.hh>
+
+
+/*-----------------.
+| libport::abort.  |
+`-----------------*/
+
+namespace libport
+{
+  /// A wrapper to std::abort to ensure that it is declared as
+  /// noreturn (which is not the case of std::abort with MSVC).
+  /// Also dumps the stack trace.
+  LIBPORT_API
+  ATTRIBUTE_NORETURN
+  void abort();
+
+  /// If set, abort() throws instead of aborting. Useful for tests.
+  LIBPORT_API
+  void abort_throw(bool v = true);
+}
+
+/*---------.
+| setenv.  |
+`---------*/
+
+# if defined _MSC_VER || defined __MINGW32__
+extern "C"
+{
+  LIBPORT_API
+  int setenv(const char* key, const char* value, int overwrite);
+}
+# endif
+
+/*----------.
+| strtoll.  |
+`----------*/
+
+# if defined _MSC_VER
+extern "C"
+{
+  LIBPORT_API
+  long long strtoll(const char* nptr, char** endptr, int base);
+}
+# endif // WIN32
+
+/*-----------.
+| unsetenv.  |
+`-----------*/
+
+# if defined _MSC_VER || defined __MINGW32__
+extern "C"
+{
+  LIBPORT_API
+  int unsetenv(const char* key);
+}
+# endif
+
+/*----------.
+| xgetenv.  |
+`----------*/
+
+extern "C"
+{
+  /// Return getenv(c) if defined, \a deflt otherwise.
+  LIBPORT_API
+  const char* xgetenv(const char* c, const char* deflt = "");
+}
+
+namespace libport
+{
+  /// Return getenv(c) if defined, \a deflt otherwise.
+  LIBPORT_API
+  std::string xgetenv(const char* c, const std::string& deflt = "");
+
+  /// Return getenv(c) if defined, \a deflt otherwise.
+  LIBPORT_API
+  std::string xgetenv(const std::string& c, const std::string& deflt = "");
+}
+
+/*----------.
+| xsystem.  |
+`----------*/
+
+namespace libport
+{
+  LIBPORT_API
+  ATTRIBUTE_UNUSED_RESULT
+  int  system(const std::string& cmd);
+  LIBPORT_API
+  void xsystem(const std::string& cmd);
+}
+
+# include <libport/cstdlib.hxx>
+
+#endif // ! LIBPORT_CSTDLIB
+
+// Local Variables:
+// mode: C++
+// End:

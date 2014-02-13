@@ -1,0 +1,83 @@
+/*
+ * Copyright (C) 2008-2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+/// \file libport/cmath
+/// \brief Portable <cmath>
+
+#ifndef LIBPORT_CMATH
+# define LIBPORT_CMATH
+
+# include <libport/config.h>
+# include <libport/detect-win32.h>
+
+
+# if ! defined _MSC_VER
+
+#  include <cmath>
+
+# else
+
+#  if ! defined _USE_MATH_DEFINES
+#   define _USE_MATH_DEFINES
+#  endif
+#  include <cmath>
+#  include <cfloat>
+
+#  if ! defined M_PI
+#   error "<cmath> did not defined M_PI."                       \
+  "You probably included <cmath> before <libport/cmath>."       \
+  "Either include <libport/cmath> first, or #define _USE_MATH_DEFINES before yourself."
+#  endif
+
+namespace std
+{
+
+#  define LIBPORT_BOUNCE(Posix, WinExpr)        \
+  template<typename _Tp>                        \
+  inline                                        \
+  int                                           \
+  Posix(_Tp __f)                                \
+  {                                             \
+    return WinExpr;                             \
+  }
+
+  LIBPORT_BOUNCE(isfinite, _finite(__f))
+  LIBPORT_BOUNCE(isinf,    !_isnan(__f) && !_finite(__f))
+  LIBPORT_BOUNCE(isnan,    _isnan(__f))
+
+#  undef LIBPORT_BOUNCE
+
+}
+
+# endif // ! defined _MSC_VER
+
+/*----------.
+| Libport.  |
+`----------*/
+
+// round and trunc are not C++ standard (not even POSIX).
+namespace libport
+{
+  float round(float d);
+  double round(double d);
+  long double round(long double d);
+
+  float trunc(float d);
+  double trunc(double d);
+  long double trunc(long double d);
+}
+
+# include <libport/cmath.hxx>
+
+#endif // !LIBPORT_CMATH
+
+// Local Variables:
+// mode: C++
+// End:

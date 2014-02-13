@@ -1,0 +1,20 @@
+<map id="G" name="G">
+<area shape="rect" href="$compatibility_8hh.html" title="liburbi/compatibility.hh" alt="" coords="853,81,1029,105" />
+<area shape="rect" href="$umessage_8hh.html" title="urbi/umessage.hh" alt="" coords="1792,305,1936,329" />
+<area shape="rect" href="$uconversion_8hh.html" title="Conversion of sounds and images." alt="" coords="629,380,787,404" />
+<area shape="rect" href="$usyncclient_8hh.html" title="Definition of the URBI interface class." alt="" coords="2093,81,2245,105" />
+<area shape="rect" href="$kernel&#45;version_8hh.html" title="urbi/kernel&#45;version.hh" alt="" coords="616,455,787,479" />
+<area shape="rect" href="$compatibility_8hxx.html" title="compatibility.hxx" alt="" coords="1128,156,1264,180" />
+<area shape="rect" href="$export_8hh.html" title="urbi/export.hh" alt="" coords="1720,679,1837,703" />
+<area shape="rect" href="$uabstractclient_8hh.html" title="Definition of the URBI interface class." alt="" coords="1936,231,2112,255" />
+<area shape="rect" href="$fwd_8hh.html" title="Forward declarations." alt="" coords="2203,529,2301,553" />
+<area shape="rect" href="$ubinary_8hh.html" title="urbi/ubinary.hh" alt="" coords="1805,529,1928,553" />
+<area shape="rect" href="$uabstractclient_8hxx.html" title="urbi/uabstractclient.hxx" alt="" coords="2819,305,3000,329" />
+<area shape="rect" href="$uimage_8hh.html" title="urbi/uimage.hh" alt="" coords="1971,604,2096,628" />
+<area shape="rect" href="$usound_8hh.html" title="urbi/usound.hh" alt="" coords="1619,604,1741,628" />
+<area shape="rect" href="$ubinary_8hxx.html" title="urbi/ubinary.hxx" alt="" coords="1816,604,1947,628" />
+<area shape="rect" href="$umessage_8hxx.html" title="urbi/umessage.hxx" alt="" coords="1792,380,1944,404" />
+<area shape="rect" href="$uvalue_8hh.html" title="urbi/uvalue.hh" alt="" coords="1401,455,1521,479" />
+<area shape="rect" href="$uvalue_8hxx.html" title="urbi/uvalue.hxx" alt="" coords="595,529,723,553" />
+<area shape="rect" href="$uclient_8hh.html" title="urbi/uclient.hh" alt="" coords="2292,156,2412,180" />
+</map>

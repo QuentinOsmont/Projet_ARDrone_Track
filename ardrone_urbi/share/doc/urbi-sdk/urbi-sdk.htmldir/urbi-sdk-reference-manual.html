@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>IV Urbi SDK Reference Manual</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,sections+,xhtml,info --> 
+<meta name="src" content="urbi-sdk.tex" /> 
+<meta name="date" content="2010-09-30 15:52:00" /> 
+<link rel="stylesheet" type="text/css" href="urbi-sdk.css" /> 
+</head><body 
+>
+   <div class="header"><a 
+href="tables-and-indexes.html" ><p>Next</p></a><a 
+href="guidelines-and-cook-books.html" ><p>Prev</p></a><a 
+href="guidelines-and-cook-books.html#tailurbi-sdkpa3.html" ><p>Prev-tail</p></a><a 
+href="#tailurbi-sdkpa4.html"><p>Tail</p></a><a 
+href="index.html#urbi-sdk-reference-manual.html" ><p>Up</p></a></div><h1 class="partHead"><span class="titlemark">Part&#x00A0;IV<br /></span><a 
+href="index.html#QQ2-26-200" id="x26-195000IV">Urbi SDK Reference Manual</a></h1>
+<!--l. 29--><p class="noindent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 29--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p>
+   <div class="likechapterTOCS">
+   <span class="chapterToc">18 <a 
+href="programs.html#x28-19700018">Programs</a></span>
+<br />   &#x00A0;<span class="sectionToc">18.1 <a 
+href="programs.html#x28-19800018.1">Environment Variables</a></span>
+<br />   &#x00A0;<span class="sectionToc">18.2 <a 
+href="programs.html#x28-20200018.2">Special Files</a></span>
+<br />   &#x00A0;<span class="sectionToc">18.3 <a 
+href="programs.html#x28-20300018.3"><span 
+class="cmtt-10x-x-109">urbi </span>&#8212; Running an Urbi Server</a></span>
+<br />   &#x00A0;<span class="sectionToc">18.4 <a 
+href="programs.html#x28-21000018.4"><span 
+class="cmtt-10x-x-109">urbi-image </span>&#8212; Querying Images from a Server</a></span>
+<br />   &#x00A0;<span class="sectionToc">18.5 <a 
+href="programs.html#x28-21500018.5"><span 
+class="cmtt-10x-x-109">urbi-launch </span>&#8212; Running a UObject</a></span>
+<br />   &#x00A0;<span class="sectionToc">18.6 <a 
+href="programs.html#x28-22100018.6"><span 
+class="cmtt-10x-x-109">urbi-send </span>&#8212; Sending urbiscript Commands to a Server</a></span>
+<br />   &#x00A0;<span class="sectionToc">18.7 <a 
+href="programs.html#x28-22200018.7"><span 
+class="cmtt-10x-x-109">umake </span>&#8212; Compiling UObject Components</a></span>
+<br />   <span class="chapterToc">19 <a 
+href="urbiscript-language-reference-manual.html#x29-22800019">urbiscript Language Reference Manual</a></span>
+<br />   &#x00A0;<span class="sectionToc">19.1 <a 
+href="urbiscript-language-reference-manual.html#x29-22900019.1">Syntax</a></span>
+<br />   &#x00A0;<span class="sectionToc">19.2 <a 
+href="urbiscript-language-reference-manual.html#x29-26100019.2">Scopes and local variables</a></span>
+<br />   &#x00A0;<span class="sectionToc">19.3 <a 
+href="urbiscript-language-reference-manual.html#x29-26400019.3">Functions</a></span>
+<br />   &#x00A0;<span class="sectionToc">19.4 <a 
+href="urbiscript-language-reference-manual.html#x29-27100019.4">Objects</a></span>
+<br />   &#x00A0;<span class="sectionToc">19.5 <a 
+href="urbiscript-language-reference-manual.html#x29-28000019.5">Structural Pattern Matching</a></span>
+<br />   &#x00A0;<span class="sectionToc">19.6 <a 
+href="urbiscript-language-reference-manual.html#x29-28400019.6">Imperative flow control</a></span>
+<br />   &#x00A0;<span class="sectionToc">19.7 <a 
+href="urbiscript-language-reference-manual.html#x29-29900019.7">Exceptions</a></span>
+<br />   &#x00A0;<span class="sectionToc">19.8 <a 
+href="urbiscript-language-reference-manual.html#x29-30700019.8">Assertions</a></span>
+<br />   &#x00A0;<span class="sectionToc">19.9 <a 
+href="urbiscript-language-reference-manual.html#x29-31000019.9">Parallel and event-based flow control</a></span>
+<br />   &#x00A0;<span class="sectionToc">19.10 <a 
+href="urbiscript-language-reference-manual.html#x29-33200019.10">Trajectories</a></span>
+<br />   &#x00A0;<span class="sectionToc">19.11 <a 
+href="urbiscript-language-reference-manual.html#x29-33300019.11">Garbage collection and limitations</a></span>
+<br />   <span class="chapterToc">20 <a 
+href="urbiscript-standard-library.html#x33-33400020">urbiscript Standard Library</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-356">20.1                       Barrier</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-360">20.2                       Binary</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-364">20.3                       Boolean</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-369">20.4                       CallMessage</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-374">20.5                       Channel</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-378">20.6                       Code</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-382">20.7                       Comparable</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-384">20.8                       Container</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-387">20.9                       Control</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-390">20.10                      Date</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-394">20.11                      Dictionary</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-399">20.12                      Directory</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-403">20.13                      Duration</a></span>
+                                                                                       
+
+                                                                                       
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-407">20.14                      Event</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-412">20.15                      Exception</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-417">20.16                      Executable</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-421">20.17                      File</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-425">20.18                      Finalizable</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-430">20.19                      Float</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-435">20.20                      Float.limits</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-437">20.21                      FormatInfo</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-441">20.22                      Formatter</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-445">20.23                      Global</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-448">20.24                      Group</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-453">20.25                      InputStream</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-458">20.26                      IoService</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-463">20.27                      Job</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-467">20.28                      Kernel1</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-471">20.29                      Lazy</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-479">20.30                      List</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-483">20.31                      Loadable</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-488">20.32                      Lobby</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-493">20.33                      Location</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-497">20.34                      Math</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-501">20.35                      Mutex</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-505">20.36                      nil</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-509">20.37                      Object</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-513">20.38                      Orderable</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-514">20.39                      OutputStream</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-518">20.40                      Pair</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-522">20.41                      Path</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-526">20.42                      Pattern</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-530">20.43                      Position</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-534">20.44                      Primitive</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-538">20.45                      Process</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-544">20.46                      Profiling</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-547">20.47                      PseudoLazy</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-548">20.48                      PubSub</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-552">20.49                      PubSub.Subscriber</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-556">20.50                      RangeIterable</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-559">20.51                      Regexp</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-563">20.52                      StackFrame</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-566">20.53                      Semaphore</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-570">20.54                      Server</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-574">20.55                      Singleton</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-578">20.56                      Socket</a></span>
+                                                                                       
+
+                                                                                       
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-583">20.57                      String</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-587">20.58                      System</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-592">20.59                      System.PackageInfo</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-595">20.60                      System.Platform</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-598">20.61                      Tag</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-609">20.62                      Timeout</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-614">20.63                      Traceable</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-616">20.64                      TrajectoryGenerator</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-639">20.65                      Triplet</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-643">20.66                      Tuple</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-647">20.67                      UObject</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-650">20.68                      UValue</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-651">20.69                      UVar</a></span>
+<br />   &#x00A0;<span class="sectionToc"> <a 
+href="urbiscript-standard-library.html#Q1-33-655">20.70                      void</a></span>
+<br />   <span class="chapterToc">21 <a 
+href="ros.html#x34-55700021">Communication with ROS</a></span>
+<br />   &#x00A0;<span class="sectionToc">21.1 <a 
+href="ros.html#x34-56000021.1">Ros</a></span>
+<br />   &#x00A0;<span class="sectionToc">21.2 <a 
+href="ros.html#x34-56300021.2">Ros.Topic</a></span>
+<br />   &#x00A0;<span class="sectionToc">21.3 <a 
+href="ros.html#x34-57000021.3">Ros.Service</a></span>
+<br />   <span class="chapterToc">22 <a 
+href="gostai-standard-robotics-api.html#x35-57300022">Gostai Standard Robotics API</a></span>
+<br />   &#x00A0;<span class="sectionToc">22.1 <a 
+href="gostai-standard-robotics-api.html#x35-57400022.1">The Structure Tree</a></span>
+<br />   &#x00A0;<span class="sectionToc">22.2 <a 
+href="gostai-standard-robotics-api.html#x35-57500022.2">Frame of Reference</a></span>
+<br />   &#x00A0;<span class="sectionToc">22.3 <a 
+href="gostai-standard-robotics-api.html#x35-57600022.3">Component naming</a></span>
+<br />   &#x00A0;<span class="sectionToc">22.4 <a 
+href="gostai-standard-robotics-api.html#x35-57700022.4">Localization</a></span>
+<br />   &#x00A0;<span class="sectionToc">22.5 <a 
+href="gostai-standard-robotics-api.html#x35-57800022.5">Interface</a></span>
+<br />   &#x00A0;<span class="sectionToc">22.6 <a 
+href="gostai-standard-robotics-api.html#x35-60400022.6">Standard Components</a></span>
+<br />   &#x00A0;<span class="sectionToc">22.7 <a 
+href="gostai-standard-robotics-api.html#x35-60700022.7">Compact notation</a></span>
+<br />   &#x00A0;<span class="sectionToc">22.8 <a 
+href="gostai-standard-robotics-api.html#x35-60800022.8">Support classes</a></span>
+   </div>
+                                                                                       
+
+                                                                                       
+<!--l. 19--><p class="noindent">
+                                                                                       
+
+                                                                                       
+</p>
+                                                                                       
+
+                                                                                       
+<!--l. 9--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p>
+                                                                                       
+
+                                                                                       
+<!--l. 9--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p>
+                                                                                       
+
+                                                                                       
+<!--l. 9--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p>
+                                                                                       
+
+                                                                                       
+
+                                                                                       
+
+                                                                                       
+<!--l. 9--><p class="indent">   <div class="footer"><a 
+href="tables-and-indexes.html" ><p>Next</p></a><a 
+href="guidelines-and-cook-books.html" ><p>Prev</p></a><a 
+href="guidelines-and-cook-books.html#tailurbi-sdkpa3.html" ><p>Prev-tail</p></a><a 
+href="urbi-sdk-reference-manual.html" ><p>Front</p></a><a 
+href="index.html#urbi-sdk-reference-manual.html" ><p>Up</p></a></div><a 
+ id="tailurbi-sdkpa4.html"></a> </p> 
+</body></html> 

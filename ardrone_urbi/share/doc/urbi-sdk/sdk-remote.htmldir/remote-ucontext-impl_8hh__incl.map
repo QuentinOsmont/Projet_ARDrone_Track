@@ -1,0 +1,25 @@
+<map id="G" name="G">
+<area shape="rect" href="$uobject_8hh.html" title="urbi/uobject.hh" alt="" coords="1559,82,1684,106" />
+<area shape="rect" href="$usyncclient_8hh.html" title="Definition of the URBI interface class." alt="" coords="3068,231,3220,255" />
+<area shape="rect" href="$export_8hh.html" title="urbi/export.hh" alt="" coords="1571,530,1688,554" />
+<area shape="rect" href="$fwd_8hh.html" title="Forward declarations." alt="" coords="1843,455,1941,479" />
+<area shape="rect" href="$kernel&#45;version_8hh.html" title="urbi/kernel&#45;version.hh" alt="" coords="2288,380,2459,404" />
+<area shape="rect" href="$ucallbacks_8hh.html" title="urbi/ucallbacks.hh" alt="" coords="924,156,1068,180" />
+<area shape="rect" href="$ucontext_8hh.html" title="urbi/ucontext.hh" alt="" coords="1261,306,1395,330" />
+<area shape="rect" href="$uvar_8hh.html" title="urbi/uvar.hh" alt="" coords="1659,231,1763,255" />
+<area shape="rect" href="$uevent_8hh.html" title="urbi/uevent.hh" alt="" coords="2237,231,2357,255" />
+<area shape="rect" href="$utimer&#45;callback_8hh.html" title="urbi/utimer&#45;callback.hh" alt="" coords="107,231,285,255" />
+<area shape="rect" href="$uobject&#45;hub_8hh.html" title="urbi/uobject&#45;hub.hh" alt="" coords="1411,231,1565,255" />
+<area shape="rect" href="$ustarter_8hh.html" title="urbi/ustarter.hh" alt="" coords="1109,231,1235,255" />
+<area shape="rect" href="$uobject_8hxx.html" title="urbi/uobject.hxx" alt="" coords="2460,156,2591,180" />
+<area shape="rect" href="$utable_8hh.html" title="Definition of the callback tables." alt="" coords="659,306,776,330" />
+<area shape="rect" href="$uvalue_8hh.html" title="urbi/uvalue.hh" alt="" coords="1099,380,1219,404" />
+<area shape="rect" href="$ucontext_8hxx.html" title="urbi/ucontext.hxx" alt="" coords="1293,380,1435,404" />
+<area shape="rect" href="$uprop_8hh.html" title="urbi/uprop.hh" alt="" coords="1859,306,1973,330" />
+<area shape="rect" href="$uproperty_8hh.html" title="urbi/uproperty.hh" alt="" coords="1941,380,2080,404" />
+<area shape="rect" href="$uvar_8hxx.html" title="urbi/uvar.hxx" alt="" coords="1725,306,1835,330" />
+<area shape="rect" href="$uevent_8hxx.html" title="urbi/uevent.hxx" alt="" coords="2288,306,2416,330" />
+<area shape="rect" href="$ustarter_8hxx.html" title="urbi/ustarter.hxx" alt="" coords="800,306,933,330" />
+<area shape="rect" href="$uclient_8hh.html" title="urbi/uclient.hh" alt="" coords="3159,306,3279,330" />
+<area shape="rect" href="$uabstractclient_8hh.html" title="Definition of the URBI interface class." alt="" coords="2840,380,3016,404" />
+</map>

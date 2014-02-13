@@ -1,0 +1,1809 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>3 The UObject API</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,sections+,xhtml,info --> 
+<meta name="src" content="urbi-sdk.tex" /> 
+<meta name="date" content="2010-09-30 15:52:00" /> 
+<link rel="stylesheet" type="text/css" href="urbi-sdk.css" /> 
+</head><body 
+>
+   <div class="header"><a 
+href="use-cases.html" ><p>Next</p></a><a 
+href="about-this-part.html" ><p>Prev</p></a><a 
+href="about-this-part.html#tailurbi-sdkli2.html" ><p>Prev-tail</p></a><a 
+href="#tailurbi-sdkch3.html"><p>Tail</p></a><a 
+href="uobjects.html#the-uobject-api.html" ><p>Up</p></a></div><h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;3</span><br /><a 
+href="index.html#QQ2-7-17" id="x7-120003">The UObject API</a></h2>
+<!--l. 12--><p class="noindent">The UObject API can be used to add new objects written in C <span 
+class="cmbx-8">++</span> to the urbiscript language, and to
+interact from C <span 
+class="cmbx-8">++</span> with the objects that are already defined. We cover the use cases of controlling a
+physical device (servomotor, speaker, camera&#x2026;), and interfacing higher-lever components (voice
+recognition, object detection&#x2026;) with Urbi.
+</p><!--l. 19--><p class="indent">   The C <span 
+class="cmbx-8">++</span> API defines the UObject class. To each instance of a C <span 
+class="cmbx-8">++</span> class deriving from
+UObject will correspond an urbiscript object sharing some of its methods and attributes.
+The API provides methods to declare which elements of your object are to be shared. To
+share a variable with Urbi, you have to give it the type UVar. This type is a container
+that provides conversion and assignment operators for all types known to Urbi: <span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">double</span></span></span>,
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">std</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">string</span></span> and <span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">char</span></span><span 
+class="cmtt-10x-x-109">*</span></span>, and the binary-holding structures <span class="lstinline"><span 
+class="cmtt-10x-x-109">UBinary</span></span>, <span class="lstinline"><span 
+class="cmtt-10x-x-109">USound</span></span> and <span class="lstinline"><span 
+class="cmtt-10x-x-109">UImage</span></span>.
+This type can also read from and write to the liburbi UValue class. The API provides
+methods to set up callbacks functions that will be notified when a variable is modified or
+read from Urbi code. Instance methods of any prototype can be rendered accessible from
+urbiscript, providing all the parameters types and the return type can be converted to/from
+UValue.
+</p>
+   <div class="sectionTOCS">
+   &#x00A0;<span class="sectionToc">3.1 <a 
+href="#x7-130003.1">Compiling UObjects</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">3.1.1 <a 
+href="#x7-140003.1.1">Compiling by hand</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">3.1.2 <a 
+href="#x7-150003.1.2">The <span 
+class="cmtt-10x-x-109">umake-* </span>family of tools</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">3.1.3 <a 
+href="#x7-160003.1.3">Using the Visual C <span 
+class="cmbx-8">++</span> Wizard</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.2 <a 
+href="#x7-170003.2">Creating a class, binding variables and functions</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.3 <a 
+href="#x7-180003.3">Creating new instances</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.4 <a 
+href="#x7-190003.4">Binding functions</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">3.4.1 <a 
+href="#x7-200003.4.1">Simple binding</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">3.4.2 <a 
+href="#x7-210003.4.2">Multiple bindings</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">3.4.3 <a 
+href="#x7-220003.4.3">Asynchronous binding</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.5 <a 
+href="#x7-230003.5">Notification of a variable change or access</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.6 <a 
+href="#x7-240003.6">Data-flow based programming: exchanging UVars</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.7 <a 
+href="#x7-250003.7">Timers</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.8 <a 
+href="#x7-260003.8">The special case of sensor/effector variables</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.9 <a 
+href="#x7-270003.9">Using Urbi variables</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.10 <a 
+href="#x7-280003.10">Emitting events</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.11 <a 
+href="#x7-290003.11">UObject and Threads</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.12 <a 
+href="#x7-300003.12">Using binary types</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">3.12.1 <a 
+href="#x7-310003.12.1">UVar conversion and memory management</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">3.12.2 <a 
+href="#x7-320003.12.2">0-copy mode</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.13 <a 
+href="#x7-330003.13">Using hubs to group objects</a></span>
+<br />   &#x00A0;<span class="sectionToc">3.14 <a 
+href="#x7-340003.14">Sending urbiscript code</a></span>
+                                                                                       
+
+                                                                                       
+<br />   &#x00A0;<span class="sectionToc">3.15 <a 
+href="#x7-350003.15">Using RTP transport in remote mode</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">3.15.1 <a 
+href="#x7-360003.15.1">Enabling RTP</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsectionToc">3.15.2 <a 
+href="#x7-370003.15.2">Per-UVar control of RTP mode</a></span>
+   </div>
+   <h3 class="sectionHead"><span class="titlemark">3.1   </span> <a 
+href="index.html#QQ2-7-18" id="x7-130003.1">Compiling UObjects</a></h3>
+<!--l. 38--><p class="noindent">UObjects can be compiled easily directly with any regular compiler. Nevertheless, Urbi SDK provides
+two tools to compile UObject seamlessly.
+</p><!--l. 41--><p class="indent">   In the following sections, we will try to compile a shared library named &#8216;<span 
+class="cmtt-10x-x-109">factory.so</span>&#8217; (or
+&#8216;<span 
+class="cmtt-10x-x-109">factory.dll</span>&#8217; on Windows platforms) from a set of four files (&#8216;<span 
+class="cmtt-10x-x-109">factory.hh</span>&#8217;, &#8216;<span 
+class="cmtt-10x-x-109">factory.cc</span>&#8217;,
+&#8216;<span 
+class="cmtt-10x-x-109">ufactory.hh</span>&#8217;, &#8216;<span 
+class="cmtt-10x-x-109">ufactory.cc</span>&#8217;). These files are stored in a &#8216;<span 
+class="cmtt-10x-x-109">factory.uob</span>&#8217; directory; its name bares no
+importance, yet the &#8216;<span 
+class="cmtt-10x-x-109">*.uob</span>&#8217; extension makes clear that it is a UObject.
+</p><!--l. 48--><p class="indent">   In what follows, <span 
+class="cmitt-10x-x-109">urbi-root </span>denotes the top-level directory of your Urbi SDK package, see
+<a 
+href="installation.html#x22-10700014.2">Section&#x00A0;14.2<!--tex4ht:ref: sec:install:install --></a>.
+</p><!--l. 51--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">3.1.1   </span> <a 
+href="contents.html#QQ2-7-19" id="x7-140003.1.1">Compiling by hand</a></h4>
+<!--l. 53--><p class="noindent">On Unix platforms, compiling by hand into a shared library is straightforward:
+</p><!--l. 56--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 56--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-14001r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">g</span><span 
+class="cmtt-10x-x-109">++</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">I</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 57--><pre class="listings"><span 
+class="cmitt-10x-x-109">urbi</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">root</span></pre><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">include</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-14002r2"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">fPIC</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">shared</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-14003r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">factory</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">uob</span><span 
+class="cmtt-10x-x-109">/*</span><span 
+class="cmtt-10x-x-109">cc</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">o</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">factory</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">so</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-14004r4"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">file</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">factory</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">so</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-14005r5"></a></span><span 
+class="cmtt-10x-x-109">factory</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">so</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">ELF</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">32-</span><span 
+class="cmtt-10x-x-109">bit</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">LSB</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">shared</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">object</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Intel</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">80386,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-14006r6"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">version</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">1</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">SYSV</span><span 
+class="cmtt-10x-x-109">),</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">dynamically</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">linked</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">not</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">stripped</span>
+   </pre>
+   </div>
+<!--l. 65--><p class="indent">   On Mac OS X the flags &#8216;<span 
+class="cmtt-10x-x-109">-Wl,-undefined,dynamic</span><span 
+class="cmtt-10x-x-109">_lookup</span>&#8217; are needed:
+</p><!--l. 67--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 67--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-14007r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">g</span><span 
+class="cmtt-10x-x-109">++</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">I</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 68--><pre class="listings"><span 
+class="cmitt-10x-x-109">urbi</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">root</span></pre><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">include</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-14008r2"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">shared</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">Wl</span><span 
+class="cmtt-10x-x-109">,-</span><span 
+class="cmtt-10x-x-109">undefined</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">dynamic_lookup</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">\</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-14009r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">factory</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">uob</span><span 
+class="cmtt-10x-x-109">/*.</span><span 
+class="cmtt-10x-x-109">cc</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">o</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">factory</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">so</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-14010r4"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">file</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">factory</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">so</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-14011r5"></a></span><span 
+class="cmtt-10x-x-109">factory</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">so</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">Mach</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">O</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">64-</span><span 
+class="cmtt-10x-x-109">bit</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">dynamically</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">linked</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">shared</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">library</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">x86_64</span>
+   </pre>
+   </div>
+<!--l. 75--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">3.1.2   </span> <a 
+href="contents.html#QQ2-7-20" id="x7-150003.1.2">The <span 
+class="cmtt-10x-x-109">umake-* </span>family of tools</a></h4>
+<!--l. 77--><p class="noindent"><span 
+class="cmtt-10x-x-109">umake </span>can be used to compile UObjects. See <a 
+href="programs.html#x28-22200018.7">Section&#x00A0;18.7<!--tex4ht:ref: sec:tools:umake --></a> for its documentation.
+</p><!--l. 80--><p class="indent">   You can give it a list of files to compile: <div class="shell">
+                                                                                       
+
+                                                                                       
+</p>
+   <!--l. 81--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-15001r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">umake</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">q</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">shared</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">library</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">factory</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">uob</span><span 
+class="cmtt-10x-x-109">/*.</span><span 
+class="cmtt-10x-x-109">cc</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">o</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">factory</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">so</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-15002r2"></a></span><span 
+class="cmtt-10x-x-109">umake</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">running</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">to</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">build</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">library</span><span 
+class="cmtt-10x-x-109">.</span>
+   </pre>
+   </div>
+<!--l. 86--><p class="noindent">or directories in which C <span 
+class="cmbx-8">++</span> sources are looked for:
+</p><!--l. 89--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 89--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-15003r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">umake</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">q</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">shared</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">library</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">factory</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">uob</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">o</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">factory</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">so</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-15004r2"></a></span><span 
+class="cmtt-10x-x-109">umake</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">running</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">to</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">build</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">library</span><span 
+class="cmtt-10x-x-109">.</span>
+   </pre>
+   </div>
+<!--l. 94--><p class="noindent">or finally, if you give no argument at all, the sources in the current directory:
+</p><!--l. 98--><p class="indent">   <div class="shell">
+</p>
+   <!--l. 98--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-15005r1"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">cd</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">factory</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">uob</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-15006r2"></a></span><span 
+class="cmtt-10x-x-109">$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">umake</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">q</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">--</span><span 
+class="cmtt-10x-x-109">shared</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">library</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">-</span><span 
+class="cmtt-10x-x-109">o</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">factory</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">so</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-15007r3"></a></span><span 
+class="cmtt-10x-x-109">umake</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">running</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">to</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">build</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">library</span><span 
+class="cmtt-10x-x-109">.</span>
+   </pre>
+   </div>
+<!--l. 105--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">3.1.3   </span> <a 
+href="contents.html#QQ2-7-21" id="x7-160003.1.3">Using the Visual C <span 
+class="cmbx-8">++</span> Wizard</a></h4>
+<!--l. 107--><p class="noindent">If you installed Urbi SDK using its installer, and if you had Visual C <span 
+class="cmbx-8">++</span> installed, then the UObject
+wizard was installed. Use it to create your UObject code:
+</p>
+<div class="center" 
+>
+<!--l. 111--><p class="noindent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 112--><p class="noindent"><img 
+src="urbi-sdk3x.png" alt="PIC" class="graphics" width="273.14923pt" height="187.83446pt"  /><!--tex4ht:graphics  
+name="urbi-sdk3x.png" src="img/visual-wizard-1.eps"  
+--></p></div>
+<!--l. 115--><p class="indent">   Then, compile your UObject.
+</p>
+<div class="center" 
+>
+<!--l. 117--><p class="noindent">
+</p><!--l. 118--><p class="noindent"><img 
+src="urbi-sdk4x.png" alt="PIC" class="graphics" width="273.14923pt" height="208.51755pt"  /><!--tex4ht:graphics  
+name="urbi-sdk4x.png" src="img/visual-wizard-2.eps"  
+--></p></div>
+<!--l. 121--><p class="indent">   And run it.
+</p>
+<div class="center" 
+>
+<!--l. 123--><p class="noindent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 124--><p class="noindent"><img 
+src="urbi-sdk5x.png" alt="PIC" class="graphics" width="273.14923pt" height="196.20474pt"  /><!--tex4ht:graphics  
+name="urbi-sdk5x.png" src="img/visual-wizard-3.eps"  
+--></p></div>
+<!--l. 128--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3.2   </span> <a 
+href="index.html#QQ2-7-22" id="x7-170003.2">Creating a class, binding variables and functions</a></h3>
+<!--l. 131--><p class="noindent">Let&#8217;s illustrate those concepts by defining a simple object: <span class="lstinline"><span 
+class="cmtt-10x-x-109">adder</span></span>. This object has one variable <span class="lstinline"><span 
+class="cmtt-10x-x-109">v</span></span>, and a
+method <span class="lstinline"><span 
+class="cmtt-10x-x-109">add</span></span> that returns the sum of this variable and its argument.
+</p>
+     <ul class="itemize1">
+     <li class="itemize">First the required include:
+     <!--l. 139--><p class="noindent"><div class="cxx">
+</p>
+     <!--l. 139--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17001r1"></a></span><!--l. 140--><pre class="listings"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">#</span></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">include</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x003C;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">uobject</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">hh</span><span 
+class="cmtt-10x-x-109">&#x003E;</span></pre>
+     </pre>
+     </div>
+     </li>
+     <li class="itemize">Then we declare our <span class="lstinline"><span 
+class="cmtt-10x-x-109">adder</span></span> class: <div class="cxx">
+     <!--l. 144--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17002r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">class</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">adder</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">public</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">UObject</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 145--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Must</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">inherit</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">from</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">UObject</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17003r2"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17004r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">public</span></span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17005r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 148--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">The</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">class</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">must</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">have</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">single</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">constructor</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">taking</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">a</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">string</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17006r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">adder</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">const</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">std</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">string</span><span 
+class="cmtt-10x-x-109">&amp;);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17007r6"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17008r7"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 151--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Our</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">variable</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17009r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">UVar</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">v</span><span 
+class="cmtt-10x-x-109">;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17010r9"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17011r10"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 154--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Our</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">method</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17012r11"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">double</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">add</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">double</span></span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17013r12"></a></span><span 
+class="cmtt-10x-x-109">};</span>
+     </pre>
+     </div>
+                                                                                       
+
+                                                                                       
+     </li>
+     <li class="itemize">The implementation of the constructor and our <span class="lstinline"><span 
+class="cmtt-10x-x-109">add</span></span> method: <div class="cxx">
+     <!--l. 160--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17014r1"></a></span><!--l. 161--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">constructor</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">defines</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">what</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">is</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">available</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">from</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Urbi</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17015r2"></a></span><span 
+class="cmtt-10x-x-109">adder</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">adder</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">const</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">std</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">string</span><span 
+class="cmtt-10x-x-109">&amp;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17016r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">UObject</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">s</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 163--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">required</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17017r4"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17018r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 165--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Bind</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">variable</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17019r6"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">UBindVar</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">adder</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">v</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17020r7"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17021r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 168--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Bind</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">function</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17022r9"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">UBindFunction</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">adder</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">add</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17023r10"></a></span><span 
+class="cmtt-10x-x-109">}</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17024r11"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17025r12"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">double</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17026r13"></a></span><span 
+class="cmtt-10x-x-109">adder</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">add</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">double</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">rhs</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17027r14"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17028r15"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">return</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">v</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">+</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">rhs</span><span 
+class="cmtt-10x-x-109">;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17029r16"></a></span><span 
+class="cmtt-10x-x-109">}</span>
+     </pre>
+     </div>
+     </li>
+     <li class="itemize">And register this class: <div class="cxx">
+     <!--l. 179--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17030r1"></a></span><!--l. 180--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Register</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">class</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">to</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">the</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Urbi</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">kernel</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-17031r2"></a></span><span 
+class="cmtt-10x-x-109">UStart</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">adder</span><span 
+class="cmtt-10x-x-109">);</span>
+     </pre>
+     </div>
+     </li></ul>
+<!--l. 185--><p class="indent">   To summarize:
+</p>
+     <ul class="itemize1">
+     <li class="itemize">Declare your object class as inheriting from <span class="lstinline"><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">UObject</span></span>.
+     </li>
+     <li class="itemize">Declare a single constructor taking a string, and pass this string to the constructor of
+     <span class="lstinline"><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">UObject</span></span>.
+     </li>
+     <li class="itemize">Declare the variables you want to share with Urbi with the type <span class="lstinline"><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">UVar</span></span>.
+     </li>
+     <li class="itemize">In the constructor, use the macros <span class="lstinline"><span 
+class="cmtt-10x-x-109">UBindVar</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">class</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmitt-10x-x-109">variable</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">)</span></span> for each <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span>
+     you want as an instance variable, and <span class="lstinline"><span 
+class="cmtt-10x-x-109">UBindFunction</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">class</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmitt-10x-x-109">function</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">)</span></span> for
+     each function you want to bind.
+     </li>
+     <li class="itemize">Call the macro <span class="lstinline"><span 
+class="cmtt-10x-x-109">UStart</span></span> for each object.</li></ul>
+<!--l. 202--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3.3   </span> <a 
+href="index.html#QQ2-7-23" id="x7-180003.3">Creating new instances</a></h3>
+                                                                                       
+
+                                                                                       
+<!--l. 204--><p class="noindent">When you start an Urbi server, an object of each class registered with <span class="lstinline"><span 
+class="cmtt-10x-x-109">UStart</span></span> is created with the same
+name as the class. New instances can be created from Urbi using the <span class="lstinline"><span 
+class="cmtt-10x-x-109">new</span></span> method. For each instance
+created in Urbi, a corresponding instance of the C <span 
+class="cmbx-8">++</span> object is created. You can get the arguments
+passed to the constructor by defining and binding a method named <span class="lstinline"><span 
+class="cmtt-10x-x-109">init</span></span> with the appropriate number
+of arguments.
+</p><!--l. 212--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3.4   </span> <a 
+href="index.html#QQ2-7-24" id="x7-190003.4">Binding functions</a></h3>
+<!--l. 214--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">3.4.1   </span> <a 
+href="contents.html#QQ2-7-25" id="x7-200003.4.1">Simple binding</a></h4>
+<!--l. 216--><p class="noindent">You can register any member function of your <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span></span> using the macro
+</p><!--l. 219--><p class="indent">   <span class="lstinline"><span 
+class="cmtt-10x-x-109">UBindFunction</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">class</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmitt-10x-x-109">function</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">)</span></span>.
+</p><!--l. 221--><p class="indent">   Once done, the function can be called from urbiscript.
+</p><!--l. 223--><p class="indent">   The following types for arguments and return value are supported:
+</p>
+     <ul class="itemize1">
+     <li class="itemize">Basic integer and floating types (int, double, float...).
+     </li>
+     <li class="itemize"><span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">const</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">std</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">string&amp;</span></span> or <span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">const</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">char</span></span><span 
+class="cmtt-10x-x-109">*</span></span>.
+     </li>
+     <li class="itemize"><span class="lstinline"><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">UValue</span></span> or any of its subtypes (<span class="lstinline"><span 
+class="cmtt-10x-x-109">UBinary</span></span>, <span class="lstinline"><span 
+class="cmtt-10x-x-109">UList</span></span>...).
+     </li>
+     <li class="itemize"><span class="lstinline"><span 
+class="cmtt-10x-x-109">std</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">list</span></span> or <span class="lstinline"><span 
+class="cmtt-10x-x-109">std</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">vector</span></span> of the above types.</li></ul>
+<!--l. 232--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">3.4.2   </span> <a 
+href="contents.html#QQ2-7-26" id="x7-210003.4.2">Multiple bindings</a></h4>
+<!--l. 234--><p class="noindent">If you have multiple functions to bind, you can use the <span class="lstinline"><span 
+class="cmtt-10x-x-109">UBindFunctions</span></span> macro to bind multiple
+functions at once:
+</p><!--l. 237--><p class="indent">   <span class="lstinline"><span 
+class="cmtt-10x-x-109">UBindFunctions</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">class</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmitt-10x-x-109">function1</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmitt-10x-x-109">function2</span><span 
+class="cmtt-10x-x-109">...)</span></span>.
+                                                                                       
+
+                                                                                       
+</p><!--l. 239--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">3.4.3   </span> <a 
+href="contents.html#QQ2-7-27" id="x7-220003.4.3">Asynchronous binding</a></h4>
+<!--l. 240--><p class="noindent">Functions bound using <span class="lstinline"><span 
+class="cmtt-10x-x-109">UBindFunction</span></span> are called synchronously, and thus block everything until they
+return.
+</p><!--l. 243--><p class="indent">   If you wish to bind a function that requires a non-negligible amount of time to execute, you can
+have it execute in a separate thread by calling
+</p><!--l. 247--><p class="indent">   <span class="lstinline"><span 
+class="cmtt-10x-x-109">UBindThreadedFunction</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">class</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmitt-10x-x-109">function</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmitt-10x-x-109">lockMode</span><span 
+class="cmtt-10x-x-109">)</span></span>.
+</p><!--l. 249--><p class="indent">   The function code will be executed in a separate thread without breaking the urbiscript execution
+semantics.
+</p><!--l. 252--><p class="indent">   The <span class="lstinline"><span 
+class="cmtt-10x-x-109">lockMode</span></span> argument can be used to prevent parallel execution of multiple bound functions if
+your code is not thread-safe. It can be any of <span class="lstinline"><span 
+class="cmtt-10x-x-109">LOCK_NONE</span></span>, <span class="lstinline"><span 
+class="cmtt-10x-x-109">LOCK_FUNCTION</span></span>, <span class="lstinline"><span 
+class="cmtt-10x-x-109">LOCK_INSTANCE</span></span>,
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">LOCK_CLASS</span></span> or <span class="lstinline"><span 
+class="cmtt-10x-x-109">LOCK_MODULE</span></span>. When set to <span class="lstinline"><span 
+class="cmtt-10x-x-109">LOCK_NONE</span></span>, no locking is performed. Otherwise, it limits
+parallel executions to:
+</p>
+     <ul class="itemize1">
+     <li class="itemize">One instance of the bound function for <span class="lstinline"><span 
+class="cmtt-10x-x-109">LOCK_FUNCTION</span></span>.
+     </li>
+     <li class="itemize">One bound function for each object instance for <span class="lstinline"><span 
+class="cmtt-10x-x-109">LOCK_INSTANCE</span></span>.
+     </li>
+     <li class="itemize">One bound function for the class for <span class="lstinline"><span 
+class="cmtt-10x-x-109">LOCK_CLASS</span></span>.
+     </li>
+     <li class="itemize">One bound function for the whole module (shared object) for <span class="lstinline"><span 
+class="cmtt-10x-x-109">LOCK_MODULE</span></span>.</li></ul>
+<!--l. 268--><p class="indent">   There is however a restriction: you cannot mix multiple locking modes: for instance a function
+bound with <span class="lstinline"><span 
+class="cmtt-10x-x-109">LOCK_FUNCTION</span></span> mode will not prevent another function bound with <span class="lstinline"><span 
+class="cmtt-10x-x-109">LOCK_INSTANCE</span></span> from
+executing in parallel.
+</p><!--l. 273--><p class="indent">   You can perform your own locking using semaphores if your code needs a more complex locking
+model.
+</p><!--l. 276--><p class="indent">   You can limit the maximum number of threads that can run in parallel by using the
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">setThreadLimit</span></span> function.
+</p><!--l. 279--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3.5   </span> <a 
+href="index.html#QQ2-7-28" id="x7-230003.5">Notification of a variable change or access</a></h3>
+<!--l. 281--><p class="noindent">You can register a function that will be called each time a variable is modified or accessed (for
+embedded components only) by calling <span class="lstinline"><span 
+class="cmtt-10x-x-109">UNotifyChange</span></span> and <span class="lstinline"><span 
+class="cmtt-10x-x-109">UNotifyAccess</span></span>, passing either an <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> or
+a variable name as first argument, and a member function of your <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span></span> as second argument. This
+function can take zero or one argument of any type. If the argument is of type <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar&amp;</span></span>, the value will be
+                                                                                       
+
+                                                                                       
+a reference to the <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> being accessed or modified. If it is of any other type, the system will try to
+convert the current value of the <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> to this type and pass this value to the function. The
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">notifyChange</span></span> callback function is called after the variable value is changed, whereas the
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">notifyAccess</span></span> callback is called before the variable is accessed, giving you the possibility to update its
+value.
+</p><!--l. 295--><p class="indent">   Notify functions can be unregistered by calling the <span class="lstinline"><span 
+class="cmtt-10x-x-109">unnotify</span></span> function of the <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> class.
+</p><!--l. 298--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3.6   </span> <a 
+href="index.html#QQ2-7-29" id="x7-240003.6">Data-flow based programming: exchanging UVars</a></h3>
+<!--l. 300--><p class="noindent">The <span class="lstinline"><span 
+class="cmtt-10x-x-109">UNotifyChange</span></span> and <span class="lstinline"><span 
+class="cmtt-10x-x-109">UNotifyAccess</span></span> features can be used to link multiple UObjects together,
+and perform data-flow based programming: the <span class="lstinline"><span 
+class="cmtt-10x-x-109">UNotifyChange</span></span> can be called to monitor
+UVars from other UObjects. Those UVars can be transmitted through bound function
+calls.
+</p><!--l. 306--><p class="indent">   One possible pattern is to have each data-processing UObject take its input from monitored UVars,
+given in its constructor, and output the result of its processing in other UVars. Consider the following
+example of an object-tracker:
+</p><!--l. 311--><p class="indent">   <div class="cxx">
+</p>
+   <!--l. 311--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24001r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">class</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">ObjectTracker</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">public</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">UObject</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24002r2"></a></span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24003r3"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">ObjectTracker</span><span 
+class="cmtt-10x-x-109">(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">const</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">std</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">string</span><span 
+class="cmtt-10x-x-109">&amp;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">n</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24004r4"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">UObject</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">n</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24005r5"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24006r6"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 317--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Bind</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">our</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">constructor</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24007r7"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">UBindFunction</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">ObjectTracker</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">init</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24008r8"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">}</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24009r9"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 320--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Take</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">our</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">data</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">source</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">in</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">our</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">constructor</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24010r10"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">void</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">init</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">UVar</span><span 
+class="cmtt-10x-x-109">&amp;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">image</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24011r11"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24012r12"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">UNotifyChange</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">image</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&amp;</span><span 
+class="cmtt-10x-x-109">ObjectTracker</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">onImage</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24013r13"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 324--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Bind</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">our</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">output</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">variable</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24014r14"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">UBindVar</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">ObjectTracker</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">val</span><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24015r15"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">}</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24016r16"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">void</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">onImage</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">UVar</span><span 
+class="cmtt-10x-x-109">&amp;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">src</span><span 
+class="cmtt-10x-x-109">)</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24017r17"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24018r18"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">UBinary</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">b</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">src</span><span 
+class="cmtt-10x-x-109">;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24019r19"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 330--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">Processing</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">here</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24020r20"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">val</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">processing_result</span><span 
+class="cmtt-10x-x-109">;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24021r21"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">}</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24022r22"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">UVar</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">val</span><span 
+class="cmtt-10x-x-109">;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24023r23"></a></span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24024r24"></a></span><span 
+class="cmtt-10x-x-109">UStart</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">ObjectTracker</span><span 
+class="cmtt-10x-x-109">);</span>
+   </pre>
+   </div>
+<!--l. 338--><p class="indent">   The following urbiscript code would be used to initialize an ObjectTracker given a camera:
+</p><!--l. 341--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 341--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-24025r1"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">tracker</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">=</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">ObjectTracker</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">new</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">camera</span><span 
+class="cmtt-10x-x-109">.</span><span 
+class="cmtt-10x-x-109">getSlot</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 342--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">val</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">));</span>
+   </pre>
+   </div>
+<!--l. 345--><p class="indent">   An other component could then take the tracker output as its input.
+</p><!--l. 347--><p class="indent">   Using this model, chains of processing elements can be created. Each time the UObject at the start
+of the chain updates, all the notifyChange will be called synchronously in cascade to update the state
+of the intermediate components.
+</p><!--l. 351--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3.7   </span> <a 
+href="index.html#QQ2-7-30" id="x7-250003.7">Timers</a></h3>
+<!--l. 354--><p class="noindent">The API provides two methods to have a function called periodically: </p>
+                                                                                       
+
+                                                                                       
+     <ul class="itemize1">
+     <li class="itemize"><span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">void</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">UObject</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">USetUpdate</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">ufloat</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">period</span><span 
+class="cmtt-10x-x-109">)</span></span>&#x00A0;
+     <br class="newline" /> Set up a timer that calls the virtual method <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">update</span><span 
+class="cmtt-10x-x-109">()</span></span> with the specified period
+     (in milliseconds). Disable updates if <span 
+class="cmitt-10x-x-109">period </span>is -1.
+     </li>
+     <li class="itemize"><span class="lstinline"><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">TimerHandle</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">UObject</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">USetTimer</span><span 
+class="cmtt-10x-x-109">&#x003C;</span><span 
+class="cmtt-10x-x-109">T</span><span 
+class="cmtt-10x-x-109">&#x003E;(</span><span 
+class="cmtt-10x-x-109">ufloat</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">period</span><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">void</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">T</span><span 
+class="cmtt-10x-x-109">::*</span><span 
+class="cmtt-10x-x-109">fun</span><span 
+class="cmtt-10x-x-109">)())</span></span>&#x00A0;
+     <br class="newline" /> Invoke an UObject member function <span 
+class="cmitt-10x-x-109">fun </span>every <span 
+class="cmitt-10x-x-109">period </span>milliseconds. <span 
+class="cmitt-10x-x-109">fun </span>is a regular
+     member-function pointer, for instance <span class="lstinline"><span 
+class="cmtt-10x-x-109">MyUObject</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">my_function</span></span>. The function returns a
+     <span class="lstinline"><span 
+class="cmtt-10x-x-109">TimerHandle</span></span> that can be passed to the <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">removeTimer</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">h</span><span 
+class="cmtt-10x-x-109">)</span></span> function to disable
+     the timer.</li></ul>
+<!--l. 369--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3.8   </span> <a 
+href="index.html#QQ2-7-31" id="x7-260003.8">The special case of sensor/effector variables</a></h3>
+<!--l. 371--><p class="noindent">In Urbi, a variable can have a different meaning depending on whether you are reading or writing it:
+you can use the same variable to represent the target value of an effector and the current value
+measured by an associated sensor. This special mode is activated by the <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span></span> defining
+the variable by calling <span class="lstinline"><span 
+class="cmtt-10x-x-109">UOwned</span></span> after calling <span class="lstinline"><span 
+class="cmtt-10x-x-109">UBindVar</span></span>. This call has the following effects:
+</p>
+     <ul class="itemize1">
+     <li class="itemize">When Urbi code or code in other modules read the variable, they read the current value.
+     </li>
+     <li class="itemize">When Urbi code or code in other modules write the variable, they set the target value.
+     </li>
+     <li class="itemize">When the module that called <span class="lstinline"><span 
+class="cmtt-10x-x-109">UOwned</span></span> reads the variable, it reads the target value. When
+     it writes the variable, it writes the current value.</li></ul>
+<!--l. 388--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3.9   </span> <a 
+href="index.html#QQ2-7-32" id="x7-270003.9">Using Urbi variables</a></h3>
+<!--l. 390--><p class="noindent">You can read or write any Urbi variable by creating an <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> passing the variable name to the
+constructor. Change the value by writing any compatible type to the <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span>, and access the value by
+casting the <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> to any compatible type.
+</p><!--l. 396--><p class="indent">   Some care must be taken in remote mode: changes on the variable coming from Urbi code or an
+other module can take time to propagate to the <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span>. By default, all changes to the value will be sent
+to the remote <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span></span>. To have more control on the bandwidth used, you can disable the
+automatic update by calling <span class="lstinline"><span 
+class="cmtt-10x-x-109">unnotify</span><span 
+class="cmtt-10x-x-109">()</span></span>. Then you can get the value on demand by calling
+                                                                                       
+
+                                                                                       
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">syncValue</span><span 
+class="cmtt-10x-x-109">()</span></span>.
+</p><!--l. 403--><p class="indent">   You can read and write all the Urbi properties of an <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> by reading and writing the appropriate
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">UProp</span></span> object in the <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span>.
+</p><!--l. 407--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3.10   </span> <a 
+href="index.html#QQ2-7-33" id="x7-280003.10">Emitting events</a></h3>
+<!--l. 409--><p class="noindent">The <span class="lstinline"><span 
+class="cmtt-10x-x-109">UEvent</span></span> class can be used to create and emit urbiscript events. Instances are created and initialized
+exactly as <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span>: either by using the <span class="lstinline"><span 
+class="cmtt-10x-x-109">UBindEvent</span></span> macro, or by calling one of its constructors or the
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">init</span></span> function.
+</p><!--l. 414--><p class="indent">   Once initialized, the <span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">emit</span></span></span> function will trigger the emission of the associated urbiscript event. It
+can be called with any number of arguments, of any compatible type.
+</p><!--l. 418--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3.11   </span> <a 
+href="index.html#QQ2-7-34" id="x7-290003.11">UObject and Threads</a></h3>
+<!--l. 420--><p class="noindent">The <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span></span> API is thread-safe in both plugin and remote mode: All API calls including operations on
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> can be performed from any thread.
+</p><!--l. 423--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3.12   </span> <a 
+href="index.html#QQ2-7-35" id="x7-300003.12">Using binary types</a></h3>
+<!--l. 425--><p class="noindent">Urbi can store binary objects of any type in a generic container, and provides specific structures for
+sound and images. The generic containers is called <span class="lstinline"><span 
+class="cmtt-10x-x-109">UBinary</span></span> and is defined in the &#8216;<span 
+class="cmtt-10x-x-109">urbi/ubinary.hh</span>&#8217;
+header. It contains an enum field type giving the type of the binary (<span class="lstinline"><span 
+class="cmtt-10x-x-109">UNKNOWN</span></span>, <span class="lstinline"><span 
+class="cmtt-10x-x-109">SOUND</span></span> or <span class="lstinline"><span 
+class="cmtt-10x-x-109">IMAGE</span></span>), and an
+union of a <span class="lstinline"><span 
+class="cmtt-10x-x-109">USound</span></span> and <span class="lstinline"><span 
+class="cmtt-10x-x-109">UImage</span></span> struct containing a pointer to the data, the size of the data and
+type-specific meta-information.
+</p><!--l. 434--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">3.12.1   </span> <a 
+href="contents.html#QQ2-7-36" id="x7-310003.12.1">UVar conversion and memory management</a></h4>
+<!--l. 435--><p class="noindent">The <span class="lstinline"><span 
+class="cmtt-10x-x-109">UBinary</span></span> manages its memory: when destroyed (or going out-of-scope), it frees all its allocated
+data. The <span class="lstinline"><span 
+class="cmtt-10x-x-109">USound</span></span> and <span class="lstinline"><span 
+class="cmtt-10x-x-109">UImage</span></span> do not.
+</p><!--l. 438--><p class="indent">   Reading an <span class="lstinline"><span 
+class="cmtt-10x-x-109">UBinary</span></span> from a <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span>, and writing a <span class="lstinline"><span 
+class="cmtt-10x-x-109">UBinary</span></span>, <span class="lstinline"><span 
+class="cmtt-10x-x-109">USound</span></span> or <span class="lstinline"><span 
+class="cmtt-10x-x-109">UImage</span></span> to an <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> performs a
+deep-copy of the data (by default, see below).
+</p><!--l. 442--><p class="indent">   Reading a <span class="lstinline"><span 
+class="cmtt-10x-x-109">USound</span></span> or <span class="lstinline"><span 
+class="cmtt-10x-x-109">UImage</span></span> from an <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> performs a shallow copy. Modifying the data is not
+allowed in that case.
+                                                                                       
+
+                                                                                       
+</p><!--l. 445--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">3.12.2   </span> <a 
+href="contents.html#QQ2-7-37" id="x7-320003.12.2">0-copy mode</a></h4>
+<!--l. 446--><p class="noindent">In plugin mode, you can setup any <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> in 0-copy mode by calling <span class="lstinline"><span 
+class="cmtt-10x-x-109">setBypass</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">true</span><span 
+class="cmtt-10x-x-109">)</span></span>.
+In this mode, binary data written to the <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> is not copied, but a reference is kept. As
+a consequence, the data is only available from within registered notifyChange callbacks.
+Those callbacks can use <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span><span 
+class="cmtt-10x-x-109">::</span><span 
+class="cmtt-10x-x-109">val</span><span 
+class="cmtt-10x-x-109">()</span></span> or cast the <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> to a <span class="lstinline"><span 
+class="cmtt-10x-x-109">UBinary</span></span> &amp; to retrieve the
+reference. Attempts to read the <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> from outside notifyChange will result in <span class="lstinline"><span 
+class="cmtt-10x-x-109">nil</span></span> being
+returned.
+</p><!--l. 455--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3.13   </span> <a 
+href="index.html#QQ2-7-38" id="x7-330003.13">Using hubs to group objects</a></h3>
+<!--l. 457--><p class="noindent">Sometimes, you need to perform actions for a group of <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObjects</span></span>, for instance devices that need to be
+updated together. The API provides the <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObjectHub</span></span> class for this purpose. To create a hub, simply
+declare a subclass of <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObjectHub</span></span>, and register it by calling once the macro <span class="lstinline"><span 
+class="cmtt-10x-x-109">UStartHub</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">class</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">)</span></span>.
+A single instance of this class will then be created upon server start-up. <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span></span> instances can then
+register to this hub by calling <span class="lstinline"><span 
+class="cmtt-10x-x-109">URegister</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmitt-10x-x-109">hub</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">class</span><span 
+class="cmitt-10x-x-109">-</span><span 
+class="cmitt-10x-x-109">name</span><span 
+class="cmtt-10x-x-109">)</span></span>. Timers can be attached to <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObjectHub</span></span>
+the same way as to <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span></span> (see <a 
+href="#x7-250003.7">Section&#x00A0;3.7<!--tex4ht:ref: sec:uob:timers --></a>). The kernel will call the <span class="lstinline"><span 
+class="cmtt-10x-x-109">update</span><span 
+class="cmtt-10x-x-109">()</span></span> method of all
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span></span> before calling the <span class="lstinline"><span 
+class="cmtt-10x-x-109">update</span><span 
+class="cmtt-10x-x-109">()</span></span> method of the hub. A hub instance can be retrieved by calling
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">getUObjectHub</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">string</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">classname</span><span 
+class="cmtt-10x-x-109">)</span></span>. The hub also holds the list of registered UObject in its
+members attribute.
+</p><!--l. 474--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3.14   </span> <a 
+href="index.html#QQ2-7-39" id="x7-340003.14">Sending urbiscript code</a></h3>
+<!--l. 476--><p class="noindent">If you need to send urbiscript code to the server, the <span class="lstinline"><span 
+class="cmtt-10x-x-109">URBI</span><span 
+class="cmtt-10x-x-109">()</span></span> macro is available, as well as the
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">send</span><span 
+class="cmtt-10x-x-109">()</span></span> function. You can either pass it a string, or directly Urbi code inside a double pair of
+parentheses:
+</p><!--l. 481--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 481--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-34001r1"></a></span><span 
+class="cmtt-10x-x-109">send</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><!--l. 482--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">myTag</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">:1+1;</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-34002r2"></a></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-34003r3"></a></span><span 
+class="cmtt-10x-x-109">URBI</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">((</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">at</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">(</span><span 
+class="cmtt-10x-x-109">myEvent</span><span 
+class="cmtt-10x-x-109">?(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">var</span></span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">x</span><span 
+class="cmtt-10x-x-109">))</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">{</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">myTag</span><span 
+class="cmtt-10x-x-109">:</span><span 
+class="cmtt-10x-x-109">echo</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">x;</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">};</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">));</span>
+   </pre>
+   </div>
+<!--l. 487--><p class="indent">   You can also use the <span class="lstinline"><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">call</span></span></span> method to make an urbiscript function call:
+</p><!--l. 490--><p class="indent">   <div class="urbiunchecked">
+</p>
+   <!--l. 490--><pre class="listings"><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-34004r1"></a></span><!--l. 491--><pre class="listings"><span class="commentstyle"><span 
+class="cmtt-10x-x-109">//</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">C</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">++</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">equivalent</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">of</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">urbiscript</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#8217;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">System</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">.</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">someFunc</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">(12,</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">&#x00A0;</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">foo</span></span><span class="commentstyle"><span 
+class="cmtt-10x-x-109">");&#8217;</span></span></pre><span 
+class="cmtt-10x-x-109">&#x00A0;</span><br /><span class="label"><a 
+ id="x7-34005r2"></a></span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">call</span></span><span 
+class="cmtt-10x-x-109">(</span><!--l. 492--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">System</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 492--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">someFunc</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">12,</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><!--l. 492--><pre class="listings"><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">foo</span></span><span class="stringstyle"><span 
+class="cmtt-10x-x-109">"</span></span></pre><span 
+class="cmtt-10x-x-109">);</span>
+                                                                                       
+
+                                                                                       
+   </pre>
+   </div>
+<!--l. 495--><p class="noindent">
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3.15   </span> <a 
+href="index.html#QQ2-7-40" id="x7-350003.15">Using RTP transport in remote mode</a></h3>
+<!--l. 498--><p class="noindent">By default, Urbi uses TCP connections for all communications between the engine and remote
+UObjects. Urbi also supports the UDP-based <span 
+class="cmti-10x-x-109">RTP</span><a 
+ id="x7-35001"></a> protocol for more efficient transmission of updated
+variable values. RTP will provide a lower latency at the cost of possible packet loss, especially in bad
+wireless network conditions.
+</p><!--l. 504--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">3.15.1   </span> <a 
+href="contents.html#QQ2-7-41" id="x7-360003.15.1">Enabling RTP</a></h4>
+<!--l. 506--><p class="noindent">To enable RTP connections, both the engine and the remote-mode urbi-launch containing your remote
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span></span> must load the RTP <span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span></span>. This can be achieved by passing <span class="lstinline"><span 
+class="cmtt-10x-x-109">urbi</span><span 
+class="cmtt-10x-x-109">/</span><span 
+class="cmtt-10x-x-109">rtp</span></span> as an extra
+argument to both urbi-launch command lines (one for the engine, the other for your remote
+<span class="lstinline"><span 
+class="cmtt-10x-x-109">UObject</span></span>).
+</p><!--l. 512--><p class="indent">   Once done, all binary data transfer (like sound and image) in both directions will by default use a
+RTP connection.
+</p><!--l. 515--><p class="noindent">
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">3.15.2   </span> <a 
+href="contents.html#QQ2-7-42" id="x7-370003.15.2">Per-UVar control of RTP mode</a></h4>
+<!--l. 517--><p class="noindent">You can control whether a specific <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> uses RTP mode by calling its <span class="lstinline"><span 
+class="cmtt-10x-x-109">useRTP</span><span 
+class="cmtt-10x-x-109">(</span><span class="keywordstyle"><span 
+class="cmtt-10x-x-109">bool</span></span><span 
+class="cmtt-10x-x-109">)</span></span> function. Each
+binary-type <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> will have its own RTP connection, and all non-binary <span class="lstinline"><span 
+class="cmtt-10x-x-109">UVar</span></span> will share
+one.
+</p><!--l. 9--><p class="indent">
+                                                                                       
+
+                                                                                       
+</p><!--l. 9--><p class="indent">   <div class="footer"><a 
+href="use-cases.html" ><p>Next</p></a><a 
+href="about-this-part.html" ><p>Prev</p></a><a 
+href="about-this-part.html#tailurbi-sdkli2.html" ><p>Prev-tail</p></a><a 
+href="the-uobject-api.html" ><p>Front</p></a><a 
+href="uobjects.html#the-uobject-api.html" ><p>Up</p></a></div><a 
+ id="tailurbi-sdkch3.html"></a>   </p> 
+</body></html> 
