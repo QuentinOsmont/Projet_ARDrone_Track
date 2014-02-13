@@ -5,33 +5,31 @@ Cette application permet de piloter le drone directement depuis notre navigateur
 ## L'ensemble des plugins
 
 * **[video-png](plugins/video-png/)** permet de diffuser la vidéo sur le navigateur par le chargement d’une image statique. Cela fonctionne très bien sur tous les navigateurs. Nécessite l’installation du
-paquet ffmpeg sur le système. (module disponible sur https://github.com/eschnou/ardrone-webflight/blob/master/plugins/video-png/)
+paquet ffmpeg sur le système.
 
-* **[video-stream](plugins/video-stream/)** utilise node-dronestream pour diffuser le flux vidéo en h264 via des websockets en javascript. Nécessite un navigateur et un processeur modernes. (module disponible sur https://github.com/eschnou/ardrone-webflight/blob/master/plugins/video-stream/)
+* **[video-stream](plugins/video-stream/)** utilise node-dronestream pour diffuser le flux vidéo en h264 via des websockets en javascript. Nécessite un navigateur et un processeur modernes.
 
-* **[hud](plugins/hud/)** permet de visualiser en haut de la fenêtre une boussole, un altimètre, ..., basé sur nodecoper-cockpit. (module disponible sur https://github.com/eschnou/ardrone-webflight/blob/master/plugins/hud/)
+* **[hud](plugins/hud/)** permet de visualiser en haut de la fenêtre une boussole, un altimètre, ..., basé sur nodecoper-cockpit.
 
-* **[pilot](plugins/pilot)** permet de contrôler le drone en utilisant le clavier. Le contrôle s’effectue sur le navigateur. (module disponible sur https://github.com/eschnou/ardrone-webflight/blob/master/plugins/pilot)
+* **[pilot](plugins/pilot)** permet de contrôler le drone en utilisant le clavier. Le contrôle s’effectue sur le navigateur. 
 
-* **[battery](plugins/battery)** affiche le niveau de la batterie dans la barre du haut. (module dispo-
-nible sur https://github.com/eschnou/ardrone-webflight/blob/master/plugins/battery)
+* **[battery](plugins/battery)** affiche le niveau de la batterie dans la barre du haut.
 
 * **[blackbox](plugins/blackbox)** enregistre toutes les données de la mission (flux vidéo, données de na-
-vigaions, ...) sur le disque. (module disponible sur https://github.com/eschnou/ardrone-webflight/blob/master/plugins/blackbox)
+vigaions, ...) sur le disque.
 
 * **[replay](plugins/replay)** permet de rejouer une mission en injectant des données au niveau du client.
-Outil utile pour coder, tester, et déboguer lorsque nous pouvons pas faire voler le drone. Nécessite le module video-png, il n’est pas encore compatible avec video-stream. (module disponible sur https://github.com/eschnou/ardrone-webflight/blob/master/plugins/replay)
+Outil utile pour coder, tester, et déboguer lorsque nous pouvons pas faire voler le drone. Nécessite le module video-png, il n’est pas encore compatible avec video-stream.
 
 
-* **[copterface](https://github.com/eschnou/webflight-copterface)** détecte les visages et permet au drone de les suivre en effectuant une rotation. (module disponible sur https://github.com/eschnou/webflight-copterface)
+* **[copterface](https://github.com/eschnou/webflight-copterface)** détecte les visages et permet au drone de les suivre en effectuant une rotation.
 
-* **[traffic](https://github.com/wiseman/webflight-traffic)** affiche un trafic aérien depuis des données ADS-B comme une superposition de la réalité augmentée. (module disponible sur https://github.com/wiseman/
+* **[traffic](https://github.com/wiseman/webflight-traffic)** affiche un trafic aérien depuis des données ADS-B comme une superposition de la réalité augmentée.
 
-* **[gamepad](https://github.com/wiseman/webflight-gamepad)** permet de contrôler le drone avec une manette. (module disponible sur https://github.com/wiseman/webflight-gamepad)
+* **[gamepad](https://github.com/wiseman/webflight-gamepad)** permet de contrôler le drone avec une manette. 
+* **[tracker](https://github.com/bkw/webflight-tracker)** permet de suivre un objet par ses pixels sur le flux vidéo en cliquant dessus. 
 
-* **[tracker](https://github.com/bkw/webflight-tracker)** permet de suivre un objet par ses pixels sur le flux vidéo en cliquant dessus. (module disponible sur https://github.com/bkw/webflight-tracker)
-
-* **[trollface](https://github.com/andrew/webflight-trollface)** permet de détecter les visages et dispose un visage de troll par dessus. (module disponible sur https://github.com/andrew/webflight-trollface)
+* **[trollface](https://github.com/andrew/webflight-trollface)** permet de détecter les visages et dispose un visage de troll par dessus. 
 
 ## Installation
 
