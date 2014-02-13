@@ -1,0 +1,1552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="79">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df name="Build" root=".">
+      <df name="Release">
+      </df>
+    </df>
+    <logicalFolder name="withoutMainLoop"
+                   displayName="withoutMainLoop"
+                   projectFiles="true"
+                   root="../..">
+      <logicalFolder name="ARDroneLib" displayName="ARDroneLib" projectFiles="true">
+        <logicalFolder name="Soft" displayName="Soft" projectFiles="true">
+          <logicalFolder name="Lib" displayName="Lib" projectFiles="true">
+            <logicalFolder name="ardrone_tool"
+                           displayName="ardrone_tool"
+                           projectFiles="true">
+              <logicalFolder name="AT" displayName="AT" projectFiles="true">
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/AT/ardrone_at_mutex.c</itemPath>
+              </logicalFolder>
+              <logicalFolder name="Com" displayName="Com" projectFiles="true">
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Com/config_com.h</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Com/config_serial.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Com/config_serial.h</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Com/config_wifi.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Com/config_wifi.h</itemPath>
+              </logicalFolder>
+              <logicalFolder name="Control" displayName="Control" projectFiles="true">
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Control/ardrone_control.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Control/ardrone_control.h</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Control/ardrone_control_ack.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Control/ardrone_control_ack.h</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Control/ardrone_control_configuration.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Control/ardrone_control_configuration.h</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Control/ardrone_control_soft_update.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Control/ardrone_control_soft_update.h</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Control/ardrone_navdata_control.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Control/ardrone_navdata_control.h</itemPath>
+              </logicalFolder>
+              <logicalFolder name="Navdata" displayName="Navdata" projectFiles="true">
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Navdata/ardrone_general_navdata.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Navdata/ardrone_general_navdata.h</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Navdata/ardrone_navdata_client.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Navdata/ardrone_navdata_client.h</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Navdata/ardrone_navdata_file.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Navdata/ardrone_navdata_file.h</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Navdata/navdata.c</itemPath>
+              </logicalFolder>
+              <logicalFolder name="UI" displayName="UI" projectFiles="true">
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/UI/ardrone_input.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/UI/ardrone_input.h</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/UI/ardrone_tool_ui.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/UI/ardrone_tool_ui.h</itemPath>
+              </logicalFolder>
+              <logicalFolder name="Video" displayName="Video" projectFiles="true">
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Video/video_com_stage.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Video/video_com_stage.h</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Video/video_stage.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Video/video_stage.h</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Video/video_stage_ffmpeg_recorder.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Video/video_stage_ffmpeg_recorder.h</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Video/video_stage_recorder.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/Video/video_stage_recorder.h</itemPath>
+              </logicalFolder>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/ardrone_api.c</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/ardrone_time.c</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/ardrone_time.h</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/ardrone_tool.c</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/ardrone_tool.h</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/ardrone_tool_configuration.c</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/ardrone_tool_configuration.h</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/ardrone_tool/config_keys.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="iniparser3.0b"
+                           displayName="iniparser3.0b"
+                           projectFiles="true">
+              <logicalFolder name="src" displayName="src" projectFiles="true">
+                <itemPath>../../../../ARDroneLib/Soft/Lib/iniparser3.0b/src/dictionary.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/iniparser3.0b/src/dictionary.h</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/iniparser3.0b/src/iniparser.c</itemPath>
+                <itemPath>../../../../ARDroneLib/Soft/Lib/iniparser3.0b/src/iniparser.h</itemPath>
+              </logicalFolder>
+            </logicalFolder>
+            <logicalFolder name="Maths" displayName="Maths" projectFiles="true">
+              <itemPath>../../../../ARDroneLib/Soft/Lib/Maths/filter.c</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/Maths/filter.h</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/Maths/maths.c</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/Maths/maths.h</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/Maths/matrices.c</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/Maths/matrices.h</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/Maths/matrix3d.c</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/Maths/matrix3d.h</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/Maths/quaternions.c</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/Maths/quaternions.h</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/Maths/time.c</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/Maths/time.h</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/Maths/vision_math.c</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/Maths/vision_math.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="utils" displayName="utils" projectFiles="true">
+              <itemPath>../../../../ARDroneLib/Soft/Lib/utils/ardrone_crc_32.c</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/utils/ardrone_crc_32.h</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/utils/ardrone_ftp.c</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/utils/ardrone_ftp.h</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/utils/ardrone_gen_ids.c</itemPath>
+              <itemPath>../../../../ARDroneLib/Soft/Lib/utils/ardrone_gen_ids.h</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="VLIB" displayName="VLIB" projectFiles="true">
+          <logicalFolder name="P263" displayName="P263" projectFiles="true">
+            <itemPath>../../../../ARDroneLib/VLIB/P263/p263_codec.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P263/p263_codec.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P263/p263_gob_layer.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P263/p263_huffman.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P263/p263_huffman.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P263/p263_layers.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P263/p263_mb_layer.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P263/p263_picture_layer.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="P264" displayName="P264" projectFiles="true">
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_Qp.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_Qp.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_codec.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_codec.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_common.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_gob_layer.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_inter_mc.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_inter_mc.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_intra_pred.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_intra_pred.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_layers.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_mb_layer.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_merge.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_merge.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_picture_layer.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_transform.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_transform.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_zigzag.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/p264_zigzag.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/video_p264.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/P264/video_p264.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="Platform" displayName="Platform" projectFiles="true">
+            <logicalFolder name="x86" displayName="x86" projectFiles="true">
+              <logicalFolder name="UVLC" displayName="UVLC" projectFiles="true">
+                <itemPath>../../../../ARDroneLib/VLIB/Platform/x86/UVLC/uvlc_codec.c</itemPath>
+              </logicalFolder>
+              <itemPath>../../../../ARDroneLib/VLIB/Platform/x86/video_config.h</itemPath>
+              <itemPath>../../../../ARDroneLib/VLIB/Platform/x86/video_utils.c</itemPath>
+              <itemPath>../../../../ARDroneLib/VLIB/Platform/x86/video_utils.h</itemPath>
+              <itemPath>../../../../ARDroneLib/VLIB/Platform/x86/video_utils_x86.h</itemPath>
+            </logicalFolder>
+            <itemPath>../../../../ARDroneLib/VLIB/Platform/video_config.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/Platform/video_utils.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="Stages" displayName="Stages" projectFiles="true">
+            <itemPath>../../../../ARDroneLib/VLIB/Stages/vlib_stage_decode.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/Stages/vlib_stage_decode.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/Stages/vlib_stage_encode.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/Stages/vlib_stage_encode.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="UVLC" displayName="UVLC" projectFiles="true">
+            <itemPath>../../../../ARDroneLib/VLIB/UVLC/uvlc.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/UVLC/uvlc.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/UVLC/uvlc_codec.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/UVLC/uvlc_codec.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/UVLC/uvlc_gob_layer.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/UVLC/uvlc_layers.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/UVLC/uvlc_mb_layer.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VLIB/UVLC/uvlc_picture_layer.c</itemPath>
+          </logicalFolder>
+          <itemPath>../../../../ARDroneLib/VLIB/video_codec.c</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_codec.h</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_controller.c</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_controller.h</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_dct.c</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_dct.h</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_gob.h</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_huffman.c</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_huffman.h</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_macroblock.c</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_macroblock.h</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_mem32.c</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_mem32.h</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_packetizer.c</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_packetizer.h</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_picture.c</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_picture.h</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_picture_defines.h</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_quantizer.c</itemPath>
+          <itemPath>../../../../ARDroneLib/VLIB/video_quantizer.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="VP_SDK" displayName="VP_SDK" projectFiles="true">
+          <logicalFolder name="ATcodec" displayName="ATcodec" projectFiles="true">
+            <itemPath>../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_Buffer.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_Buffer.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_Error.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_Memory.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_Memory.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_Sorted_List.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_Sorted_List.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_Tree.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_Tree.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_api.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_api.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="VP_Api" displayName="VP_Api" projectFiles="true">
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Api/vp_api.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Api/vp_api.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_config.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_error.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_error.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_io_multi_stage.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_io_multi_stage.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_picture.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_stage.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_stage.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_supervisor.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_supervisor.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_thread_helper.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_thread_helper.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="VP_Com" displayName="VP_Com" projectFiles="true">
+            <logicalFolder name="linux" displayName="linux" projectFiles="true">
+              <itemPath>../../../../ARDroneLib/VP_SDK/VP_Com/linux/vp_com.c</itemPath>
+              <itemPath>../../../../ARDroneLib/VP_SDK/VP_Com/linux/vp_com_config_itf.c</itemPath>
+              <itemPath>../../../../ARDroneLib/VP_SDK/VP_Com/linux/vp_com_config_itf.h</itemPath>
+              <itemPath>../../../../ARDroneLib/VP_SDK/VP_Com/linux/vp_com_serial.c</itemPath>
+              <itemPath>../../../../ARDroneLib/VP_SDK/VP_Com/linux/vp_com_wifi.c</itemPath>
+              <itemPath>../../../../ARDroneLib/VP_SDK/VP_Com/linux/vp_com_wired.c</itemPath>
+            </logicalFolder>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Com/vp_com.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Com/vp_com_error.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Com/vp_com_error.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Com/vp_com_serial.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Com/vp_com_socket.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Com/vp_com_socket.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Com/vp_com_socket_utils.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Com/vp_com_wifi.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="VP_Os" displayName="VP_Os" projectFiles="true">
+            <logicalFolder name="elinux" displayName="elinux" projectFiles="true">
+              <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/elinux/vp_os_ltt.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="linux" displayName="linux" projectFiles="true">
+              <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/linux/intrin.h</itemPath>
+              <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/linux/vp_os_delay.c</itemPath>
+              <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/linux/vp_os_serial.h</itemPath>
+              <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/linux/vp_os_signal.c</itemPath>
+              <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/linux/vp_os_signal_dep.h</itemPath>
+              <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/linux/vp_os_thread.c</itemPath>
+              <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/linux/vp_os_thread_dep.h</itemPath>
+            </logicalFolder>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/vp_os.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_assert.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_delay.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_error_handling.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_error_handling.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_malloc.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_malloc.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_print.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_rtmon.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_signal.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_thread.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_types.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="VP_Stages" displayName="VP_Stages" projectFiles="true">
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_buffer_to_picture.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_buffer_to_picture.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_configs.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_configs.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_frame_pipe.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_frame_pipe.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_i_camif.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_io_buffer.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_io_buffer.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_io_com.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_io_com.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_io_console.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_io_console.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_io_file.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_io_file.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_o_sdl.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_o_sdl.h</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_yuv2rgb.c</itemPath>
+            <itemPath>../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_yuv2rgb.h</itemPath>
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="Examples" displayName="Examples" projectFiles="true">
+        <logicalFolder name="Linux" displayName="Linux" projectFiles="true">
+          <logicalFolder name="sdk_demo" displayName="sdk_demo" projectFiles="true">
+            <logicalFolder name="Sources" displayName="Sources" projectFiles="true">
+              <logicalFolder name="Navdata" displayName="Navdata" projectFiles="true">
+                <itemPath>../Sources/Navdata/navdata.c</itemPath>
+                <itemPath>../Sources/Navdata/navdata.h</itemPath>
+              </logicalFolder>
+              <logicalFolder name="UI" displayName="UI" projectFiles="true">
+                <itemPath>../Sources/UI/gamepad.c</itemPath>
+                <itemPath>../Sources/UI/gamepad.h</itemPath>
+                <itemPath>../Sources/UI/ui.c</itemPath>
+                <itemPath>../Sources/UI/ui.h</itemPath>
+              </logicalFolder>
+              <logicalFolder name="Video" displayName="Video" projectFiles="true">
+                <itemPath>../Sources/Video/video_stage.c</itemPath>
+                <itemPath>../Sources/Video/video_stage.h</itemPath>
+              </logicalFolder>
+              <itemPath>../Sources/ardrone_testing_tool.c</itemPath>
+              <itemPath>../Sources/ardrone_testing_tool.h</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+      </toolsSet>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+          <cTool>
+            <incDir>
+              <pElem>../../../../ARDroneLib/VLIB/Platform/x86</pElem>
+              <pElem>/usr/include/gtk-2.0</pElem>
+              <pElem>../../../../ARDroneLib</pElem>
+              <pElem>/usr/include/directfb</pElem>
+              <pElem>../../../../ARDroneLib/Soft/Common</pElem>
+              <pElem>/usr/include/cairo</pElem>
+              <pElem>../../../../ARDroneLib/VLIB/P263</pElem>
+              <pElem>/usr/lib/gtk-2.0/include</pElem>
+              <pElem>/usr/include/pixman-1</pElem>
+              <pElem>../../../../ARDroneLib/Soft/Build/targets_versions/_Linux_2.6.32-36-generic_GNU_Linux_gcc_4.4.3/include</pElem>
+              <pElem>../Sources</pElem>
+              <pElem>../../../../ARDroneLib/VP_SDK</pElem>
+              <pElem>/usr/lib/glib-2.0/include</pElem>
+              <pElem>/usr/include/freetype2</pElem>
+              <pElem>/usr/include/atk-1.0</pElem>
+              <pElem>../../../../ARDroneLib/VP_SDK/VP_Com</pElem>
+              <pElem>/specific</pElem>
+              <pElem>../../../../ARDroneLib/VP_SDK/Build</pElem>
+              <pElem>/usr/include/libpng12</pElem>
+              <pElem>/usr/include/glib-2.0</pElem>
+              <pElem>/usr/include/pango-1.0</pElem>
+              <pElem>../../../../ARDroneLib/Soft/Lib</pElem>
+              <pElem>../../../../ARDroneLib/VP_SDK/VP_Com/linux</pElem>
+              <pElem>/usr/local/include/opencv</pElem>
+              <pElem>../../../../ARDroneLib/VP_SDK/VP_Os/linux</pElem>
+            </incDir>
+            <preprocessorList>
+              <Elem>COMPIL_MODE_PROD</Elem>
+              <Elem>GNU_LINUX</Elem>
+              <Elem>NDEBUG</Elem>
+              <Elem>RECORD_VIDEO</Elem>
+              <Elem>TARGET_CPU_ARM=0</Elem>
+              <Elem>TARGET_CPU_X86=1</Elem>
+              <Elem>USE_FFMPEG</Elem>
+              <Elem>USE_LINUX</Elem>
+              <Elem>USE_VLIB</Elem>
+              <Elem>USE_WIFI</Elem>
+              <Elem>_REENTRANT</Elem>
+              <Elem>__LINUX__</Elem>
+              <Elem>__linux__</Elem>
+            </preprocessorList>
+          </cTool>
+        </makeTool>
+      </makefileType>
+      <item path="../../../../ARDroneLib/Soft/Lib/Maths/filter.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/Maths/maths.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/Maths/matrices.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/Maths/matrix3d.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/Maths/quaternions.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/Maths/time.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/Maths/vision_math.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Com/config_com.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Com/config_serial.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Com/config_wifi.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Control/ardrone_control.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Control/ardrone_control_ack.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Control/ardrone_control_configuration.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Control/ardrone_control_soft_update.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Control/ardrone_navdata_control.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Navdata/ardrone_general_navdata.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Navdata/ardrone_navdata_client.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Navdata/ardrone_navdata_file.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/UI/ardrone_input.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/UI/ardrone_tool_ui.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Video/video_com_stage.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Video/video_com_stage.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Video/video_stage.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Video/video_stage.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Video/video_stage_ffmpeg_recorder.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Video/video_stage_ffmpeg_recorder.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Video/video_stage_recorder.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/Video/video_stage_recorder.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/ardrone_api.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/ardrone_time.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/ardrone_time.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/ardrone_tool.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/ardrone_tool.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/ardrone_tool_configuration.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/ardrone_tool_configuration.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/ardrone_tool/config_keys.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/iniparser3.0b/src/dictionary.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/iniparser3.0b/src/dictionary.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/iniparser3.0b/src/iniparser.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/iniparser3.0b/src/iniparser.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/utils/ardrone_crc_32.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/utils/ardrone_ftp.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/Soft/Lib/utils/ardrone_gen_ids.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P263/p263_codec.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P263/p263_huffman.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P263/p263_layers.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_Qp.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_Qp.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_codec.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_codec.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_common.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_gob_layer.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_inter_mc.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_inter_mc.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_intra_pred.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_intra_pred.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_layers.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_mb_layer.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_merge.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_merge.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_picture_layer.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_transform.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_transform.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_zigzag.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/p264_zigzag.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/video_p264.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/P264/video_p264.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/Platform/video_config.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/Platform/video_utils.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/Platform/x86/video_config.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/Platform/x86/video_utils.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/Platform/x86/video_utils_x86.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/Stages/vlib_stage_decode.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/Stages/vlib_stage_encode.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/UVLC/uvlc.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/UVLC/uvlc_codec.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/UVLC/uvlc_layers.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_codec.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_codec.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_controller.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_controller.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_dct.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_dct.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_gob.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_huffman.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_huffman.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_macroblock.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_macroblock.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_mem32.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_mem32.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_packetizer.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_packetizer.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_picture.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_picture.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_picture_defines.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_quantizer.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VLIB/video_quantizer.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_Buffer.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_Error.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_Memory.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_Sorted_List.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_Tree.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/ATcodec/ATcodec_api.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Api/vp_api.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Api/vp_api.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_config.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_error.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_error.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_io_multi_stage.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_io_multi_stage.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_picture.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_stage.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_stage.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_supervisor.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_supervisor.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_thread_helper.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Api/vp_api_thread_helper.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Com/linux/vp_com_config_itf.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Com/vp_com.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Com/vp_com_error.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Com/vp_com_serial.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Com/vp_com_socket.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Com/vp_com_wifi.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Os/elinux/vp_os_ltt.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Os/linux/intrin.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Os/linux/vp_os_serial.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Os/linux/vp_os_signal_dep.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Os/linux/vp_os_thread_dep.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Os/vp_os.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_assert.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_delay.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_error_handling.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_malloc.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_print.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_rtmon.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_signal.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_thread.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Os/vp_os_types.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_buffer_to_picture.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_buffer_to_picture.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_configs.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_configs.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_frame_pipe.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_frame_pipe.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_i_camif.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_io_buffer.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_io_buffer.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_io_com.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_io_com.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_io_console.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_io_console.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_io_file.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_io_file.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_o_sdl.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_o_sdl.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_yuv2rgb.c"
+            ex="false"
+            tool="0"
+            flavor="0">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="../../../../ARDroneLib/VP_SDK/VP_Stages/vp_stages_yuv2rgb.h"
+            ex="true"
+            tool="3"
+            flavor="0">
+      </item>
+      <item path="../Sources/Navdata/navdata.h" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="../Sources/UI/gamepad.h" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="../Sources/UI/ui.h" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="../Sources/Video/video_stage.h" ex="true" tool="3" flavor="0">
+      </item>
+      <item path="../Sources/ardrone_testing_tool.h" ex="true" tool="3" flavor="0">
+      </item>
+      <folder path="withoutMainLoop/ARDroneLib">
+        <cTool>
+          <preprocessorList>
+            <Elem>AT_MESSAGES_HEADER="../Common/at_msgs.h"</Elem>
+            <Elem>USE_FFMPEG_RECORDER</Elem>
+            <Elem>USE_NEW_ATCODEC</Elem>
+            <Elem>_MOBILE</Elem>
+          </preprocessorList>
+        </cTool>
+      </folder>
+      <folder path="withoutMainLoop/ARDroneLib/Soft/Lib/Maths">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="withoutMainLoop/ARDroneLib/Soft/Lib/ardrone_tool/AT">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="withoutMainLoop/ARDroneLib/Soft/Lib/ardrone_tool/Com">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="withoutMainLoop/ARDroneLib/Soft/Lib/ardrone_tool/Control">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="withoutMainLoop/ARDroneLib/Soft/Lib/ardrone_tool/Navdata">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="withoutMainLoop/ARDroneLib/Soft/Lib/ardrone_tool/UI">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="withoutMainLoop/ARDroneLib/Soft/Lib/utils">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="withoutMainLoop/ARDroneLib/VLIB/P263">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="withoutMainLoop/ARDroneLib/VLIB/Platform">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="withoutMainLoop/ARDroneLib/VLIB/Stages">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="withoutMainLoop/ARDroneLib/VLIB/UVLC">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="withoutMainLoop/ARDroneLib/VP_SDK/ATcodec">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="withoutMainLoop/ARDroneLib/VP_SDK/VP_Com">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="withoutMainLoop/ARDroneLib/VP_SDK/VP_Os">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="withoutMainLoop/Examples">
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/gio-unix-2.0/</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+    </conf>
+  </confs>
+</configurationDescriptor>
