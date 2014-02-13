@@ -47,7 +47,7 @@ export PYTHONPATH=/usr/include/python2.7:/usr/lib/2.7:.
 2. Lancer le makefile par la commande `make`
 3. Exécuter le programme `./ardrone_autopylot`
 
-### Contrôle du drone
+## Contrôle du drone
 
 Le pilote automatique du programme n’est pas initialisé par défaut. Nous devons appuyer sur le bouton de pilote automatique (croix pour la manette PS3) pour que le contrôle soit transférer sur la fonction du fichier « autopylot_agent.py ». Toute action sur la manette rend le contrôle à l’utilisateur. Le projet comporte certaines failles :
 * le programme peut prendre plusieurs secondes pour communiques les données de navi-
