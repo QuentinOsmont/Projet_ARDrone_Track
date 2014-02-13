@@ -1,0 +1,26 @@
+Lancement du programme
+------------------------
+	./trackeur (pas d'options)
+
+
+Utilisation du programme
+--------------------------
+	2 modes : tracking et manuel (mode manuel pas défaut).
+
+	Mode tracking
+		Début : cliquer sur la couleur à suivre dans la fenêtre "Image camera"
+			Remarque : il est plus facile de faire cela lorsque le drone est au sol
+		Fin : appuyer sur la touche 's'
+		
+	Mode manuel
+		Contrôle du drone avec le clavier.
+		'd' : décollage
+		'a' : atterrissage
+		Flèches directionnelles : déplacements avant/arrière et latéraux
+		'h' : voler plus haut
+		'b' : voler plus bas
+		'j' : rotation antihoraire
+		'k' : rotation horaire
+		"echap" : arrêt du programme (cause une erreur)
+
+	Remarque : les touches 'd', 'a' et "echap" fonctionnent en mode tracking, "echap" fonctionne seulement lorsque le drone est au sol.
