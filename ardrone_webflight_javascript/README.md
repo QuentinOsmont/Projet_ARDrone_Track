@@ -1,14 +1,6 @@
 # ardrone-webflight
 
-Pilot the AR.Drone 2.0 directly from your browser. Extend the application with plugins
-to add features such as video recording, autonomous flight, face recognition, and more.
-It makes it a very friendly environment to quickly build and experiment with your drone
-(e.g. during a [nodecopter](http://nodecopter.com) event).
-
-If you encounter an issue; please submit it to the issue tracker! You can also catch
-up with me (eschnou) on twitter or on #freenode (channel #nodecopter).
-
-**This branch is the development branch, there are no packaged release yet.**
+Cette application permet de piloter le drone directement depuis notre navigateur. De plus, il est possible d'étendre l'application avec des plugins afin d'ajouter des fonctionnalités telles que l'enregistrement vidéo, le vol autonome, la reconnaissance des visages, le suivit d'objet et plus encore. Cela permet d'avoir un environnement convivial pour construire et expérimenter notre drone.
 
 ## Built-in plugins
 
@@ -94,13 +86,7 @@ is bundled in its own folder.
 There is no tutorial yet, in the meanwhile, just have a look at the built in plugins,
 it is faily straightforward.
 
-## Thanks
 
-This work is based on the integration of [nodecopter-cockpit](https://github.com/bkw/nodecopter-cockpit)
-and [drone-browser](https://github.com/functino/drone-browser), refactored in a plugin architecture.
-Thanks to [@bkw](https://github.com/bkw/) and [@functino](https://github.com/functino) for sharing! Also
-a big thank you to [@felixge](https://github.com/felixge) for his [node-ar-drone](https://github.com/felixge/node-ar-drone) library
-which pushed me into buying a drone and become crazy about these little flying robots!
 
 ## License
 
