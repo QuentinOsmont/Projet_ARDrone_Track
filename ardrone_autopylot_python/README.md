@@ -11,6 +11,8 @@ joystick mais également par un module de suivit d’objet en Python (Voir vidé
 # This should reflect where you put the SDK
 SDK_DIR:=/home/quentin/Documents/ARDrone_SDK_2_0_1
 ```
+* le type de contrôleur utilisé en commentant celui intéressé et décommentant l’autre (lignes 27-28). Pour connaître l’adresse de votre manette, il faut taper « lsusb » dans un terminal :
+```
 # We currently support LOGITCH and PS3 gamepads
 #GAMEPAD = GAMEPAD_LOGITECH_ID=0x046dc215
 GAMEPAD = GAMEPAD_PS3_ID=0x054c0268
@@ -20,13 +22,6 @@ GAMEPAD = GAMEPAD_PS3_ID=0x054c0268
 ```
 # Python version: you may need to run apt-get install python-dev as root
 PYVER = 2.7
-3
-4
-5
-6
-7
-8
-9
 # If you use Python, make sure that PYTHONPATH shell variable contains .
 # (dot; current directory). In ~/.bashrc:
 # export PYTHONPATH=$PYTHONPATH:.
