@@ -1,0 +1,54 @@
+//Récupération du projet
+git clone https://github.com/eschnou/ardrone-webflight.git
+
+//Pour récupérer le module tracker
+git clone https://github.com/bkw/webflight-tracker.git
+
+//Pour ajouter le module tracker au projet ardrone-webflight
+mkdir ardrone-webflight/plugins/tracker
+mv webflight-tracker/index.js webflight-tracker/public ardrone-webflight/plugins/tracker
+
+//déplacement
+cd ardrone-webflight
+
+//Besoin d'installer node.js
+sudo apt-get install python-software-properties python g++ make
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get update
+sudo apt-get install nodejs
+
+//test 
+node -v
+
+//ensuite
+npm install
+
+//installe bower
+sudo npm install -g bower
+
+//ensuite
+bower install
+
+//Besoin du package ffmpeg
+sudo apt-get install ffmpeg
+
+//Copy the config.js.sample to config.js and edit to select your plugins
+cp config.js.example config.js
+gedit config.js
+var config = {
+  plugins: [ "video-stream", "hud", "battery", "pilot", "tracker" ],
+...
+
+//installer firefox (dernière version d'un navigateur performant (bug sur google chrome)
+sudo apt-get install firefox
+
+
+//Connect to the drone's wifi
+//Run
+node app.js
+
+//sur le navigateur 
+localhost:3000
+
+//Les commandes pour controler le drone doivent être tapées dans la fenêtre du navigateur
