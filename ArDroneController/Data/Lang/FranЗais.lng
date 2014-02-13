@@ -1,0 +1,103 @@
+////////////////////////////////////////////////////////////////////
+// << WARNING >>
+// N'editez pas ce fichier, a moins de savoir 
+// exactement ce que vous faites !
+//
+// Traduction: Patrick Christmann
+////////////////////////////////////////////////////////////////////
+
+// General
+Error=Erreur
+Warning=Avertissement
+Info=Information
+Ok=Ok
+Apply=Appliquer
+Cancel=Annuler
+
+// Erreurs diverses
+ConnectFail=La connection au drone a échouée.
+ExitFlying=Le drone est en vol, voulez vous réellement quitter ?
+DisconnectFlying=Le drone est en vol, voulez vous réellement déconnecter ?
+WifiFailed=L'adaptateur wifi n'a pas pu être initialisé.
+AppLoadFailed=L'application ne peut pas démarrer, veuillez réinstaller !
+DumpSuccess=La configuration du drone a été sauvegardée dans le fichier Config.log
+DumpFailed=Impossible de lire la configuration du drone, vérifiez la connection wifi
+
+// GUI - Menu, barre d'outils et barre de statut
+Main=Fichier
+MainGetCfg=Lire config drone
+MainExit=Quitter
+Config=Options
+ConfigApp=Général
+ConfigKey=Clavier
+ConfigJoy=Joystick
+About=A propos...
+Connect=Ouvrir la connection au drone
+Disconnect=Fermer la connection au drone
+Emergency=Arrêt d'urgence (Echap)
+Trim=Effectuer un trim à plat/calibrage
+LandTakeOff=Décoller et atterrir (Entrée)
+Record=Démarrer et arrêter l'enregistrement (R)
+Screenshot=Enregistrer une capture d'écran (P)
+Fullscreen=Basculer entre le mode plein écran et le mode fenêtre (F)
+Camera=Basculer entre la caméra frontale et la caméra ventrale (C)
+Home=(Experimental) Retourner à la position de départ(H)
+HomeReset=Définir la position actuelle comme point de départ
+ConnectedTo=Connecté à: 
+DroneVersion=Version ArDrone: 
+NotConnected=Pas de connection au drone
+
+// Dialogue de configuration
+SelectLang=Langue de l'application
+PlaySounds=Jouer un son en cas de batterie faible ou de signal wifi faible
+RCMod=Utilisation du Mod RC (experimental)
+SelectCodec=Sélectionnez la résolution de la vidéo (V2 uniquement)
+HudStyle=Selectionnez le modèle du HUD
+HudColor=Sélectionnez la couleur du HUD
+HudLine=Sélectionnez l'épaisseur de ligne du HUD
+USUnit=Utilisez les unités US (pied au lieu de mètre)
+SetMaxSpeed=Vitesse maximale (en % des capacités du drone)
+SetMaxAcc=Vitesse d'accélération (en % des capacités du drone)
+SetMaxAlt=Altitude maximale autorisée (en mètres)
+
+// Dialogue de configuration du joystick
+NoJoystick=Pas de jostick trouvé, option indisponible
+JoystickConfig=Configuration du joystick
+Invert=Inverser l'axe
+Axis=Gestion des axes du joystick
+AxisSelection=Sélectionnez l'axe à utiliser pour chaque direction
+AxeFwd=Se déplacer en avant et en arrière
+AxeSide=Se déplacer à droite et à gauche
+AxeTurn=Tourner à droite et à gauche
+AxeAlt=Monter et descendre
+AxeMultiAssign=Le même axe d'un joystick ne peut pas être utilisé pour plusieurs directions !
+Buttons=Gestion des boutons du joystick
+ButtonSelection=Sélectionnez les boutons à assigner aux actions
+ButtonMultiAssign=Le même bouton ne peut être assigné à deux actions !
+
+// Dialogue de configuration du clavier
+KeyboardConfig=Configuration du clavier
+// Dans la ligne ci dessous, les caractères ## seront remplacés par un retour à la ligne
+SelectKeyWarning=Configurez les touches à utiliser. Veuillez noter qu'il n'est pas possible d'utiliser les touches spéciales suivantes !####Esc (Arrêt d'urgence)##Entrée (Décoller/Atterrir)##R (Enregistrer)##P (Prendre une photo)##F (Plein écran/Mode fenêtre)##C (Changer de caméra)##H (Retour au point de départ)
+AssignKey=Appuyez une touche...
+KeyMoveFwd=Déplacer le drone vers l'avant
+KeyMoveBwd=Déplacer le drone vers l'arrière
+KeyMoveR=Déplacer le drone vers la droite
+KeyMoveL=Déplacer le drone vers la gauche
+KeyMoveTR=Tourner le drone vers la droite
+KeyMoveTL=Tourner le drone vers la gauche
+KeyMoveUp=Déplacer le drone vers le haut
+KeyMoveDown=Déplacer le drone vers le bas
+ForbiddenKey=Les touches spéciales ne peuvent pas êtres utilisées pour diriger le drone !
+RedundantKey=La même touche ne peut pas controler plusieurs directions !
+
+// Erreurs du drone
+ErrorMotors=Erreur: Dysfonctionnement moteur(s)
+ErrorMotorBlocked=Erreur: Moteur(s) bloqué(s)
+ErrorAngles=Erreur: Angles trop élevés
+ErrorUltrasound=Erreur: Dysfonctionnement ultrason
+ErrorLostComm=Erreur: Perte de la connection
+ErrorWatchdog=Erreur: Communication (watchdog)
+ErrorEM=Erreur: Urgence enclenchée
+ErrorUserEM=Erreur: Urgence utilisateur enclenchée
+ErrorBattery=Erreur: Niveau batterie critique

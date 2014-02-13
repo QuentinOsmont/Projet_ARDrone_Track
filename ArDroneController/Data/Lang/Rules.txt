@@ -1,0 +1,26 @@
+To add a new language :
+-----------------------
+
+1 - copy an .lng file and rename it to the new language.
+
+2 - Replace all strings on the right of the = sign
+
+3 - The %d string contained in some strings must exist in the translated string
+    They are placeholders for some values, and replaced on runtime
+
+	for example the string : 
+	"There are %d element(s) selected" 
+	will be replaced on runtime by :
+	"There are 5 element(s) selected"
+	
+	*******************************************************************************
+	NOTE : Even if the position of the placeholders in the string is not important,
+	       they must be present, otherwise the display may be corrupt, and the 
+	       application may enter in an undefined behaviour, so be carefull !
+	*******************************************************************************
+
+
+4 - Strings beginning with // are considered as comments and ignored
+
+5 - Please let me know if you translate to another language, 
+    so I will add it to next version, if you agree ! :-)
