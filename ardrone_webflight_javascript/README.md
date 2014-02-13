@@ -56,14 +56,12 @@ bower install
 ```
 
 Pour utiliser les plugins, le fichier config.js doit être configuré :
-
 ```
 cp config.js.example config.js
 //Modification du fichier config.js pour l'utilisation du plugin tracker
 var config = {
     plugins: [ "video-stream", "hud", "battery", "pilot", "tracker" ],
     ...
-
 ```
 
 Dans le but d'utiliser les plvar config = {
