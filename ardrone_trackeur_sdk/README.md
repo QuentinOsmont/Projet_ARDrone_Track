@@ -1,4 +1,4 @@
-# ardrone_webflight_javascript
+# ardrone_trackeur_sdk
 
 Cette application permet au drone de suivre une cible colorée. Cependant, les sources proviennent d'un projet conçu avec le SDK 1.8 et adapté pour l'AR.Drone 1.0. L'application a été modifié pour être compilé avec le SDK 2.0.1 mais n'affiche toujours pas le flux video dans la fenêtre OpenCV (fenêtre grisé).
 
