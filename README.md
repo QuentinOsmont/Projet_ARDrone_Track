@@ -1,7 +1,11 @@
 Projet_ARDrone_Track
 ====================
 
-Projets de différents langages pour le suivit d'objet par l'AR.Drone 2.0 avec la SDK 2.0.1.
+Projets de différents langages pour le suivit d'objet par l'AR.Drone 2.0 avec la SDK 2.0.1. 
+*Pour les récupérer :
+```
+git clone https://github.com/QuentinOsmont/Projet_ARDrone_Track
+```
 
 ## Projet développé avec OpenCV
 - Il permet de générer une fenêtre retransmettant le flux vidéo de envoyé par la caméra du drone.
