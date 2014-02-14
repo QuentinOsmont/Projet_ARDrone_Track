@@ -21,3 +21,6 @@ git clone https://github.com/QuentinOsmont/Projet_ARDrone_Track
 
 ## Projet développé avec JavaScript
 - Il utilise un serveur node et un navigateur récent et puissant.
+
+## Projet développé avec Java
+- Il ouvre une fenêtre censée retransmettre le flux vidéo et composée de bouton de commande pour le drone. 
