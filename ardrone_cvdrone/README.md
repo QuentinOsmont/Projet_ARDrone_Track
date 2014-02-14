@@ -37,7 +37,7 @@ sudo apt-get install libopencv-dev
 * POSIX Threads pour Win32 2.9.1 : http://www.sourceware.org/pthreads-win32/
 
 
-## License
+## Licence
 
 Copyright (C) 2013 puku0x
 
