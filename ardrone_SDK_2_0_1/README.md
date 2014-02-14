@@ -25,6 +25,5 @@ sudo apt-get install libsdl-dev libgtk2.0-dev libiw-dev
 
 Dans l'objectif d'utiliser un autre système d'exploitation, il suffit de modifier le fichier "custom.makefile" se situant dans le dossier "ardrone_SDK_2_0_1/ARDroneLib/Soft/Build".
 * changer le "no" en "yes" pour le système utilisé
-ste des bugs d'utilisation sur "google chrome".
 
 
