@@ -1,0 +1,170 @@
+/*
+ * Copyright (C) 2010-2011, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/call-message.u");
+requireFile("urbi/orderable.u");
+requireFile("urbi/object.u");
+requireFile("urbi/exception.u");
+requireFile("urbi/boolean.u");
+requireFile("urbi/list.u");
+requireFile("urbi/nil.u");
+requireFile("urbi/range-iterable.u");
+requireFile("urbi/comparable.u");
+
+/*--------.
+| Float.  |
+`--------*/
+
+do (Float)
+{
+  // The connectives == and < are builtins.
+  //
+  // Warning: We derive from Orderable first so that we use its
+  // Object.==, otherwise String would use both Comparable.== and
+  // Comparable.!= that bounce endlessly one on the other.
+  setProtos([Orderable, Comparable, RangeIterable]);
+
+  /// Absolute approximation parameter.
+  var epsilonTilde = 0.0001;
+
+  /// Absolute approximation.
+  function '~='(x) { (this - x).abs <= epsilonTilde };
+
+/* %= is now a = a % b.
+
+  /// Relative approximation parameter.
+  var epsilonPercent = 0.0001;
+
+  /// Relative approximation.
+  function '%='(x) { (1.0 - this / x).abs <= epsilonPercent };
+*/
+
+  // FIXME: =~= cannot be correctly implemented without properties.
+  function '=~='(x) { (this - x).abs <= delta + x.delta };
+
+  /// Normalized value (i.e., 0 <= res <= 1).
+  function '\'n'()
+  {
+    (this - rangemin) / (rangemax - rangemin)
+  };
+
+  function asList()
+  {
+    seq
+  };
+
+  var '$fresh' = 0;
+  function fresh()
+  {
+    Float.'$fresh' += 1;
+  };
+
+  function hex()
+  {
+    format(FormatInfo.new("%x"))
+  };
+
+  function map(f)
+  {
+    asList.map(f)
+  };
+
+  function max(var args[])
+  {
+    (args << this).max;
+  };
+
+  function min(var args[])
+  {
+    (args << this).min;
+  };
+
+  /// owner: The object that owns the slot onto which a property will be
+  ///        given.
+  /// name:  Slot name.
+  /// prop:  Property name (e.g., "rangemin").
+  /// value: Property value (e.g., 0).
+  function newPropertyHook(owner, name, prop, value)
+  {
+    installUpdateHookStack(owner, name)|
+    // Setup 'n mecanism
+    {
+      var slotName = name + "_quote_n"|
+
+      if (!owner.hasSlot(slotName))
+      {
+        function quote_n()
+        {
+          var max = owner.getProperty(name, "rangemax") |
+          var min = owner.getProperty(name, "rangemin") |
+          var val = owner.getSlot(name) |
+          (val - min) / (max - min) |
+        }|
+
+        function hook(slot, val)
+        {
+          var max = owner.getProperty(name, "rangemax") |
+          var min = owner.getProperty(name, "rangemin") |
+          updateSlot(name, min + (max - min) * val)
+        }|
+
+        owner.setSlot(slotName, quote_n)|
+        owner.setProperty(slotName, "updateHook", hook)|
+      }|
+    }|
+
+    function rangeminHook(slot, val)
+    {
+      var min = getProperty(slot, "rangemin")|
+      if (val < min)
+        min
+      else
+        val
+    }|
+
+    function rangemaxHook(slot, val)
+    {
+      var max = getProperty(slot, "rangemax")|
+      if (val > max)
+        max
+      else
+        val
+    }|
+
+    switch (prop)
+    {
+      case "rangemin":
+        owner.setProperty(name, "updateHook", rangeminHook)|
+      case "rangemax":
+        owner.setProperty(name, "updateHook", rangemaxHook)|
+    }|
+  };
+
+  function sgn()
+  {
+    Kernel1.deprecated("Float.sgn", "Float.sign") |
+    sign
+  };
+
+  function sqr()
+  {
+    this ** 2
+  };
+
+  // Repeat \a action \a this times.
+  function times (action)
+  {
+    for| (var i = 0; i < this; i++)
+      action()
+  };
+
+};
+
+

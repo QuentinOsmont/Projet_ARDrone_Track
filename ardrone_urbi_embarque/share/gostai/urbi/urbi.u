@@ -1,0 +1,111 @@
+/*
+ * Copyright (C) 2010-2011, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+do (Object)
+{
+  var isVoid = false;
+  function acceptVoid()   { this };
+  function unacceptVoid() { this };
+};
+do (void.acceptVoid)
+{
+  function acceptVoid()   { new };
+  function unacceptVoid() { protos.front };
+};
+
+System.loadFile(System.searchFile("urbi/object.u"));
+System.loadFile(System.searchFile("urbi/system.u"));
+System.load("urbi/global.u");
+System.load("urbi/platform.u");
+
+requireFile("urbi/traceable.u");
+requireFile("urbi/exception.u");
+requireFile("urbi/call-message.u");
+requireFile("urbi/comparable.u");
+requireFile("urbi/container.u");
+requireFile("urbi/lazy.u");
+requireFile("urbi/range-iterable.u");
+requireFile("urbi/list.u");
+requireFile("urbi/singleton.u");
+
+requireFile("urbi/boolean.u");
+requireFile("urbi/nil.u");
+requireFile("urbi/control.u");
+requireFile("urbi/channel.u");
+
+// Disable top-level display
+Channel.topLevel.enabled = false;
+
+// Provide !=.
+Object.addProto(Comparable);
+
+requireFile("urbi/orderable.u");
+List.protos.insertBack(Global.Orderable);
+
+requireFile("urbi/updatehook-stack.u");
+
+requireFile("urbi/binary.u");
+requireFile("urbi/code.u");
+requireFile("urbi/date.u");
+requireFile("urbi/dictionary.u");
+requireFile("urbi/directory.u");
+requireFile("urbi/file.u");
+requireFile("urbi/path.u");
+requireFile("urbi/loadable.u");
+requireFile("urbi/duration.u");
+requireFile("urbi/enumeration.u");
+requireFile("urbi/event.u");
+requireFile("urbi/float.u");
+requireFile("urbi/group.u");
+requireFile("urbi/kernel1.u");
+requireFile("urbi/job.u");
+requireFile("urbi/lobby.u");
+requireFile("urbi/math.u");
+requireFile("urbi/mutex.u");
+requireFile("urbi/package-info.u");
+requireFile("urbi/pattern.u");
+requireFile("urbi/profile.u");
+requireFile("urbi/pubsub.u");
+requireFile("urbi/socket.u");
+requireFile("urbi/stack-frame.u");
+requireFile("urbi/string.u");
+requireFile("urbi/tag.u");
+requireFile("urbi/timeout.u");
+requireFile("urbi/trajectory-generator.u");
+requireFile("urbi/tuple.u");
+requireFile("urbi/weak-pointer.u");
+// Enhance requireFile thanks to previous loadings.
+requireFile("urbi/require-file.u");
+
+/*----------.
+| UObject.  |
+`----------*/
+
+"Initializing uobjects NOW";
+requireFile("urbi/uobject.u");
+
+if ("ros" in Platform.enabledModules && System.getenv("ROS_ROOT"))
+  loadModule("urbi/ros");
+
+// These guys are loading modules via loadModule, which needs
+// UObject.searchPath, which is defined by urbi/uobject.u.
+if (!System.Platform.compilationModeSpace)
+{
+  requireFile("urbi/formatter.u");
+  requireFile("urbi/input-stream.u");
+  requireFile("urbi/logger.u");
+  requireFile("urbi/process.u");
+  requireFile("urbi/regexp.u");
+};
+
+Channel.topLevel.enabled = true |
+System.defaultIsSystem = false |
+// Used by initialization code to detect the end of urbi.u.
+var Object.loaded = true |;

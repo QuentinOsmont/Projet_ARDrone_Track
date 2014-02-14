@@ -1,0 +1,51 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/call-message.u");
+requireFile("urbi/boolean.u");
+
+class Global.Control
+{
+  function 'detach'(var c)
+  {
+    System.spawn(c, false)
+  };
+
+  function 'disown'(var c)
+  {
+    System.spawn(c, true)
+  };
+
+  // 'every,sleep'(deadline, delay)
+  //
+  // Prepare the next iteration for "every,", which should happen at
+  // deadline + delay.
+  function 'every,sleep'(deadline, delay)
+  {
+    deadline += delay |
+    sleep(deadline - shiftedTime)|
+    deadline
+  };
+
+  // 'every|sleep'(deadline, delay)
+  //
+  // Prepare the next iteration for every|, which should happen at
+  // deadline + delay.  Return deadline.
+  function 'every|sleep'(deadline, delay)
+  {
+    deadline += delay |
+    var delta = deadline - shiftedTime |
+    if (0 < delta)
+      sleep(delta)
+    else
+      deadline -= delta |
+    deadline
+  };
+};

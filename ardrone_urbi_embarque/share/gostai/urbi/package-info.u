@@ -1,0 +1,70 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+class System.PackageInfo
+{
+  var components = [ => ];
+
+  function init (var name)
+  {
+    var this.name = name |
+    var this.dependencies = [] |
+    System.PackageInfo.components[name] = this
+  };
+
+  // A function to make initialization dependencies easier to manage.
+  function banner()
+  {
+    ["*" * 56]
+    + copyright(false) +
+    ["",
+     "This program comes with ABSOLUTELY NO WARRANTY.  It can",
+     "be used under certain conditions.  Type `license;',",
+     "`authors;', or `copyright;' for more information.",
+     "",
+     "Check our community site: http://www.urbiforge.org.",
+     "*" * 56];
+  };
+
+  function copyright(var deep = true)
+  {
+    [
+      "%s version %s rev. %s" % [name, version, revision],
+      "Copyright (C) %s %s" % [copyrightYears, copyrightHolder]
+    ]
+    +
+    {
+      if (deep && dependencies)
+        dependencies
+          .map(methodToFunction("copyright"))
+          .foldl([].methodToFunction("+"), [""])
+      else
+        [];
+    }
+  };
+
+  function depend(var other)
+  {
+    dependencies += [other]|;
+  };
+};
+
+load("urbi/package-info/urbi-sdk.u");
+load("urbi/package-info/libport.u");
+
+do (System.PackageInfo)
+{
+  var copyrightHolder = "Gostai S.A.S.";
+  var copyrightYears = "2004-2011";
+  do (components["Urbi SDK"])
+  {
+    depend(components["Libport"]);
+  };
+};

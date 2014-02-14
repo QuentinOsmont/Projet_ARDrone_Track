@@ -1,0 +1,47 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/global.u");
+requireFile("urbi/traceable.u");
+requireFile("urbi/control.u");
+requireFile("urbi/channel.u");
+
+do (Job)
+{
+  addProto(Global.Traceable);
+
+  function asString()
+  {
+    "%s<%s>" % [type, name]
+  };
+
+  function dumpState()
+  {
+    echo("Job: " + name)|
+    echo("  State: " + status) |
+
+    if (var t = timeShift)
+      echo("  Timeshift: " + t + "ms") |
+
+    if (var ts = tags)
+    {
+      echo("  Tags:") |
+      for| (var t : tags)
+        echo("    " + t);
+    } |
+
+    if (var b = backtrace)
+    {
+      echo("  Backtrace:") |
+      for| (var l : b)
+        echo("    " + l);
+    }
+  }
+};

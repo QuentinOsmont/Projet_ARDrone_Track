@@ -1,0 +1,48 @@
+/*
+ * Copyright (C) 2010, 2011, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/loadable.u");
+requireFile("urbi/call-message.u");
+requireFile("urbi/channel.u");
+requireFile("urbi/global.u");
+requireFile("urbi/singleton.u");
+requireFile("urbi/control.u");
+requireFile("urbi/float.u");
+
+class Global.Math
+{
+  setProtos([Singleton]);
+
+  function abs(var x)     { x.abs };
+  function acos(var x)    { x.acos };
+  function asin(var x)    { x.asin };
+  function atan(var x)    { x.atan };
+  function cos(var x)     { x.cos };
+  function exp(var x)     { x.exp };
+  function log(var x)     { x.log };
+  function random(var x)  { x.random };
+  function srandom(var x) { x.srandom };
+  function round(var x)   { x.round };
+  function sign(var x)    { x.sign };
+  function sin(var x)     { x.sin };
+  function sqr(var x)     { x.sqr };
+  function sqrt(var x)    { x.sqrt };
+  function tan(var x)     { x.tan };
+  function trunc(var x)   { x.trunc };
+
+  function atan2(x, y)  { x.atan2(y) };
+
+  function min(var args[]) { args.min };
+  function max(var args[]) { args.max };
+
+  for (var v: ["inf", "nan", "pi"])
+    setSlot(v, Float.getSlot(v));
+};
+Global.addProto(Global.Math);

@@ -1,0 +1,103 @@
+/*
+ * Copyright (C) 2011, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/loadable.u");
+requireFile("urbi/call-message.u");
+requireFile("urbi/channel.u");
+requireFile("urbi/global.u");
+requireFile("urbi/exception.u");
+requireFile("urbi/control.u");
+
+/*-----------------------.
+| Profiling operations.  |
+`-----------------------*/
+
+class Global.Profile
+{
+  class Function
+  {
+    function asString()
+    {
+      "%s('%s', %s, %.6f, %.6f)"
+      % [type, name, calls, selfTime, selfTimePer]
+    };
+  };
+
+  /// Compute the optimal unit for given values.
+  /// \param values   in seconds.
+  /// \return (factor, unit)
+  function computeUnit(var values)
+  {
+    var max = values.filter(function (var v){ v != 0 }).max |
+    var order = 0|
+    for (var i : [0, 3, 6])
+      if (1 <= max * 10 ** i)
+      {
+        order = i|
+        break
+      }|
+    var unit =
+      {
+        switch (order)
+        {
+          case 0: " s"
+          case 3: "ms"
+          case 6: "us"
+        }
+     }|
+    (10 ** order, unit)
+  };
+
+  function asString()
+  {
+    // Compute unit for times:
+    var timeUnit =
+      computeUnit(calls.map(function (var c) { c.selfTime })) |
+    // Compute unit for selfTimePers:
+    var selfTimePerUnit =
+      computeUnit(calls.map(function (var c) { c.selfTimePer })) |
+    var totalTime     = totalTime * timeUnit[0] |
+    var wallClockTime = wallClockTime * timeUnit[0] |
+
+    var str = "Profile(\n"
+              "  %-21s %6s\n"
+              "  %-21s %6.2f\n"
+              "  %-21s %6.2f\n"
+              "  %-21s %6s\n"
+              "  %-21s %6s\n\n"
+              % ["Yields:",                             yields,
+                 "Total time (%s):"      % timeUnit[1], totalTime,
+                 "Wall-clock time (%s):" % timeUnit[1], wallClockTime,
+                 "Function calls:",                     totalCalls,
+                 "Max depth:",                          maxFunctionCallDepth] |
+    str +=
+    "  .-------------------------------------------------------------------.\n"
+    "  |   function   |   %%    | cumulative |  self  |  calls  |   self    |\n"
+    "  |              |        |    (%s)    |  (%s)  |         | (%s/call) |\n"
+    "  |--------------+--------+------------+--------+---------+-----------|\n"
+    % [timeUnit[1], timeUnit[1], selfTimePerUnit[1]] |
+
+    var cumulative = 0 |
+    for (var c: calls)
+    {
+      var selfTime = c.selfTime * timeUnit[0] |
+      var selfTimePer = c.selfTimePer * selfTimePerUnit[0] |
+      str += "  | %12s | %6.2f | %10.2f | %6.2f | %7s | %9.3f |\n"
+             % [{if (c.name.empty) "<anonymous>" else c.name},
+                selfTime / totalTime * 100.0,
+                cumulative += selfTime,
+                selfTime,
+                c.calls,
+                selfTimePer] |
+    } |
+    str += "  '--------------'--------'------------'--------'---------'-----------'\n"
+           ")"
+  };
+};

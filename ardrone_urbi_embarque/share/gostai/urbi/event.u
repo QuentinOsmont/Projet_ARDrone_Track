@@ -1,0 +1,68 @@
+/*
+ * Copyright (C) 2010, 2011, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/boolean.u");
+
+// Completion of events code
+
+do (Event)
+{
+  function '||' (rhs)
+  {
+    var res = Event.new |
+    at (this?)
+      res! |
+    at (rhs?)
+      res! |
+    res
+  };
+
+  // This function does not handle events that have a duration because
+  // this would be costly for the declarations of "at" with
+  // conditions.
+  function '<<' (rhs)
+  {
+    var handler |
+    rhs.onEvent(closure (var evt, var payload) { true },
+                closure (var evt, var payload, var pattern) { handler = this.trigger },
+                closure (var evt, var payload, var pattern) { handler.stop },
+                true) |
+
+    // To watch many at once.
+    this
+  };
+
+  // Event that triggers if the original event is up for the given
+  // duration. That is, "this ~ duration".
+  function persists(var duration)
+  {
+    var res = Event.new |
+    var control = Tag.new |
+    var handler = nil |
+    at (this?)
+    {
+      control:
+      {
+        sleep(duration) |
+        handler = res.&trigger.apply([res] + '$payload')
+      }
+    }
+    onleave
+    {
+      control.stop |
+      if (handler != nil)
+      {
+        handler.stop |
+        handler = nil
+      }
+    } |
+    res
+  };
+};

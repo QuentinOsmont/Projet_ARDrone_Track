@@ -1,0 +1,184 @@
+/*
+ * Copyright (C) 2010-2011, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+do (System)
+{
+  // Assertion control.
+  var ndebug = false;
+
+  var assertVerbose = false;
+  function assert_(var assertion, var messageFail, var messagePass = "")
+  {
+    if (!assertion)
+      throw Exception.new("failed assertion: " + messageFail) |
+    if (assertVerbose && !messagePass.empty)
+      clog << "passed assertion: " + messagePass
+  };
+
+  /// assert(assertion).
+  function 'assert'
+  {
+    if (call.args.size != 1)
+      throw Exception.Arity.new(call.message, call.args.size, 1) |
+    if (!ndebug)
+      assert_(call.evalArgAt(0), call.argString(0), call.argString(0)) |
+  };
+
+  /// assertCall(Message: String | Lazy, Lhs, Rhs).
+  function assertCall
+  {
+    if (call.args.size < 2)
+      throw Exception.Arity.new(call.message, call.args.size, 2) |
+    if (!ndebug)
+    {
+      // Support lazy invocations (all arguments are lazy),
+      // or a partially lazy one, to ease bouncing from functions.
+      var message =
+      {
+        if (call.args[0].type == "String")
+          call.args[0]
+        else
+          call.argAt(0)
+      }|
+
+      // Skip the function name.
+      var args = call.args.tail |
+      var target = args[0] |
+      var c = call |
+      c.message = message |
+      c.args = args.tail |
+      c.targetLazy = target |
+      c.target = target.value.acceptVoid |
+      var formatArgsStr = c.format |
+      var messageFail =
+          "%s (%s)" % [formatArgsStr, c.negatedFormat(c.argsPrint)] |
+      var messagePass =
+          "%s (%s)" % [formatArgsStr, c.format(c.argsPrint)] |
+
+      assert_(c.value, messageFail, messagePass)
+    }
+  };
+
+
+  /// assert_op(Operator: String | Lazy, Lhs, Rhs).
+  var assert_op = &assertCall;
+
+  var period = 20ms;
+
+  // systemFiles.
+  systemFiles->updateHook = function(slot, value)
+  {
+    setSystemFiles(value) |
+    void
+  };
+
+  // '$loadedFiles' local slot names are files loaded so far
+  // Object.new not being loaded yet, '$loadedFiles' is a dummy string
+  var '$loadedFiles' =
+    [
+      "urbi/object.u" => 1,
+      "urbi/urbi.u"   => 1,
+      "urbi/system.u" => 1,
+    ];
+  var defaultIsSystem = true;
+
+  // Enhance loadFile to fill systemFiles.
+  overrideSlot("loadFile",
+  function (var file, var target = this, var isSystem = defaultIsSystem)
+    {
+      if (isSystem)
+        addSystemFile(file.asString)|
+      'loadFile$old'(file, target)
+    });
+
+  [
+    searchFile("urbi/urbi.u").asString,
+    searchFile("urbi/system.u").asString,
+    searchFile("urbi/object.u").asString,
+    "ast/factory.cc",
+    "ast/parametric-ast.cc",
+    "ast/parametric-ast.hh",
+    "ast/parametric-ast.hxx",
+    "binder/binder.cc",
+    "flower/flower.cc",
+    "object/code.cc",
+    "object/object-class.cc",
+    "parser/ugrammar.y",
+    "rewrite/desugarer.cc",
+    "rewrite/pattern-binder.cc",
+    "rewrite/rescoper.cc"
+  ].each(&addSystemFile);
+
+  /// Look for file and load it.
+  // Throw on errors.
+  function load(var file, var target = this, var isSystem = defaultIsSystem)
+  {
+    '$loadedFiles'.set(file, false)|
+    var res = loadFile(searchFile(file), target, isSystem).acceptVoid |
+    '$loadedFiles'.set(file, true)|
+    res.unacceptVoid
+  };
+
+  function lobbies()
+  {
+    Lobby.instances
+  };
+
+  function lobby()
+  {
+    Lobby.lobby
+  };
+
+  // Look for file, and load it if found.
+  function maybeLoad(var file, var channel = Global.clog)
+  {
+    var path = nil |
+    try
+    {
+      path = searchFile(file)
+    }
+    catch (var e if e.isA(Exception.FileNotFound))
+    {
+    }|
+    if (!path.isNil)
+    {
+      channel.echo("loading %s." % path) |
+      loadFile(path)
+    }
+  };
+
+  function ps()
+  {
+    nonInterruptible |
+    for| (var t : jobs)
+      t.dumpState
+  };
+
+  function '$requireWait'(var file)
+  {};
+
+  function requireFile(var file)
+  {
+    if (file in '$loadedFiles')
+      '$requireWait'(file)
+    else
+      load(file) |
+    void
+  };
+
+  // Do not make a wrapper function here, as you would get a tag for
+  // the scope of that function, instead of the caller.
+  setSlot("scopeTag", Tag.&scope);
+
+  function version()
+  {
+    PackageInfo.components["Urbi SDK"].version
+  };
+};

@@ -1,0 +1,72 @@
+/*
+ * Copyright (C) 2010, 2011, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/nil.u");
+requireFile("urbi/channel.u");
+requireFile("urbi/global.u");
+requireFile("urbi/object.u");
+requireFile("urbi/boolean.u");
+requireFile("urbi/comparable.u");
+requireFile("urbi/control.u");
+
+class Global.Binary
+{
+  addProto(Comparable);
+  removeProto(Object);
+
+  // The semantics is mandated by K1 compatibility.
+  function '+'(rhs)
+  {
+    var res = Global.Binary.new(keywords, data + rhs.data)|
+    if (keywords.empty)
+      res.keywords = rhs.keywords |
+    res
+  };
+
+  function '=='(rhs)
+  {
+    keywords == rhs.keywords && data == rhs.data
+  };
+
+  function asString()
+  {
+    if (this === Binary)
+      "Binary"
+    else
+    {
+      var res = "BIN " + data.size |
+      if (!keywords.empty)
+        res += " " + keywords |
+      // The way the data is separated from the header differs depending
+      // on whether the information is sent to the kernel, or send by it
+      // it.  This is tightly related to the liburbi protocol, don't
+      // play foolish games here.
+      res += "\n" + data |
+      res
+    }
+  };
+
+  function copy()
+  {
+    Global.Binary.new(keywords, data)
+  };
+
+  function empty()
+  {
+    data.empty;
+  };
+
+  function init(k, v)
+  {
+    var this.keywords = k |
+    var this.data = v
+  };
+
+};

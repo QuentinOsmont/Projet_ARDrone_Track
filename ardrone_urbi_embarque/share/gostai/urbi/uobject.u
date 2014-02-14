@@ -1,0 +1,1108 @@
+/*
+ * Copyright (C) 2011, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+/* Urbi side of 2.0 UObject plugin/remote implementation.
+*/
+
+// We cannot use the "class Global.UObject: Finalizable" syntax here,
+// because of specific constraints of Finalizable.
+var Global.UObject = Finalizable.new;
+do (Global.UObject)
+{
+  var type = "UObject";
+  var __uobject_cname = "UObject";
+  // We need this indirection to delay the first evaluation until
+  // urbi/logger is actually loaded, which requires the
+  // UObject.searchPath, which is defined below by the UObjectInit
+  // call.
+  function logger()
+  {
+    UObject.logger = Logger.new("UObject")
+  };
+
+  var minimumInterval = System.period;
+  var updateTask = 0;
+  var timerTask = 0;
+  var updateInterval = 0;
+  // map lobby.uid+ event_name=>1 to know if event is already registered
+  var remoteEventMap;
+  function update()
+  {
+    logger.warn << "update not defined"
+  };
+
+  // Override new to throw an exception in init returned
+  function 'new'(var args[])
+  {
+    // The fresh child.
+    var res = call.&target.clone |
+    if (!res.hasLocalSlot("tag"))
+      var res.tag = Tag.new|
+    // Call the "init" from the parent, retargetted to the child.
+    call.message = "init" |
+    try
+    {
+      var ret = res.callMessage(call).acceptVoid|
+      if (ret.isA(Float) && ret != 0)
+        throw Exception.new("%s construction failed: init returned %s."
+                            % [__uobjectName, ret]) |
+    }
+    catch (var e)
+    {
+      res.destroy|
+      throw e
+    }|
+    res
+  };
+
+  function init()
+  {
+    0
+  };
+
+  function uobjectInit()
+  {
+    // COW
+    updateTask = Tag.new|
+    remoteEventMap = [ => ]|
+    timerTask = [ => ]
+  };
+
+  /// Move a notifychange on 'from' setup by this object, move it on 'to'.
+  function reconnect(from, to)
+  {
+    warn("reconnect is deprecated, use connections");
+  };
+
+  function destroy()
+  {
+    for| (var t: timerTask)
+      t.second.stop |
+    updateTask.stop |
+    tag.stop |
+    var name = __uobjectName |
+    var remote = hasLocalSlot("isRemote") |
+    var lob = lobby | // will find this.lobby if we are a remote uobject
+    uobjects.removeLocalSlot(__uobjectName)|
+    // Remove reference loops induced by closures.
+    for| (var f: localSlotNames)
+      if (getSlot(f).isA(UVar))
+      {
+        getSlot(f).tag.stop|
+        removeProperty(f + "_quote_n", "updateHook")
+      }|
+    for| (var f: localSlotNames.remove("__uobjectName").remove("finalize"))
+      removeLocalSlot(f)|
+    // Destroy C++ UObject instance
+    if (!remote)
+    {
+      finalize |
+      // Reparent to loose all UObject methods including finalize
+      setProtos([Finalizable])
+    }
+    else
+    {
+      if (lob.connected)
+      {
+         var chan = Channel.new('external'.MODULE_TAG)|
+         var chan.lobby = lob|
+         chan << ['external'.UEM_DELETE, name]
+      }
+    }
+  };
+
+  var bounceSetUpdate = Event.new;
+  at(bounceSetUpdate?(var obj))
+  {
+    if (0 < obj.updateInterval)
+      obj.updateTask: detach(obj.periodicCall(obj.updateInterval,
+                                          obj.&update,
+                                      "update", [obj]))
+  };
+
+  /// Set a timer to call update at specified interval in seconds.
+  function setUpdate(interval)
+  {
+    if (0 < interval && interval < minimumInterval)
+      interval = minimumInterval|
+    // Stop current update task.
+    updateTask.stop|
+    updateInterval = interval|
+    bounceSetUpdate!(this)
+  };
+
+  /// Set a timer to call \b func every \b interval milliseconds.
+  function setTimer(interval, func, tagName=nil)
+  {
+    if (!tagName)
+      tagName = String.fresh|
+    if (interval < minimumInterval)
+      interval = minimumInterval|
+    if (!hasLocalSlot("timerTask"))
+      timerTask = [ => ]|
+    var tag = Tag.new|
+    disown({tag:loop{ func() | sleep(interval)}}) |
+    timerTask[tagName] = tag
+  };
+
+  /// Remove timer associated with \b tagName
+  function removeTimer(tagName)
+  {
+    var v = timerTask.getWithDefault(tagName, nil) |
+    if (v)
+    {
+      v.stop |
+      timerTask.erase(tagName) |
+      true
+    }
+    else
+      false
+  };
+
+  /// Call hub update function \b for hub \b hubname
+  function setHubUpdate(hubname, interval, func)
+  {
+    if (0 < interval && interval < minimumInterval)
+      interval = minimumInterval |
+    // Ensure only one instance is running using a tag in slot hub<hubname>.
+    var slotName = "hub"+hubname |
+    if (!hasSlot(slotName))
+      setSlot(slotName, Tag.new) |
+    getSlot(slotName).stop |
+    if (0 < interval)
+      getSlot(slotName):
+        detach({loop{ func() | sleep(interval)}})
+  };
+
+  // Decrease notify refcount for this UVar, stop notify if it reaches 0
+  function unnotify(objname, varname, count)
+  {
+    if (lobby.hasLocalSlot("__bindingCount"))
+    {
+      var fullname = objname + "." + varname |
+      var cnt = lobby.__bindingCount.getWithDefault(fullname, -1) |
+      if (cnt <= 0)
+      {
+        logger.warn << "Error, unnotify on unknown variable " + fullname
+      }
+      else
+      {
+        cnt -= count |
+        lobby.__bindingCount[fullname] = cnt |
+        if (!cnt && hasSlot(objname) && getSlot(objname).hasSlot(varname))
+        {
+          // May or may not be present, never mind
+          if (lobby.__bindingFunc[fullname].isA(UConnection))
+            lobby.__bindingFunc[fullname].disconnect
+          else if (lobby.__bindingFunc[fullname].isA(Float))
+            getSlot(objname).getSlot(varname)
+              .removeNotifyChange(lobby.__bindingFunc[fullname])|
+          // May be using the shared RTP object
+          if (lobby.hasLocalSlot("sharedRTP")
+              && lobby.__bindingFunc[fullname] === lobby.sharedRTP)
+          {
+            lobby.sharedRTP.unGroupedSendVar(fullname)
+          }|
+          // If specific UObjects are used to handle this binding: destroy them
+          if (lobby.__bindingFunc[fullname].isA(List))
+            for|(var i: lobby.__bindingFunc[fullname])
+              try{i.destroy} catch {}
+        }
+      }
+    }
+  };
+
+  // Helper for implementation of remote UObject function calls.  For
+  // each invocation we create a fresh NAME, and store a Barrier in
+  // barriers[NAME].  The Remote UObject is then sent a request to run
+  // the function call and to invoke Global.UObject.funCall(NAME,
+  // RESULT) while we wait on the Barrier.
+  function funCall(var name, var val = void)
+  {
+    // Get the barrier.
+    var b = lobby.barriers[name] |
+    lobby.barriers.erase(name) |
+    b.signal(val.acceptVoid)
+  };
+
+  function syncGet(exp, tag)
+  {
+    var res;
+    try
+    {
+      res = eval(exp)|
+      Channel.new(tag) << res
+    }
+    catch (var e)
+    {
+      lobby.send("!!! " + e, tag)
+    }
+  };
+};
+
+/*
+ * UVar provides access and change notification on a slot.
+ * instanciate with 'UVar.new(containerObject, slotName);
+ * call notifyChange(someFunc) to have someFunc called (with no argument)
+ * right after a new value is written, call notifyAccess(someFunc) to have
+ * someFunc called just before a value is read. The contained value is stored
+ * in the 'val' slot of the UVar.
+ */
+do (&UVar)
+{
+  function logger()
+  {
+    &UVar.logger = Logger.new("UObject")
+  };
+  var traceSet = Event.new;
+  var traceGet = Event.new;
+  var traceBind = Event.new;
+  var owner;
+  var ownerName = "<unknown>";
+  /// Enable RTP for this UVar.
+  var rtp = false;
+  // If this is true, callbacks that throw will be removed from callback lists.
+  var eraseThrowingCallbacks = true;
+  function asPrintable()
+  {
+    "\"%s.%s\"" % [ownerName, initialName]
+  };
+
+  function asString()
+  {
+    "%s.%s" % [ownerName, initialName]
+  };
+
+  /// Copy this UVar under slot \b slotName of \b targetObj
+  function copy(targetObj, slotName)
+  {
+    targetObj.setSlot(slotName, this)|
+    targetObj.setProperty(slotName, "updateHook", &updateBounce)|
+    targetObj.updateSlot("getProperty", &parentGetProperty)|
+    targetObj.updateSlot("setProperty", &parentSetProperty)|
+    targetObj.updateSlot("hasProperty", &parentHasProperty)
+  };
+
+  function init(parent, name)
+  {
+    var this.rtp = false;
+    var this.rtp_old = false;
+    owner = parent|
+    if (parent.hasSlot("__uobjectName"))
+      ownerName = parent.__uobjectName
+    else
+      ownerName = parent.asString|
+    this.initialName = name|
+    var this.fullName = ownerName + "." + initialName|
+    // We need to explicitly kill the at below, use this.tag for this.
+    var this.tag = Tag.new(fullName)|
+    parent.setSlot(name, this)|
+    parent.setProperty(name, "updateHook", &updateBounce)|
+    var slotName = name + "_quote_n"|
+    // If the slot was containing a float, it already has a *_quote_n
+    // slot, which is not the right one.
+    if (parent.hasLocalSlot(slotName))
+      parent.removeLocalSlot(slotName) |
+    parent.setSlot(slotName, function ()
+      {
+        var min = parent.getSlot(name).rangemin |
+        var max = parent.getSlot(name).rangemax |
+        {var r = parent.getSlot(name) | (r() - min) / (max-min)}
+      })|
+    parent.setProperty(slotName, "updateHook", function(slot, value)
+      {
+        var min = parent.getSlot(name).rangemin |
+        var max = parent.getSlot(name).rangemax |
+        parent.updateSlot(name, min + (max - min) * value)
+      })|
+    if (not parent.hasLocalSlot("__has_uvar"))
+    {
+      parent.getProperty = &parentGetProperty|
+      parent.setProperty = &parentSetProperty|
+      parent.hasProperty = &parentHasProperty
+    };
+    tag:at (rtp->changed? if rtp != rtp_old)
+    {
+      // Propagate to all remotes.
+      // First find the list of lobbies that have remotes
+      rtp_old = rtp|
+      var lobbies = []|
+      var fullname =  ownerName + "." + name|
+      var obj = getSlot(ownerName)|
+      for|(var s: uobjects.localSlotNames)
+      {
+        var o = uobjects.getSlot(s)|
+        if (o.hasLocalSlot("lobby") && !lobbies.has(o.lobby))
+          lobbies << o.lobby
+      }|
+      lobbies -= [Lobby.systemLobby]|
+      // Then ask them to use RTP and reset existing notifies.
+      var chan = Channel.new('external'.MODULE_TAG)|
+      var msg = ['external'.UEM_SETRTP, fullname, rtp];
+      var tv = obj.getSlot(name).apply([obj]).acceptVoid|
+      for|(var l: lobbies)
+      {
+        chan.lobby = l |
+        chan << msg |
+        if (!l.hasSlot("__bindingFunc"))
+          continue|
+        var currentBindings = l.__bindingFunc.getWithDefault(fullname,nil)|
+        if (currentBindings.isA(&Float))
+        { // Standard TCP notifychange, remove it...
+          removeNotifyChange(currentBindings);
+          //... and replace it with RTP version
+          'external'.setupRTP(tv.isA(Binary), ownerName, name, l, nil)
+          // Do not change bindingCount.
+        }
+      }
+
+    }
+  };
+
+  // Compatibility with gostai studio which checks
+  // UObject.hasLocalSlot(hasProperty)
+  UObject.hasProperty = &parentHasProperty;
+  /// Global number of notifyaccess
+  var nAccess = 0;
+  var nAccessTag = Tag.new;
+  var onHasNotifyAccess = Event.new;
+  // hooking of changed has a cost of one at per UVar.
+  var hookChanged = !getenv("URBI_UVAR_HOOK_CHANGED");
+
+  var __clone = &clone;
+
+  removeLocalSlot("clone");
+  const var clone = function()
+  {
+    var uv = __clone|
+    do (uv)
+    {
+      var isUVar = 1
+    }
+  };
+
+  // If \a compatF is non-nil, warn about a deprecated use of function
+  // \a fnName and return \a compatF, otherwise return \a f.
+  function backwards(var fnName, f, compatF)
+  {
+    if (!compatF.isNil)
+    {
+      logger.warn << ("%s(handle, func) is deprecated, use %s(func)"
+                      % [fnName, fnName])|
+      compatF
+    }
+    else
+      f
+  };
+
+  /// Calls f each time the UVar is modified, returns an id to remove it
+  function notifyChange(f, compatF = nil)
+  {
+    notifyChange_(backwards("notifyChange", f, compatF))
+  };
+
+  function notifyChangeOwned(f, compatF = nil)
+  {
+    notifyChangeOwned_(backwards("notifyChangeOwned", f, compatF))
+  };
+
+  function notifyAccess(f, compatF = nil)
+  {
+    //beware of the CoW
+    &UVar.nAccess++ |
+    if (&UVar.nAccess == 1)
+      onHasNotifyAccess! |
+    notifyAccess_(backwards("notifyAccess", f, compatF))
+  };
+
+  function hookChangedEvent()
+  {
+    disown({
+      var t = Tag.new |
+      if (!changed.hasLocalSlot("onSubscribe"))
+        var changed.onSubscribe = Event.new |
+      t: at (changed.onSubscribe?)
+      {
+        if (loopCheck)
+        {
+          changed.removeLocalSlot("onSubscribe")|
+          t.stop
+        }
+      }
+    })
+  };
+
+  function '>>'(target)
+  {
+    UConnection.new(this, target)
+  };
+  function '<<'(source)
+  {
+    UConnection.new(source, this)
+  };
+  /// Return an UVar from its name
+  function fromName(n)
+  {
+    var base = lobby|
+    for|(var c: n.split("."))
+      base = base.getSlot(c) |
+    base
+  };
+  void
+};
+
+do (UConnection)
+{
+  function init(from, to)
+  {
+    /// We cannot take a reference on those uvars.
+    source = from.fullName|
+    target = to.fullName |
+    from.changeConnections << this |
+    from.loopCheck |
+    var this.start = time
+  };
+  function niceName(varname)
+  {
+    try
+    {
+      var uvar = UVar.fromName(varname) |
+      var uob = uobjects.getSlot(uvar.ownerName)|
+      {
+        ["compactName", "componentName", "__uobjectName", "uid"].map
+        ( function(x) { if (uob.hasSlot(x)) uob.getSlot(x).apply([uob]) else ""}).filter
+        ( function(x) { x})[0] + "." + uvar.initialName
+      }
+    }
+    catch(var e)
+    {
+      varname
+    }
+  };
+
+  function asString()
+  {
+    if (!source)
+      "Connection ()"
+    else
+      niceName(source) + " >> " + niceName(target)
+  };
+
+  function displayStats()
+  {
+    "" + fireRate +" Hz   mean " + meanCallTime*1000000 + " us   max "
+      + maxCallTime * 1000000  + " us   min "
+      + minCallTime * 1000000 + " us"
+  };
+
+  function disconnect()
+  {
+    try
+    {
+      var src = UVar.fromName(source)|
+      src.changeConnections.remove(this)
+    }
+    catch(var e)
+    {
+      //wall(e)
+    }|
+    source = ""
+  };
+
+  function reconnect(from)
+  {
+    disconnect()|
+    init(from, UVar.fromName(target))
+  };
+
+  function resetStats()
+  {
+    totalCallTime = callCount = 0|
+    minCallTime = maxCallTime = 0|
+    start = time
+  };
+
+  function meanCallTime()
+  {
+    totalCallTime / callCount
+  };
+
+  function fireRate()
+  {
+    callCount / (time-start)
+  };
+
+  /// Return the list of all connections in the system
+  function getAll()
+  {
+    var res = []|
+    for|(var i: uobjects.localSlotNames)
+    {
+      if (!getSlot(i).isVoid)
+      {
+        var o = getSlot(i)|
+        if (o.isA(UObject))
+          for|(var j: o.localSlotNames)
+            if (!o.getSlot(j).isVoid && o.getSlot(j).isA(UVar))
+              res += o.getSlot(j).changeConnections
+      }
+    }|
+    res
+  };
+};
+
+/** BypassValue is UValue container which does only cast the content into
+ *  an Urbi Object on request.
+ */
+do (UValue)
+{
+  var transparent = true;
+  function asString()
+  {
+    if (transparent)
+      extract.asString
+    else
+      '$id'
+  };
+  function asToplevelPrintable()
+  {
+    if (transparent)
+      extractAsToplevelPrintable
+    else
+      '$id'.asToplevelPrintable
+  };
+  var asPrintable = &asToplevelPrintable;
+};
+
+class Global.uobjects {};
+var Global.uobjects_handle = function()
+{
+  warn("uobjects_handle no longuer necessary")|
+  nil
+};
+
+// UObjects can use evaluate at initialization-time.
+UVar.new(Global,"evaluate");
+do (Global.&evaluate)
+{
+  eraseThrowingCallbacks = false;
+  owned = true;
+  notifyChangeOwned(function()
+  {
+    var res = eval(Global.&evaluate.val.asString).acceptVoid |
+    if (!res.isVoid)
+      Global.&evaluate.writeOwned(res)
+  });
+};
+
+UVar.new(Global, "currentLobbyId");
+Global.&currentLobbyId.notifyAccess(function()
+{
+  &currentLobbyId.val = lobby.uid;
+});
+
+UVar.new(Global, "currentRunnerInUObjectUpdate");
+Global.&currentRunnerInUObjectUpdate.notifyAccess(function()
+{
+  &currentRunnerInUObjectUpdate.val
+    = currentRunner.hasLocalSlot("$uobjectInUpdate");
+});
+
+Global.uobjects.uobjectInit();
+
+Global.addProto(uobjects);
+
+// UObject remote API.
+
+/*------------------.
+| Global.external.  |
+`------------------*/
+
+class Global.'external'
+{
+  function logger()
+  {
+    Global.'external'.logger = Logger.new("UObject")
+  };
+  var MODULE_TAG = "__ExternalMessage__";
+  var UEM_EVALFUNCTION = 0;
+  var UEM_ASSIGNVALUE  = 1;
+  var UEM_EMITEVENT    = 2;
+  var UEM_ENDEVENT     = 3;
+  var UEM_NEW          = 4;
+  var UEM_DELETE       = 5;
+  var UEM_INIT         = 6;
+  var UEM_TIMER        = 7;
+  var UEM_NORTP        = 8; //< Disable RTP for this connection
+  var UEM_SETRTP       = 9;
+  var UEM_SETLOCAL     = 12;
+
+  /* external object <objname>: Set clone to send a UEM_NEW message.
+  The remote upon reception of the UEM_NEW message 'instantiate <objname>
+  with name <newname>' will instantiate the UObject, and send:
+  - var <newname>.load, which will fail (<newname> does not exist)
+  - class <newname>{} (which will go in the lobby)
+  - external object <newname>
+  - external var/func <newname>.xxx from whatever
+
+  So in external.object we move the instance from lobby to Global.uobjects and
+  recreate <newname>.load, and in our custom cloner, we:
+  - send the NEW message passing a uid as <newname>
+  - wait until uobjects.<newname>.init is set
+  -  return the instance, which is also left in uobjects.<newname> because the
+  remote will use it using this name.
+  */
+  function object(objname)
+  {
+    if (!lobby.hasLocalSlot("$uobjectMutex"))
+      lobby.setSlot("$uobjectMutex", Mutex.new)|
+    nonInterruptible |
+    if (uobjects.hasLocalSlot(objname))
+      return|
+    // The remote sent the code 'class <objname> {};' just before
+    // calling this function, but we want objname in uobjects, not
+    // lobby.
+    if (uobjects not in Global.protos)
+      Global.addProto(uobjects)|
+    uobjects.setSlot(objname, UObject.new) |
+    do (uobjects.getSlot(objname))
+    {
+      var __uobjectName = objname |
+      var isRemote = true |
+      uobjectInit |
+    }|
+    if (!lobby.hasLocalSlot(objname))
+      logger.err << "ERROR: lobby " + lobby + " has no slot " + objname
+    else
+      for| (var s: lobby.getSlot(objname).localSlotNames)
+        uobjects.getSlot(objname).setSlot(s, lobby.getSlot(objname).getSlot(s))|
+    lobby.removeLocalSlot(objname)|
+    do (uobjects.getSlot(objname))
+    {
+      var lobby = lobby |
+      var notifies = [ => ] |
+      init() |
+    }|
+    var chan = Channel.new(MODULE_TAG)|
+    var chan.lobby = lobby|
+    var chan.source = objname|
+    function cloner()
+    {
+      var u = "object".fresh|
+      chan << ['external'.UEM_NEW, u, objname]|
+      // Wait until the remote defines u.init.
+      waituntil(Global.uobjects.hasSlot(u)
+                && Global.uobjects.getSlot(u).hasLocalSlot("init")) |
+      var ret = Global.uobjects.getSlot(u)|
+      ret.protos = [this]|
+      ret
+    }|
+    uobjects.getSlot(objname).setSlot("clone", cloner)|
+    //Ensure load is bound. K1 uobj tries to do it before binding the object.
+    'var'(objname, "load", "dummy0")|
+    void
+  };
+
+  /// Monitor a RTP connexion, call onfail if it does not seem to work
+  function monitorRTP(src, dst, onfail)
+  {
+    // Do not use waituntil here, as stats is a primitive which
+    // changes over time.  Something that waituntil does not know to
+    // cope with currently.
+    while (src.stats["packetSent"] == 0)
+      sleep(period)|
+    // Data has been transmitted. Wait a bit...
+    sleep(20 * period)|
+    // And check if something was received.
+    if (!dst.stats["bytesReceived"])
+    {
+      try
+      {
+        logger.warn << "RTP connection %s=>%s seems to be failing,"
+                       " falling back to TCP"
+                       % [dst.getRemoteHost, src.getRemoteHost]
+      }
+      catch
+      {
+        // One of the getRemoteHost failed.
+        logger.warn << "RTP connection with %s seems to be failing,"
+                       " falling back to TCP"
+                       % lobby.remoteIP
+      }|
+      onfail()
+    }
+    // Connection started fine, assume it will stay that way and return.
+  };
+
+  function makeRTPPair(lobby=lobby)
+  {
+    if (!lobby.hasLocalSlot("_rtp_object_name"))
+      throw "RTP subsystem not setup for this lobby: "|
+    var rrtp = uobjects.getSlot(lobby._rtp_object_name).new|
+    var port = rrtp.listen("0.0.0.0", "0")|
+    var host = lobby.remoteIP|
+    var lrtp = URTP.new|
+    //wall("...connecting to " + host +":" + port)|
+    lrtp.connect(host, port)|
+    var lrtp.lobbyId = lobby.uid|
+    var l = lobby |
+    // Destroy local rtp object when the remote disconnects
+    disown({
+           var t = Tag.new|
+           t:at(Lobby.onDisconnect?(l))
+           {
+             try{lrtp.destroy} catch {} |
+             t.stop
+           }
+    })|
+    (lrtp, rrtp)
+  };
+
+  /// Notify the remote when <objname>.<varname> is modified.
+  function 'var'(objname, varname, fr)
+  {
+    var fullname = objname + "." + varname|
+
+    if (!uobjects.hasSlot(objname))
+    {
+      if (varname == "load")
+        return|
+      logger.err << "Error: external var called for "+objname+"."+varname
+    }|
+    if (!lobby.hasSlot("handle"))
+    {
+      function lobby.handle()
+      {
+        warn("Lobby handles are no longuer used")|
+        nil
+      }
+    }|
+    // Refcount number of binds to this var
+    if (!lobby.hasLocalSlot("__bindingCount"))
+    {
+      var lobby.__bindingCount = [ => ] |
+      // Variable name => bound function for this lobby, or list of UObject
+      var lobby.__bindingFunc = [ => ]
+    } |
+    var currentCount = lobby.__bindingCount.getWithDefault(fullname, 0) |
+    lobby.__bindingCount[fullname] = currentCount + 1 |
+    if (currentCount)
+      return |
+    var obj = uobjects.getSlot(objname)|
+    // Setup a hook, notify the remote when a change occurrs.
+    if (!obj.hasLocalSlot(varname))
+      UVar.new(obj, varname)
+    else if (obj.getSlot(varname).isVoid
+             || !obj.getSlot(varname).hasSlot("isUVar"))
+    {
+      // The slot already exists, but is not an uvar.
+      var v = obj.getSlot(varname).acceptVoid|
+      var props = obj.properties(varname)|
+      obj.removeLocalSlot(varname)|
+      UVar.new(obj, varname) |
+      if (!v.isVoid())
+        obj.updateSlot(varname, v)|
+      // Restore properties.
+      for|(var p: props)
+        obj.setProperty(varname, p.first, p.second)
+    }|
+    // Try to use RTP mode for binaries, or if explicitly requested.
+    var tv = obj.getSlot(varname).apply([obj]).acceptVoid|
+    if (lobby.hasLocalSlot("_rtp_object_name")
+        && !lobby.hasLocalSlot("noRTP")
+        && (obj.getSlot(varname).rtp
+            ||
+            (tv.isA(Binary))))
+      detach({ setupRTP(tv.isA(Binary), objname, varname, lobby, fr)})
+    else
+    {
+      remoteNotifyChange(objname, varname, fr)
+    }
+  };
+
+  // Setup RTP connection
+  function setupRTP(isbin, objname, varname, lobby, fr)
+  {
+    // Attempt to use RTP mode
+    // wall("attempting RTP connection...");
+    // RTP setup will require usage of the connection which is stuck in
+    // the foreground "external var" call, so detach.
+    var fullname = objname + "." + varname|
+    var obj = getSlot(objname)|
+    if (isbin)
+    {  // each Binary UVar uses its own RTP connection
+      // Those are UObjects, they persist so local variables are fine.
+      (var lrtp, var rrtp) = makeRTPPair(lobby)|
+      rrtp.localDeliver = fullname|
+      lrtp.sendVar(obj.getSlot(varname))|
+      lobby.__bindingFunc[fullname] = [rrtp, lrtp]|
+      // Fallback to old TCP method if RTP fails.
+      disown(monitorRTP(lrtp, rrtp,
+        closure()
+        {
+                          remoteNotifyChange(objname, varname, fr)|
+                          var lobby.noRTP = true
+        }))|
+    }
+    else
+    {
+      // Other data types share one RTP connection
+      //wall("rtp mode for " + varname)|
+      lobby.'$uobjectMutex': if (!lobby.hasSlot("sharedRTP"))
+      {
+        try {
+          (var lrtp, var rrtp) = makeRTPPair(lobby)|
+          //wall("instanciating shared rtp for " + lobby +":" + lrtp)|
+          var lobby.sharedRTP = lrtp|
+          var lobby.remoteSharedRTP = rrtp|
+          disown(monitorRTP(lrtp, rrtp,
+                            closure()
+                            {
+                              remoteNotifyChange(objname, varname, fr)|
+                              var lobby.noRTP = true
+                            }))|
+        }
+        catch(var e)
+        {
+          logger.err << "Fatal error setting rtp: " + e
+        }|
+      }|
+      lobby.__bindingFunc[fullname] = lobby.sharedRTP|
+      lobby.sharedRTP.groupedSendVar(obj.getSlot(varname))
+    }
+  };
+
+  function remoteNotifyChange(objname, varname, fr)
+  {
+    // Create a 'notifyChange' function that generates the UObject
+    // message and sends it through the remote connection.
+    var uob = uobjects.getSlot(objname)|
+    var chan = Channel.new(MODULE_TAG)|
+    var chan.lobby = lobby|
+    var fullname = objname + "." + varname|
+    var chan.source = fullname +" " + uob.protos[0].asString|
+    // Construct the callback function
+    function f(args[])
+    {
+      // If source is the current lobby, loopback took care of notification
+      if (lobby == chan.lobby && currentRunner.hasLocalSlot("$uobjectInUpdate"))
+        return|
+      var uvar =
+      {
+        if (!args.size)
+          uob.getSlot(varname)
+        else
+          args[0]
+      }|
+      var v = uvar.getSlot({if (uvar.owned) "valsensor" else "val"})
+        .apply([uvar])
+        .acceptVoid.uvalueSerialize  |
+      if (!v.isNil && !v.isVoid)
+        chan << ['external'.UEM_ASSIGNVALUE,
+                 fullname,
+                 v,
+                 uob.getProperty(varname, "timestamp")]
+    }|
+
+    // Directly set it if the source UVar is from this connection
+    if (getSlot(objname).hasLocalSlot("lobby")
+         && getSlot(objname).lobby == lobby)
+    {
+      lobby.__bindingFunc[fullname] =
+        uobjects.getSlot(objname).getSlot(varname).notifyChange(f)
+    }
+    else
+    // Or use an intermediate UConnection and InputPort to handle
+    // disconnect.
+    {
+      // Try to put the port into source UObject if it exists, or lobby.
+      var o;
+      if (!uobjects.hasSlot(fr) || uobjects.getSlot(fr).lobby != lobby)
+      {
+        logger.warn << "Invalid source uobject in 'external var'"|
+        o = lobby.hookPoint
+      }
+      else
+        o = uobjects.getSlot(fr)|
+      var iportname = fullname.replace(".", "_")|
+      if (!o.hasLocalSlot(iportname))
+      {
+        UVar.new(o, iportname)|
+        var o.getSlot(iportname).inputPort = true
+      }|
+      o.getSlot(iportname).notifyChange(f)|
+      lobby.__bindingFunc[fullname] =
+      uobjects.getSlot(objname).getSlot(varname) >> o.getSlot(iportname)
+          |
+      /*| should not be needed anymore
+      uobjects.getSlot(fr).notifies
+      .getWithDefault(objname + "." + varname, [], true) << f|
+      */
+    }|
+    void
+  };
+
+  function failRTP()
+  {
+    Channel.new(MODULE_TAG) << [UEM_NORTP]
+  };
+
+  // Bind a function call to the remote side.
+  // Write to the slot a function that will generate an uobject call message,
+  // send it to the remote side, and wait for the result.
+  function 'function'(nargs, objname, fname, fr)
+  {
+    var functionName = objname + "." + fname|
+    var chan = Channel.new(MODULE_TAG)|
+    var chan.lobby = lobby|
+    var chan.source = functionName |
+    if (!lobby.hasLocalSlot("barriers"))
+      var lobby.barriers = Dictionary.new;
+    function f(var args[])
+    {
+      // Just to be safe, do not rely on asString for UObject and UVar
+      for| (var i: args.size)
+      {
+        if (args[i].isA(UObject))
+          args[i] = args[i].__uobjectName
+        else if (args[i].isA(UVar))
+          args[i] = args[i].ownerName + "." + args[i].initialName|
+        args[i] = args[i].uvalueSerialize
+      }|
+      if (args.size != nargs)
+        throw Exception.Arity.new("Remote bound function", args.size, nargs)|
+      var u = String.fresh |
+      chan.lobby.barriers[u] = Barrier.new |
+      chan << [ 'external'.UEM_EVALFUNCTION,
+                functionName + "__" + args.size,
+                u ] + args|
+      var res = chan.lobby.barriers[u].wait|
+      if (res.isA(Exception))
+        throw res
+      else
+        res.uvalueDeserialize.unacceptVoid;
+    }|
+    Global.uobjects.getSlot(objname).setSlot(fname, f)|
+    void
+  };
+
+  function eventBounce(starting, evname, args)
+  {
+    Channel.new(MODULE_TAG) << [
+       {if (starting) UEM_EMITEVENT else UEM_ENDEVENT},
+       evname] + args
+  };
+
+  function event(nargs, objname, ename, fr)
+  {
+    // FIXME: No way to catch an event with payload without generating the 'at'
+    // code.
+    var obj = uobjects.getSlot(objname)|
+    var fullname = objname+"."+ename+"__" + nargs.asString |
+    var key = lobby.uid + fullname |
+    if (key not in obj.remoteEventMap)
+    {
+      obj.remoteEventMap[key] = 1 |
+      if (not uobjects.getSlot(objname).hasLocalSlot(ename))
+        uobjects.getSlot(objname).setSlot(ename, Event.new) |
+      var args = nargs.map(function(x) { "p%s" %[x]}).join(", ") |
+      var varargs = nargs.map(function(x) { "var p%s" %[x]}).join(", ")|
+      var code =
+        ("at (uobjects.%s.%s?(%s)) 'external'.eventBounce(true, \"%s\",[%s])"
+        + "onleave 'external'.eventBounce(false, \"%s\",[%s])")
+      % [objname, ename, varargs, fullname, args, fullname, args]|
+      eval(code)
+    }
+  };
+
+  at (Lobby.onDisconnect?(var l))
+  {
+    nonInterruptible;
+    // Remove all the remote uobjects created by this lobby.
+    for| (var o: uobjects.localSlotNames)
+    {
+      if (!uobjects.getSlot(o).isVoid
+          && uobjects.getSlot(o).hasSlot("lobby")
+          && uobjects.getSlot(o).lobby === l)
+      {
+        // Destroy will remove the object from uobjects.
+        // Someone else might be doing the same thing right now, ignore
+        // errors.
+        try
+        {
+          uobjects.getSlot(o).destroy
+        }
+        catch
+        {}
+      }
+    };
+
+    if (uobjects.hasLocalSlot("URTP"))
+      // Also kill local RTP uobjects linked to this lobby.
+      for (var o: l.localSlotNames)
+        if (l.getSlot(o).isA(URTP))
+          l.getSlot(o).destroy;
+
+    // Unblock all pending remote function calls
+    if (l.hasLocalSlot("barriers"))
+      for|(var b: l.barriers)
+        b.second.signal(Exception.new("Remote disconnected"))
+  };
+};
+
+/// Display statistics for all found connections
+function uobjects.connectionStats()
+{
+  for|(var c: UConnection.getAll)
+    echo(c.asString  + " " +  c.displayStats)
+};
+function uobjects.resetConnectionStats()
+{
+  for|(var c: UConnection.getAll)
+    c.resetStats
+};
+
+/** Inherit from UValueSerializable to make objects of your class available from
+ * UObjects.
+ * You can set 'uvalueSerializeSlots' to fix the names of the slots that must
+ * be serialized.
+ */
+class Global.UValueSerializable
+{
+  var uvalueSerializeSlots = nil;
+  function uvalueSerialize()
+  {
+    nonInterruptible;
+    var res = Dictionary.new;
+    res["$sn"] = type;
+    // No need to recurse here.
+    var names = uvalueSerializeSlots || localSlotNames;
+    for|(var s: names)
+    if (!getSlot(s).isA(Executable))
+      res[s] = getSlot(s).uvalueSerialize;
+    res;
+  };
+};
+
+function Object.uvalueSerialize() {this};
+function List.uvalueSerialize()
+{
+  map(function(x) {x.uvalueSerialize})
+};
+function Dictionary.uvalueSerialize()
+{
+  var res = Dictionary.new |
+  for|(var e: this)
+    res[e.first] = e.second.uvalueSerialize()|
+  res
+};
+
+// Store serializable objects here.
+class Global.Serializables {};

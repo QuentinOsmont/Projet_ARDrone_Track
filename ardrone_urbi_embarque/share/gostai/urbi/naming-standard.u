@@ -1,0 +1,63 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+
+/** Urbi Naming Standard infrastructure classes **/
+
+do (Global)
+{
+  /// Implementations of a Facet must inherit from the appropriate class.
+  class Interface {
+    var componentName;
+    var parentComponent = nil;
+  } |
+  do (Interface) {
+    class Battery           : Interface  {};
+    class Motor             : Interface  {};
+    class LinearMotor       : Motor  {};
+    class RotationalMotor   : Motor  {};
+    class VideoIn           : Interface  {};
+    class AudioIn           : Interface  {};
+    class AudioOut          : Interface  {};
+    class Identity          : Interface  {};
+    class Network           : Interface  {};
+    class Sensor            : Interface  {};
+    class DistanceSensor    : Sensor {};
+    class TouchSensor       : Sensor {};
+    class AccelerationSensor: Sensor {};
+    class GyroSensor        : Sensor {};
+    class TemperatureSensor : Sensor {};
+    class Laser             : Sensor {};
+    class Mobile            : Interface  {};
+    class Tracker           : Interface  {};
+    class BlobDetector      : Interface  {};
+    class TextToSpeech      : Interface  {};
+    class SpeechRecognizer  : Interface  {};
+    class Led               : Interface  {};
+    class RGBLed            : Led    {};
+    function interfaces()
+    {
+      function isInterface(o)
+      {
+        var name = o.type;
+        Interface.hasLocalSlot(name) && Interface.getSlot(name) === o
+      };
+
+      var res = allProtos.filter(isInterface) |
+      res.filter(function (x) { !res.any(function(y) { x !== y && y.isA(x)})})
+    };
+  };
+  // Keep the 'Facet' name for backward compatibility.
+  var Facet = function() {
+    Lobby.wall("Warning, Facet is deprecated, use 'Interface'");
+    Facet = Interface
+  };
+  var Interface.facets = Interface.&interfaces;
+};

@@ -1,0 +1,64 @@
+/*
+ * Copyright (C) 2011, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+do (System.PackageInfo.new("Urbi SDK"))
+{
+  // The SCM date string.
+  var date =
+    "2011-03-04 17:53:25 +0100";
+
+  // The day part of the SCM date string.
+  var day =
+    "March 4, 2011";
+
+  // The SCM complete description string, with slashes.
+  var description =
+    "2.6-525-g7c8262c";
+
+  // The SCM identification string.
+  var id =
+    "7c8262c (2011-03-04 17:53:25 +0100 demaille@gostai.com: UAbstractClient: remove dead type.)";
+
+  // The SCM major version component (Major.Minor.SubMinor).
+  var major =
+    2;
+
+  // The SCM minor version component (Major.Minor.SubMinor).
+  var minor =
+    6;
+
+  // The number of changes since the Version.
+  var patch =
+    525;
+
+  // The SCM revision string.
+  var revision =
+    "7c8262c";
+
+  // The SCM SubMinor version component (Major.Minor.SubMinor).
+  var subMinor =
+    0;
+
+  // The SCM complete version string, with dashes.
+  var tarballVersion =
+    "2.6-525-g7c8262c";
+
+  // The SCM version string.
+  var version =
+    "2.6";
+
+  // Version and revision together.
+  var versionRev =
+    "version 2.6 patch 525 revision 7c8262c";
+
+  // The SCM version integer (Major * 1e6 + Minor * 1e3 + SubMinor).
+  var versionValue =
+    2006000;
+};

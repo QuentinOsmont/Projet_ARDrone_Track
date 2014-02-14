@@ -1,0 +1,60 @@
+/*
+ * Copyright (C) 2010, 2011, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/string.u");
+requireFile("urbi/loadable.u");
+requireFile("urbi/channel.u");
+requireFile("urbi/control.u");
+requireFile("urbi/global.u");
+
+do (Global.Tag)
+{
+  function asString()
+  {
+    if (this === Tag)
+      type
+    else
+      "%s<%s>" % [type, name]
+  };
+
+  function begin()
+  {
+    var res = clone|
+    at (res.enter?)
+      echo("%s: begin" % res.name)|
+    res;
+  };
+
+  function end()
+  {
+    var res = clone|
+    at (res.leave?)
+      echo("%s: end" % res.name)|
+    res;
+  };
+
+  var SystemTag = new("SystemTag");
+
+  class tags
+  {
+    function 'new'(name)
+    {
+      Tag.new(name)
+    };
+  };
+
+  function waitUntilStopped(time_out=inf)
+  {
+    this: sleep(time_out)
+  };
+
+};
+
+Global.addProto(Tag.tags);

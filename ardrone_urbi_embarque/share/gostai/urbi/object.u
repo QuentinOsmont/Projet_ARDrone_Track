@@ -1,0 +1,192 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+do (Object)
+{
+  // Syntactic sugar for setProtos.
+  protos->updateHook = function(slot, value) { setProtos(value); };
+
+  function 'class'(var name, var protos = [])
+  {
+    var res = Object.clone |
+    if (protos)
+      res.setProtos(protos) |
+    var res.type = name |
+    res.setSlot("as" + name, function () { this })|
+    res
+  };
+
+  function cloneSlot(from, to)
+  {
+    setSlot(to, getSlot(from).clone)
+  };
+
+  function copySlot(from, to)
+  {
+    setSlot(to, getSlot(from))
+  };
+
+  /// FIXME: implement in C++ to get the period passed on command line.
+  function getPeriod()
+  {
+    Kernel1.deprecated("Object.getPeriod", "System.period") |
+    System.period
+  };
+
+  function print()
+  {
+    Channel.topLevel << this
+  };
+
+  // Change the whole set of parents.
+  function setProtos(ps)
+  {
+    // Beware that we may be losing the ancestry on Object, which has
+    // access to "addProto".
+    var add = Object.&addProto |
+    protos.clear() |
+    for| (var p: ps.reverse)
+      add.apply([this, p]) |
+  };
+
+  function '!=='(rhs)
+  {
+    !(this === rhs)
+  };
+
+  // Invoke "clone", then "init".
+  function 'new'(var args[])
+  {
+    // The fresh child.
+    var res = call.&target.clone |
+    // Call the "init" from the parent, retargetted to the child.
+    call.message = "init" |
+    res.callMessage(call) |
+    res
+  };
+
+  /*--------------.
+  | Conversions.  |
+  `--------------*/
+
+  function as(type)
+  {
+    getSlot("as" + type.type).apply([this])
+  };
+
+  // To be overridden by subclasses.
+  function asString()
+  {
+    '$id'
+  };
+
+  function format(f = FormatInfo)
+  {
+    asString.format(f)
+  };
+
+
+  /*--------.
+  | Slots.  |
+  `--------*/
+  function allSlotNames()
+  {
+    slotNames
+  };
+
+  function isProto()
+  {
+    hasLocalSlot("type")
+  };
+
+  function overrideSlot(var slot, var value)
+  {
+    copySlot(slot, slot + "$old")|
+    setProperty(slot, "constant", false)|
+    updateSlot(slot, value)|
+    setProperty(slot, "constant", true)|
+  };
+
+  function ownsSlot(s)
+  {
+    warn("`o.ownsSlot(s)' is deprecated, use `o.hasLocalSlot(s)'") |
+    hasLocalSlot(s)
+  };
+
+  // Gives type, + uid if relevant
+  function '$id'()
+  {
+    var res = type |
+    if (!isProto)
+      res += "_" + uid |
+    res
+  };
+
+  function bounce(fn)
+  {
+    function (x)
+    {
+      call.message = fn |
+      call.args = [] |
+      x.callMessage(call)
+    }
+  };
+
+  function inspect(var deep = false)
+  {
+    function '<' (l, r) { l.toLower < r.toLower }|
+    // Be sure that "l.inspect" (with l being a Lobby) goes onto the
+    // current Lobby, not onto "l".
+    function echo(m) { lobby.echo(m) }|
+    echo("Inspecting " + this.asPrintable)|
+    echo("** Prototypes:")|
+    for| (var p: protos)
+      echo("  " + p.asPrintable)|
+    var slots =
+      {
+        if (deep)
+        {
+          echo("** All Slots:")|
+          slotNames
+        }
+        else
+        {
+          echo("** Local Slots:")|
+          localSlotNames
+        }
+      }|
+    for| (var s: slots.sort('<'))
+    {
+      var o = locateSlot(s)|
+      var ps = o.properties(s)|
+      var constant = ps["constant"]|
+      ps.erase("constant")|
+      echo({
+             if (!deep)
+               "  "
+             else if (o === this)
+               "  this."
+             else
+               "  %s." % o.asPrintable
+           }
+           + "%s : %s%s"
+              % [s,
+                 { if (constant) "const " else "" },
+                 o.getSlot(s).type])|
+      if (ps)
+      {
+        echo("    Properties:") |
+        for| (var p: ps.keys.sort('<'))
+          echo("     %s : %s = %s"
+               % [p, ps[p].type, ps[p].asPrintable])
+      }
+    };
+  };
+};

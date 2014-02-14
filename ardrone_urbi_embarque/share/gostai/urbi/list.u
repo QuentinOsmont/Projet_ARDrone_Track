@@ -1,0 +1,208 @@
+/*
+ * Copyright (C) 2010, 2011, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/container.u");
+requireFile("urbi/global.u");
+requireFile("urbi/exception.u");
+requireFile("urbi/range-iterable.u");
+
+/*-------.
+| List.  |
+`-------*/
+
+do (List)
+{
+  protos = [Global.RangeIterable, Global.Container];
+
+  function '<'(var that)
+  {
+    for| (var i : size.min(that.size))
+      if (this[i] < that[i])
+        return true
+      else if (that[i] < this[i])
+        return false |
+    size < that.size;
+  };
+
+  copySlot("insertBack", "<<");
+
+  // Subtract a list from this.
+  function '-' (rhs)
+  {
+    var res = [] |
+    for| (var i: this)
+      if (i not in rhs)
+	res << i |
+    res
+  };
+
+  function argMax(var comp = function (a, b) { a < b })
+  {
+    argMin(function (a, b) {comp(b, a)})
+  };
+
+  function argMin(var comp = function (a, b) { a < b })
+  {
+    if (empty)
+      throw Exception.new("list cannot be empty") |
+    var res = 0|
+    var size = this.size |
+    var i;
+    try
+    {
+      for| (i = 1; i < size; i += 1)
+        if (comp(this[i], this[res]))
+          res = i |
+    }
+    catch (var e if e.isA(Exception.Argument))
+    {
+      e.index = i;
+      throw
+    };
+    res
+  };
+
+  // The list of elements verifying the \a f predicate.
+  function filter(f)
+  {
+    var res = [] |
+    for| (var elt: this)
+      if (f(elt))
+        res << elt |
+    res
+  };
+
+  function foldl(action, value)
+  {
+    var res = value|
+    for (var i : size)
+      res = action(res, this[i])|
+    res
+  };
+
+  // Whether e is in the list.
+  function has(e)
+  {
+    any (function (i) { i == e })
+  };
+
+  // FIXME: We need to use a single convention for physical-equality
+  // related functions. The first on used was prefix 'mem', as in
+  // memSameAs, from Caml. We should either rename this method as
+  // memHas, or choose another convention.
+  function hasSame(e)
+  {
+    any (function (i) { i === e })
+  };
+
+  copySlot ("front", "head");
+
+  function insertUnique(var e)
+  {
+    if (!has(e))
+      insertBack(e)|
+    this
+  };
+
+  // Concatenate the string representation of the members, separated by \a sep
+  function join(sep = "", prefix = "", suffix = "")
+  {
+    sep.join(this, prefix, suffix)
+  };
+
+  function keys()
+  {
+    size.asList
+  };
+
+  // Build a new list containing the result of \a f applied to all elements
+  function map(var f)
+  {
+    var res = [] |
+    for| (var i: this)
+      res << f(i) |
+    res
+  };
+
+  // We might want separate Range objects, with a literal syntax
+  // (a..b, a:b, ...).
+  function range(var from, var to = nil)
+  {
+    if (to.isNil)
+    {
+      to = from |
+      from = 0  |
+    }|
+    var res = []|
+    for| (var i = from; i < to; i++)
+      res << this[i] |
+    res
+  };
+
+  function remove(e)
+  {
+    var res = this - [e] |
+    clear |
+    for| (var i: res)
+      this << i |
+    this
+  };
+
+  /// Whether the members of this are members of that.
+  function subset(var that)
+  {
+    all(function (var m) { m in that })
+  };
+
+  // Pattern matching.
+  function matchAgainst(var handler, var pattern)
+  {
+    pattern.isA(List)
+    && pattern.size == size
+    &&
+    {
+      // FIXME: do this with a crossed map
+      var i = 0 |
+      for| (var e : this)
+      {
+        if (!handler.matchPattern(pattern[i], e))
+          return false |
+        i++ |
+      } |
+      true
+    }
+  };
+
+  function max(var comp = function (a, b) { a < b })
+  {
+    this[argMax(comp)];
+  };
+
+  function min(var comp = function (a, b) { a < b })
+  {
+    this[argMin(comp)];
+  };
+
+  // The list of elements zipped with the \a f function.
+  function zip(f, l)
+  {
+    assert(this.size == l.size) |
+    var res = [] |
+    for| (var i: this.size)
+      res << f(this[i], l[i]) |
+    res
+  };
+
+  function append(var rhs)
+  {
+    Kernel1.deprecated("list.append(that)", "list += that")|
+    '+='(rhs)
+  }
+};

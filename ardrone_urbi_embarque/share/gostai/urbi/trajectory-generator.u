@@ -1,0 +1,412 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/loadable.u");
+requireFile("urbi/call-message.u");
+requireFile("urbi/global.u");
+requireFile("urbi/object.u");
+requireFile("urbi/dictionary.u");
+requireFile("urbi/boolean.u");
+requireFile("urbi/control.u");
+requireFile("urbi/list.u");
+requireFile("urbi/channel.u");
+requireFile("urbi/group.u");
+requireFile("urbi/tag.u");
+requireFile("urbi/float.u");
+
+/*----------------------.
+| TrajectoryGenerator.  |
+`----------------------*/
+class Global.TrajectoryGenerator
+{
+  var 'pi/2' = pi / 2;
+
+  // Initialization: Instantiate one of the sub classes.
+  function init(args)
+  {
+    var this.getter = args["getter"] |
+    var this.setter = args["setter"] |
+    var this.targetValue = args["base"]|
+    var this.args = args|
+    var adaptive = args.getWithDefault("adaptive", false) |
+    protos =
+      [{
+        if ("accel" in args)
+          Accel
+        else if ("cos" in args)
+        {
+          // Bounce to a sine.
+          args["phase"] = args.getWithDefault("phase", 0) + 'pi/2' |
+          args["sin"] = args["cos"] |
+          Sin
+        }
+        else if ("sin" in args)
+          Sin
+        else if ("smooth" in args)
+          Smooth
+        else if ("speed" in args)
+          if (adaptive)
+            SpeedAdaptive
+          else
+            // Speed is just Time, but with initial conditions
+            // expressed in speed instead of duration.
+            Time
+        else if ("time" in args)
+          if (adaptive) TimeAdaptive else Time
+      }] |
+    init(args) |
+  };
+
+  // Complete the initialization by setting startTime and startValue.
+  // Must be called right before run(), not in init(), since the
+  // TrajectoryGenerator might be created way before it is run, in
+  // which case we want startTime to match that of run(), not that of
+  // init().
+  function reset()
+  {
+    var this.startTime = time|
+    // Sin does not need startValue, but it is simpler to compute it
+    // anyway as it allows to depend on it below.  Besides, it allows
+    // to enforce a proper initial value for Sin too.
+    var this.startValue = getStartValue |
+  };
+
+  // Going from startValue to targetValue with given speed.
+  function duration(var speed)
+  {
+    if (speed)
+      abs(startValue - targetValue) / speed
+    else
+      Float.inf
+  }|
+
+  /// Evaluate the initial value.
+  function getStartValue()
+  {
+    var res = getter |
+    switch (res.type)
+    {
+      case "Float":
+        // Fine.
+
+      case "Group":
+        res = res.members.head |
+        while (res.type == "List")
+          res = res.head
+
+      default:
+        // Accept unknown types as long as they have a '+' slot.
+        if (!res.hasSlot("+"))
+        {
+          res = 0| warn("setting dummy startValue")
+        }
+    } |
+    res
+  };
+
+  // Override system time to take shift induced by freeze into account.
+  function time()
+  {
+    System.time - currentRunner.timeShift
+  };
+
+  /// Use this tag to end a trajectory.
+  var tag;
+
+  /// End the trajectory.
+  function stop()
+  {
+    tag.stop
+  };
+
+  // Update the variable according to the trajectory.
+  // Use the functions getter/setter to read/update the variable.
+  // Blocking until the trajectory is over.
+  function run()
+  {
+    reset |
+    tag = Tag.new|
+    tag:
+      every|(System.period)
+	setter(nextValue)
+  };
+
+  // Generate a TrajectoryGenerator that first runs \a this, then
+  // \a other.
+  function '+' (other)
+  {
+    Then.new(this, other);
+  }
+
+};
+
+class TrajectoryGenerator.Until : TrajectoryGenerator
+{
+  // Build a trajectory generator that runs \a generator until
+  // the \a condition is verified.  Then quit.
+  function init // (generator, condition)
+  {
+    var this.gen = call.evalArgAt(0) |
+    var this.until = call.argAt(1) |
+  };
+
+  // Update the variable according to the trajectory.
+  // Use the functions getter/setter to read/update the variable.
+  // Blocking until the trajectory is over.
+  function run()
+  {
+    at (until)
+      gen.stop;
+    gen.run;
+  };
+};
+
+
+class TrajectoryGenerator.Then : TrajectoryGenerator
+{
+  // Generate the TrajectoryGenerator that first runs \a first, then
+  // \a second.
+  function init(first, second)
+  {
+    var this.first = first |
+    var this.second = second |
+  };
+
+  // Update the variable according to the trajectory.
+  // Use the functions getter/setter to read/update the variable.
+  // Blocking until the trajectory is over.
+  function run()
+  {
+    first.run|
+    second.run
+  };
+};
+
+
+/*-------------------------------.
+| TrajectoryGenerator.OpenLoop.  |
+`-------------------------------*/
+
+// The generators that derive from this trajectory generator do not
+// need the current value to compute the new one.  Separating them
+// allows to spare useless calls to the getter in trajectories that do
+// not need them, which can be an huge saving in cases where reading
+// the current value is expensive.
+class TrajectoryGenerator.OpenLoop : TrajectoryGenerator
+{
+  function nextValue()
+  {
+    get
+  };
+};
+
+class TrajectoryGenerator.Accel : TrajectoryGenerator.OpenLoop
+{
+  function init(args)
+  {
+    var this.accel = args["accel"] |
+    var this.'accel/2' = accel / 2
+  };
+
+  function reset()
+  {
+    TrajectoryGenerator.OpenLoop.&reset.apply([this]) |
+    var this.duration = sqrt(2 * (targetValue - this.startValue) / accel)
+  };
+
+  function get()
+  {
+    var time = time |
+    if (duration - System.period < time - startTime)
+    {
+      setter(targetValue) |
+      stop
+    }
+    else
+    {
+      var d = time - startTime |
+      d * d * 'accel/2'
+    }
+  };
+};
+
+class TrajectoryGenerator.Sin : TrajectoryGenerator.OpenLoop
+{
+  function init(args)
+  {
+    var this.phase = args.getWithDefault("phase", 0) |
+    var this.ampli = args.getWithDefault("ampli", 0) |
+    var this.period = args["sin"] |
+    var this.alpha = 2 * pi / period
+  };
+
+  function get()
+  {
+    targetValue + ampli * sin((time - startTime) * alpha + phase)
+  };
+};
+
+class TrajectoryGenerator.Smooth : TrajectoryGenerator.OpenLoop
+{
+  function init(args)
+  {
+    var this.duration = args["smooth"] |
+  };
+
+  function get()
+  {
+    var time = time |
+    if (duration - System.period < time - startTime)
+    {
+      setter(targetValue)|
+      stop
+    }
+    else
+    {
+      var stat = (time - startTime) / duration |
+      startValue
+        + (targetValue - startValue) * (sin(pi * stat - 'pi/2') + 1) / 2
+    }
+  };
+};
+
+class TrajectoryGenerator.Time : TrajectoryGenerator.OpenLoop
+{
+  function init(args)
+  {
+  };
+
+  function reset()
+  {
+    // Speed is just Time, but with initial conditions expressed in
+    // speed instead of duration.  But since this relies on the
+    // current time, it must be call in reset, not init.
+    TrajectoryGenerator.OpenLoop.&reset.apply([this]) |
+    var this.duration =
+      { if ("time" in args) args["time"] else duration(args["speed"]) }
+  };
+
+  function get()
+  {
+    var timeElapsed = time - startTime |
+    if (duration - System.period < timeElapsed)
+    {
+      setter(targetValue)|
+      stop
+    }
+    else
+    {
+      var stat = timeElapsed / duration |
+      startValue + (targetValue - startValue) * stat
+    }
+  };
+
+};
+
+
+/*---------------------------------.
+| TrajectoryGenerator.ClosedLoop.  |
+`---------------------------------*/
+
+// The generators that derive from this trajectory generator need the
+// the current value to compute the new one.
+class TrajectoryGenerator.ClosedLoop : TrajectoryGenerator
+{
+  /// Stop adaptive trajectory if error is below this value.
+  var delta = 0;
+  var lastVal;
+
+  function nextValue()
+  {
+    var currentVal = getter |
+    if (targetReached(currentVal))
+    {
+      setter(targetValue) |
+      stop
+    }
+    else
+      get(currentVal)
+  };
+
+  function reset()
+  {
+    TrajectoryGenerator.&reset.apply([this]) |
+    lastVal = getter
+  };
+
+  // Compute a float mean for the relative positionning errors.
+  function errorLevel(currentVal)
+  {
+    delta = abs(currentVal - lastVal) * 0.02 + delta * 0.98 |
+    lastVal = currentVal |
+    delta
+  };
+
+  // Whether we reached the target value.
+  function targetReached(var currentVal)
+  {
+    abs(currentVal - targetValue) <= errorLevel(currentVal)
+  };
+};
+
+class TrajectoryGenerator.SpeedAdaptive : TrajectoryGenerator.ClosedLoop
+{
+  function init(args)
+  {
+    var this.speed = args["speed"] |
+  };
+
+  function reset()
+  {
+    TrajectoryGenerator.ClosedLoop.&reset.apply([this]) |
+  };
+
+  function get(currentVal)
+  {
+    var res = currentVal
+        + speed * (targetValue - currentVal).sign * System.period |
+    if ((currentVal < targetValue && targetValue < res)
+        || (res < targetValue && targetValue < currentVal))
+      targetValue
+    else
+      res
+  };
+};
+
+class TrajectoryGenerator.TimeAdaptive : TrajectoryGenerator.ClosedLoop
+{
+  var duration;
+
+  function init(args)
+  {
+  };
+
+  function reset()
+  {
+    // Speed is just Time, but with initial conditions expressed in
+    // speed instead of duration.  But since this relies on the
+    // current time, it must be call in reset, not init.
+    TrajectoryGenerator.ClosedLoop.&reset.apply([this]) |
+    duration =
+      { if ("time" in args) args["time"] else duration(args["speed"]) }
+  };
+
+  function get(var currentVal)
+  {
+    var timeLeft = startTime + duration - time |
+    if (timeLeft < System.period)
+      targetValue
+    else
+    {
+      var stat = System.period / timeLeft |
+      currentVal + stat * (targetValue - currentVal)
+    }
+  };
+};

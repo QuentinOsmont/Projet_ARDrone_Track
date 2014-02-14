@@ -1,0 +1,82 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/loadable.u");
+requireFile("urbi/nil.u");
+requireFile("urbi/channel.u");
+requireFile("urbi/control.u");
+requireFile("urbi/global.u");
+
+// Publisher-subscriber interface
+
+class Global.PubSub
+{
+
+  class Subscriber
+  {
+    function init()
+    {
+       var this.barrier = Barrier.new |
+       var this.queue = []
+    };
+
+    function enqueue(ev)
+    {
+       queue.insertBack(ev) |
+       barrier.signal(nil)
+    };
+
+    function getOne()
+    {
+      nonInterruptible |
+      if (queue.empty)
+        barrier.wait |
+      var ev = queue.front |
+      queue.removeFront |
+      ev
+    };
+
+    function getAll()
+    {
+      nonInterruptible |
+      if (queue.empty)
+        barrier.wait |
+      // Take a copy of the list before clearing it
+      var evs = queue.clone |
+      queue.clear |
+      evs
+    };
+  };
+
+  function init()
+  {
+    var this.subscribers = []
+  };
+
+  function subscribe()
+  {
+    var sub = Subscriber.new |
+    subscribers.insertBack(sub) |
+    sub
+  };
+
+  function unsubscribe(sub)
+  {
+    subscribers.removeById(sub)
+  };
+
+  function publish(ev)
+  {
+    for| (var sub: subscribers)
+      sub.enqueue(ev) |
+    ev
+  };
+
+};

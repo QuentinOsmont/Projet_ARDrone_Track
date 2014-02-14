@@ -1,0 +1,40 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/boolean.u");
+requireFile("urbi/channel.u");
+requireFile("urbi/control.u");
+requireFile("urbi/global.u");
+
+class Global.Loadable
+{
+  var load = false;
+
+  function '$loadableSet'(val)
+  {
+    load = val |
+    this
+  };
+
+  function on()
+  {
+    '$loadableSet'(true)
+  };
+
+  function off()
+  {
+    '$loadableSet'(false)
+  };
+
+  function toggle()
+  {
+    '$loadableSet'(!load)
+  };
+};

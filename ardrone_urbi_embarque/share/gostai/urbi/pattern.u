@@ -1,0 +1,67 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/loadable.u");
+requireFile("urbi/nil.u");
+requireFile("urbi/channel.u");
+requireFile("urbi/global.u");
+requireFile("urbi/boolean.u");
+requireFile("urbi/control.u");
+
+class Global.Pattern
+{
+  var pattern;
+  var bindings = [ => ];
+  var guard;
+
+  function init(p, g = nil)
+  {
+    pattern = p |
+    bindings = [ => ] |
+    guard = g |
+  };
+
+  function match(value)
+  {
+    matchPattern(pattern, value)
+    && (&guard.isNil || guard(this))
+  };
+
+  function matchPattern(pattern, value)
+  {
+    if (pattern.hasSlot("match"))
+      pattern.match(this, value)
+    else if (value.hasSlot("matchAgainst"))
+      value.matchAgainst(this, pattern)
+    else
+      value == pattern
+  };
+
+  class Binding
+  {
+    var name = "";
+
+    function init(n)
+    {
+      name = n
+    };
+
+    function asString()
+    {
+      "var " + name
+    };
+
+    function match(pattern, value)
+    {
+      pattern.bindings[name] = value |
+      true
+    };
+  };
+};

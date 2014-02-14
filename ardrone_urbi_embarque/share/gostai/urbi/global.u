@@ -1,0 +1,46 @@
+/*
+ * Copyright (C) 2010, 2011, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+do (Global)
+{
+  // Import the primitives.
+  addProto(System);
+  removeProto(Object);
+
+  function echo(var args[])
+  {
+    lobby.&echo.apply([lobby] + args);
+  };
+
+  /*---------------------------.
+  | Method function wrappers.  |
+  `---------------------------*/
+
+  // Make a function f from a method m, so as f(a, b, c) is equivalent
+  // to a.m(b, c)
+  // FIXME: I'm not satisfied with the name, but can't find anything
+  // better
+  function methodToFunction(name)
+  {
+    function (var args[])
+    {
+      var val = args.head.getSlot(name) |
+      if (val.isA(Executable))
+        val.apply(args)
+      else
+        val
+    }
+  };
+
+  function wall(var args[])
+  {
+    lobby.&wall.apply([lobby] + args);
+  };
+};

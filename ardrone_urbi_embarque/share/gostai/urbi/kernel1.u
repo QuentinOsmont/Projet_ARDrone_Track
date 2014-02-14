@@ -1,0 +1,110 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/call-message.u");
+requireFile("urbi/channel.u");
+requireFile("urbi/global.u");
+requireFile("urbi/singleton.u");
+requireFile("urbi/control.u");
+
+// k1 compatibility.
+class Global.Kernel1
+{
+  setProtos([Singleton]);
+
+  function deprecated(what, suggestion = "")
+  {
+    if (suggestion.empty)
+      warn("`%s' is deprecated" % what)
+    else
+      warn("`%s' is deprecated, use `%s'" % [what, suggestion])
+  };
+
+  function copy(b)
+  {
+    deprecated("copy(binary)", "binary.copy") |
+    b.copy
+  };
+
+  function error()
+  {
+    deprecated("error", "cerr") |
+    cerr
+  };
+
+  function isvoid()
+  {
+    deprecated("isvoid(o)", "o.isVoid") |
+    call.evalArgAt(0).acceptVoid.isVoid
+  };
+
+  function noop()
+  {
+    deprecated("noop", "{}")
+  };
+
+  function output()
+  {
+    deprecated("output", "cout") |
+    cout
+  };
+
+  function ping()
+  {
+    echo("pong time=%ss" % time);
+  };
+
+  function seq(n)
+  {
+    deprecated("seq(number)", "number.seq") |
+    n.seq
+  };
+
+  function size(l)
+  {
+    deprecated("size(list)", "list.size") |
+    l.size
+  };
+
+  function strlen(s)
+  {
+    deprecated("strlen(string)", "string.length") |
+    s.length
+  };
+
+  function system()
+  {
+    deprecated("system", "System") |
+    System
+  };
+
+  var System.ghostID = function () { deprecated("ghostID") };
+
+  // Deprecated commands from k1.
+  // FIXME: Maybe some commands should be rewritten.
+  for| (var name: [
+                    "commands",
+                    "connections",
+                    "devices",
+                    "events",
+                    "functions",
+                    "reset",
+                    "runningcommands",
+                    "strict",
+                    "taglist",
+                    "undefall",
+                    "unstrict",
+                    "uservars",
+                    "vars",
+                  ])
+    setSlot(name,
+      function () { deprecated(name) });
+
+};

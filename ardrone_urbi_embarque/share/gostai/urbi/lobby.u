@@ -1,0 +1,172 @@
+/*
+ * Copyright (C) 2010-2011, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/event.u");
+requireFile("urbi/loadable.u");
+requireFile("urbi/call-message.u");
+requireFile("urbi/object.u");
+requireFile("urbi/boolean.u");
+requireFile("urbi/list.u");
+requireFile("urbi/nil.u");
+requireFile("urbi/file.u");
+
+var Lobby.systemLobby = this;
+do (Lobby)
+{
+  var onDisconnect = Event.new;
+  var connected = true;
+
+  function asString()
+  {
+    var res = Object.&asString.apply([this]) |
+    if (hasSlot("remoteIP"))
+      res += " (%s)" % remoteIP |
+    res
+  };
+
+  // Echo the Urbi authors.
+  function authors()
+  {
+    echoEach(File.new(System.urbiRoot / "AUTHORS.txt").asList
+             + ["", "See also `thanks;'."]);
+  };
+
+  // A function to make initialization dependencies easier to manage.
+  function banner()
+  {
+    echoEach(System
+             .PackageInfo
+             .components["Urbi SDK"]
+             .banner)
+  };
+
+  // Echo the copyright notice.
+  function copyright(var deep = true)
+  {
+    echoEach(System
+             .PackageInfo
+             .components["Urbi SDK"]
+             .copyright(deep))
+  };
+
+  // Echo the Urbi license.
+  function license()
+  {
+    echoEach(File.new(System.urbiRoot / "LICENSE.txt"));
+  };
+
+  // Echo \a msg "on tag" \a tag.
+  function echo(var msg, var tag = "", var prefix = "***")
+  {
+    // Avoid the trailing space.
+    msg = msg.asString |
+    send(prefix + { if (msg) " " + msg else "" }, tag)
+  };
+
+  // Each each member or \a lines as a line, on \a tag.
+  function echoEach(var lines, var tag = "", var prefix = "***")
+  {
+    for (var line: lines)
+      echo(line, tag, prefix);
+  };
+
+  function handleDisconnect()
+  {
+    connected = false |
+    Lobby.systemLobby.echo("disconnecting " + this) |
+    // Break the reference loop of notifyChange local to this lobby.
+    if (hasLocalSlot("handle") && handle.isA(Finalizable))
+      removeLocalSlot("handle")|
+    // Reverse connect socket has a closure on lobby.
+    if (hasLocalSlot("socket"))
+      removeLocalSlot("socket")|
+    onDisconnect!(this)
+  };
+
+  /// \param displayBanner  whether to send the banner.
+  /// \param isGhost        whether it's the ghostconnection.
+  function initialize(var displayBanner, var isGhost = false)
+  {
+    if (this != lobby)
+      receive("initialize(%s, %s);" % [displayBanner, isGhost])
+    else
+    {
+      if (displayBanner)
+        banner|
+      if (isGhost)
+      {
+        maybeLoad("URBI.INI", clog) |
+        maybeLoad("global.u", clog)
+      }|
+      maybeLoad("CLIENT.INI", clog) |
+      maybeLoad("local.u", clog)
+    }
+  };
+
+  // Echo the Urbi contributors.
+  function thanks()
+  {
+    echoEach(File.new(System.urbiRoot / "THANKS.txt").asList
+             + ["", "See also `authors;'."]);
+  };
+
+  function wall(var msg, var tag = "")
+  {
+    for (var l in lobbies - [Lobby])
+      l.echo(msg, tag);
+  };
+
+  // Create an urbi connection to a remote host.
+  function reverseConnect(host, port)
+  {
+    do (create)
+    {
+      var remoteIP = host|
+      var socket = Socket.new|
+      var socket.receive = closure(t) { receive(t)}|
+      write = function(t) { socket.write(t)}|
+      send = function (var args[])
+      {
+        if (args.size == 2 && !args[1].empty)
+        write("[%08d:%s] %s\n"
+              % [(time*1000).round, args[1], args[0]])
+        else
+        write("[%08d] %s\n"
+              % [(time*1000).round, args[0]])
+
+      }|
+      // Prevent call to quit as it would close the ghost connection
+      var quitBackend = &quit;
+      quit = function() { socket.disconnect}|
+      socket.connect(host, port)|
+      var t = Tag.new|
+      t:at(socket.disconnected?)
+      {
+        quitBackend;
+        t.stop;
+      }|
+      initialize(true);
+    }
+  };
+
+  // We received a C-c that makes us clear the foreground jobs.
+  function sigint_interrupt()
+  {
+    cerr << "!!! received interruption, killing foreground job."
+  };
+
+  // We received a C-c that makes us shutdown.
+  function sigint_shutdown()
+  {
+    cerr << "!!! received interruption, shutting down." |
+    System.shutdown;
+  };
+
+};

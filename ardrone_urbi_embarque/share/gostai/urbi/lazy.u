@@ -1,0 +1,65 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/global.u");
+requireFile("urbi/comparable.u");
+
+class Global.Lazy : Global.Comparable
+{
+  var code;
+  var val;
+
+  function init(value)
+  {
+    var this.code = value |
+    var this.val |
+    this
+  };
+
+  function '=='(other)
+  {
+    // code is very likely to be a closure, do not fire it, otherwise
+    // we might compare two values instead of two expressions.
+    &code == other.&code && &val.acceptVoid == other.&val.acceptVoid;
+  };
+
+  function eval()
+  {
+    val = code.acceptVoid|
+    &val.unacceptVoid
+  };
+
+  function value()
+  {
+    if (&val.isVoid)
+      eval|
+    &val.unacceptVoid
+  };
+
+  function asString ()
+  {
+    var c = &code |
+    if (c.hasSlot("bodyString"))
+      c.bodyString
+    else
+      c.asString
+  };
+};
+
+class Global.PseudoLazy: Lazy
+{
+
+  function eval()
+  {
+    val = &code.acceptVoid|
+    &val.unacceptVoid
+  };
+
+};

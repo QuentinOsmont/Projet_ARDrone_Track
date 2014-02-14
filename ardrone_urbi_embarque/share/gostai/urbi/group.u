@@ -1,0 +1,86 @@
+/*
+ * Copyright (C) 2010, 2011, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/call-message.u");
+requireFile("urbi/object.u");
+requireFile("urbi/global.u");
+requireFile("urbi/boolean.u");
+requireFile("urbi/channel.u");
+requireFile("urbi/control.u");
+requireFile("urbi/list.u");
+requireFile("urbi/nil.u");
+requireFile("urbi/range-iterable.u");
+
+class Global.Group : RangeIterable
+{
+  function init(var args[])
+  {
+    var this.members = args |
+    this
+  };
+
+  // n-ary strict: add the arguments as group members.
+  function add(var args[])
+  {
+    // Fetch Object's updateSlot or we will trigger the fallback
+    Object.&updateSlot.apply([this, "members", members + args])|
+    this
+  };
+
+  copySlot("add", "<<");
+
+  // n-ary strict: remove the arguments as group members.
+  // Removing a non-member is ok.
+  function remove(var args[])
+  {
+    // Fetch Object's updateSlot or we will trigger the fallback
+    Object.&updateSlot.apply([this, "members", members - args])|
+    this
+  };
+
+  function asList()
+  {
+    members
+  };
+
+  function asString()
+  {
+    if (this === Group)
+      "Group"
+    else
+      type + " " + members
+  };
+
+  // FIXME: This implementation always evaluates the
+  // arguments. There's no other way to do it for now.
+  function fallback(var args[])
+  {
+    var results = [] |
+    // We must use callMessage instead of apply, as the later looses the message
+    closure action (m)
+    {
+      results.insertBack(m.callMessage(call).acceptVoid)
+    } |
+    'each&'(action) |
+    // If the resulting group contains only void, return void.
+    if (results.all(methodToFunction("isVoid")))
+      void
+    else
+      Group.&new.apply([Group] + results)
+  };
+
+  for| (var s : ["getProperty", "hasProperty", "setProperty", "updateSlot"])
+    copySlot("fallback", s);
+
+  function hasSlot(var name)
+  {
+    members.all(function (var o) { o.hasSlot(name) })
+  }
+};

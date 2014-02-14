@@ -1,0 +1,138 @@
+/*
+ * Copyright (C) 2010, 2011, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/loadable.u");
+requireFile("urbi/call-message.u");
+requireFile("urbi/container.u");
+requireFile("urbi/global.u");
+requireFile("urbi/string.u");
+requireFile("urbi/exception.u");
+requireFile("urbi/boolean.u");
+requireFile("urbi/channel.u");
+requireFile("urbi/control.u");
+requireFile("urbi/pattern.u");
+requireFile("urbi/list.u");
+requireFile("urbi/nil.u");
+requireFile("urbi/range-iterable.u");
+
+class Global.Tuple : Global.RangeIterable, Global.Container
+{
+  var members = [];
+
+  function init(m)
+  {
+    members = m
+  };
+
+  function asString ()
+  {
+    var res = "(" |
+    res += members.map(methodToFunction("asPrintable")).join(", ") |
+    if (members.size == 1)
+      res += "," |
+    res + ")"
+  };
+
+  function asList()
+  {
+    members
+  };
+
+  function '=='(other)
+  {
+    members == other.members
+  };
+
+  function '<' (other)
+  {
+    members < other.members
+  };
+
+  function '[]'(n)
+  {
+    members[n]
+  };
+
+  function '[]='(n, v)
+  {
+    members[n] = v
+  };
+
+  function size()
+  {
+    members.size;
+  };
+
+  function '*'(var rhs)
+  {
+    Tuple.new(members.map(
+      closure (var v) { v * rhs }
+    ))
+  };
+
+  function '+'(var rhs)
+  {
+    Tuple.new(members.zip(
+      closure (var lhs, var rhs) { lhs + rhs },
+      rhs.members
+    ))
+  };
+
+  // Pattern matching.
+  function matchAgainst(handler, pattern)
+  {
+    pattern.isA(Tuple) && members.matchAgainst(handler, pattern.members)
+  };
+};
+
+{
+  function makeTupleClass(name, size)
+  {
+    var names = ["first", "second", "third", "fourth", "fifth", "sixth"];
+
+    class Res : Tuple
+    {
+      type = name;
+      var members = [nil] * size;
+      var size = size;
+
+      function init(var args[])
+      {
+        if (args.size != size)
+          throw Exception.Arity.new("%s.%s" % [name, "init"],
+                                    args.size,
+                                    size)|
+        var m = args |
+        m += m.range(size - m.size) |
+        Tuple.&init.apply([this, m])
+      };
+
+      var idx = 0;
+      for (var name: names.range(size))
+      {
+        var n = idx;
+        setSlot(name, function () { members[n] });
+        setProperty(name, "updateHook",
+          function (name, val) {
+            // Copy members if needed before altering it
+            if (!hasLocalSlot("members"))
+              members = members.clone;
+            members[n] = val;
+            void;
+          });
+        idx++;
+      };
+    };
+    Global.setSlot(name, Res);
+  };
+
+  makeTupleClass("Pair", 2);
+  makeTupleClass("Triplet", 3);
+};

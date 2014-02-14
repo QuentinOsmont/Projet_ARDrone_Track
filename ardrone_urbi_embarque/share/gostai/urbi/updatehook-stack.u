@@ -1,0 +1,77 @@
+/*
+ * Copyright (C) 2010, Gostai S.A.S.
+ *
+ * This software is provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the
+ * implied warranties of fitness for a particular purpose.
+ *
+ * See the LICENSE file for more information.
+ */
+
+requireFile("urbi/nil.u");
+requireFile("urbi/exception.u");
+requireFile("urbi/object.u");
+requireFile("urbi/global.u");
+requireFile("urbi/boolean.u");
+requireFile("urbi/channel.u");
+requireFile("urbi/control.u");
+
+function Global.UpdateHookStack (name, value)
+{
+  var myself = getProperty(name, "updateHook")|
+  var res = value|
+  for| (var hook: myself.hooks)
+  {
+    res = hook(name, res)|
+    if (res.isVoid)
+      return value
+  }|
+  res
+};
+
+do (&UpdateHookStack)
+{
+  var hooks = [];
+
+  function init()
+  {
+    var this.hooks = hooks.clone;
+  };
+
+  function addHook(f)
+  {
+    hooks << f;
+  };
+};
+
+function Global.installUpdateHookStack(o, slot)
+{
+  if (o === Object)
+    throw Exception.new("Cannot install updateHookStack on Object!");
+  var old;
+  if (o.hasProperty(slot, "updateHook"))
+  {
+    old = o.getProperty(slot, "updateHook");
+    if (old.isA(&UpdateHookStack))
+      return;
+  };
+
+  o.setProperty(slot, "updateHook", &UpdateHookStack.new);
+
+  function setProperty(name, prop, v)
+  {
+    if (prop == "updateHook"
+        && hasProperty(name, prop)
+        && getProperty(name, prop).isA(&UpdateHookStack))
+      getProperty(name, prop).addHook(v)
+    else
+      Object.&setProperty.apply([this, name, prop, v]);
+  };
+
+  o.setProperty = setProperty;
+
+  if (!old.isVoid)
+    o.setProperty(slot, "updateHook", old);
+
+  void;
+}
