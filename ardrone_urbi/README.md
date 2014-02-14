@@ -30,6 +30,10 @@ tar -xvf http://www.psykokwak.com/blog/images/ardrone/urbi-sdk-2.3-linux-x86-gcc
 * Télécharger Gostai Lab à cette adresse : http://www.psykokwak.com/blog/images/ardrone/urbi-sdk-2.3-linux-x86-gcc4-ardrone-1.0.tar.bz2
 * Lancer Urbi
 * Lancer Gostai (Remarque, il faut reculer la date de l'ordinateur d'au moins deux ans pour utiliser Gostai sans clé)
+```
+cd gostai-lab-2.7.4-linux/bin
+./GostaiLab
+```
 * Ouvrir le fichier "balltracking.ula"
 * Lancer la connection au drone.
 
