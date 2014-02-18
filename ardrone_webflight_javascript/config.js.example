@@ -8,6 +8,11 @@ var config = {
           , "tracker"
          // , "blackbox"      // Experimental: Records all mision data (navData, raw video, PaVE headers, etc.)
         //, "replay"        // Experimental: Replay the data recorded by the blackbox
+        // , "copterface"
+	  //, "traffic"
+	//, "trollface"
+	 // , "gamepad"
+
         ],
 
         // Config for pilot plugin
