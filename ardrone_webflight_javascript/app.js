@@ -34,6 +34,8 @@ app.configure(function () {
     app.use(express.logger('dev'));
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
+    //app.use(express.static(__dirname + '/public'));
+    //app.use(express.static(__dirname + '/plugins'));
     app.use("/components", express.static(path.join(__dirname, 'bower_components')));
 });
 
@@ -146,6 +148,14 @@ config.plugins.forEach(function (plugin) {
             scripts.push("/plugin/" + plugin + "/js/" + script);
         });
     }
+
+    // Add the img to the view
+    if (fs.existsSync(img = path.join(assets, 'img'))) {
+        fs.readdirSync(img).filter(getFilter('img')).forEach(function(script) {
+            scripts.push("/plugin/" + plugin + "/img/" + script);
+        });
+    }
+
 
     // Add the css to the view
     if (fs.existsSync(css = path.join(assets, 'css'))) {

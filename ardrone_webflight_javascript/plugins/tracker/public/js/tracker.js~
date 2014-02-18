@@ -30,7 +30,10 @@
         this.div = $('#tracker').get(0);
 	
         this.div.addEventListener('click', function(event) {
-            tracker.setTrackingCoords(event.clientX, event.clientY);
+
+		console.log("1- ", event.clientX);
+		console.log("2- ", event.clientY);
+            tracker.setTrackingCoords(event.offsetX, event.offsetY);
         });
 
         this.enabled = false;

@@ -135,7 +135,7 @@ function copterface(name, deps) {
     });
 
     client = deps.client;
-    client.getPngStream()
+    client.createPngStream()
       .on('error', console.log)
       .on('data', function(pngBuffer) {
       lastPng = pngBuffer;

@@ -59,7 +59,7 @@ def track(bgr_image, threshold=100):
 
 
 
-    #Threshold and erode green image
+    Threshold and erode green image
     cv.Threshold(g_image, g_image, threshold, 255, cv.CV_THRESH_BINARY)
     cv.Erode(g_image, g_image)
 

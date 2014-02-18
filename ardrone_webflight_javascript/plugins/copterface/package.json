@@ -1,0 +1,33 @@
+{
+  "name": "webflight-copterface",
+  "version": "0.1.0",
+  "description": "Track faces and center the drone towards them.",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:eschnou/webflight-copterface.git"
+  },
+  "keywords": [
+    "drone",
+    "ardrone",
+    "nodecopter",
+    "parrot",
+    "face",
+    "detection",
+    "opencv",
+    "copterface"
+  ],
+  "dependencies": {
+    "ar-drone": "0.0.5",
+    "opencv": "~0.1.0",
+    "node-pid-controller": "0.0.x",
+    "async": "0.2.9"
+  },
+  "author": "Laurent Eschenauer <laurent@eschenauer.be>",
+  "contributors": [
+    {
+      "name": "Paul Hayes",
+      "name": "Philippe Modard <philippe.modard@gmail.com>"
+    }
+  ],
+  "license": "MIT"
+}

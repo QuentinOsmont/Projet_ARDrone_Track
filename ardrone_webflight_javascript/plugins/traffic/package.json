@@ -1,0 +1,45 @@
+{
+  "name": "webflight-traffic",
+  "description": "Plugin for AR.Drone webflight that shows nearby air traffic.",
+  "author": "John Wiseman <jjwiseman@gmail.com> (http://lemondronor.com)",
+  "version": "0.1.1",
+  "main": "./index.js",
+  "dependencies": {
+    "ar-drone": "~0.2.0",
+    "geolib": "~1.3.1",
+    "lodash.defaults": "~2.2.0",
+    "lodash.foreach": "~2.2.0",
+    "planefinder": "~0.0.3",
+    "sbs1": "~0.2.2"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "bin": {},
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/wiseman/webflight-traffic.git"
+  },
+  "bugs": "https://github.com/wiseman/webflight-traffic/issues",
+  "keywords": [
+    "AR.Drone",
+    "ads-b",
+    "aircraft",
+    "ardrone-webflight",
+    "aviation",
+    "avionics",
+    "diydrone",
+    "drone",
+    "hud",
+    "mode s",
+    "planespotter",
+    "planespotting",
+    "plugin",
+    "sbs-1",
+    "virtual radar",
+    "webflight"
+  ],
+  "license": "MIT/X11",
+  "engine": {
+    "node": ">=0.4"
+  }
+}

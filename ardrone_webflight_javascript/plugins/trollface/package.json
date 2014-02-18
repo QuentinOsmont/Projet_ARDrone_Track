@@ -1,0 +1,31 @@
+{
+  "name": "webflight-trollface",
+  "description": "Plugin for AR.Drone webflight that overlays trollfaces on detected faces",
+  "author": "Andrew Nesbitt",
+  "version": "0.1.0",
+  "main": "./index.js",
+  "dependencies": {
+    "canvas": "~1.1.0",
+    "opencv": "~0.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "bin": {},
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/andrew/webflight-trollface.git"
+  },
+  "bugs": "https://github.com/andrew/webflight-trollface/issues",
+  "keywords": [
+    "AR.Drone",
+    "ardrone-webflight",
+    "drone",
+    "webflight",
+    "opencv",
+    "trollface"
+  ],
+  "license": "MIT",
+  "engine": {
+    "node": ">=0.4"
+  }
+}
